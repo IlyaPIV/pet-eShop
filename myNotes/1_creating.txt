@@ -1,0 +1,39 @@
+1 - ROOT (pet_eShop)
+2 - COMMON (eShop_Common)
+3 - WebParent (eShop_WebParent)
+4 - BackEnd (eShop_BackEnd)
+5 - FrontEnd (eShop_FrontEnd)
+
+1.0) Root модуль
+1.1) создал maven проект
+1.2) в pom.xml добавил packaging pom + description
+2.0) Common library - создал Spring Boot модуль (+ Spring data jpa)
+2.1) удалил пакет с тестами
+1.3) добавил в модули новый Common
+2.2) в pom.xml удалил spring-boot-starter-test и плагин
+3.0) WebParent - создан Spring Boot модуль (+ Spring Web)
+3.1) в pom.xml удалили билд плагин
+1.4) добавил в модули новый WebParent
+3.2) удалил main пакеты с мейн классом и тестом
+3.3) в pom.xml добавили packaging pom
+4.0) BackEnd - создан Spring Boot модуль
+4.1) в pom.xml поменяли секцию parent на родительскую
+3.4) в pom.xml добавили модуль
+4.2) удалили dependency, объявленные в родительском модуле
+4.3) удалили тестовый класс
+4.4) заполнили application.properties (порт 8080)
+3.5) в pom.xml добавили dependency от thymeleaf
+4.5) в папке java переименовали пакет в pet.eshop.admin
+4.6) добавили класс MainController
+4.7) в ресурсах новая папка templates
+4.8) в templates добавлена html страница index
+5.0) FrontEnd - создан Spring Boot модуль
+3.6) в pom.xml добавили модуль
+5.1) в pom.xml поменяли секцию parent на родительскую
+5.2) удалили dependency, объявленные в родительском модуле
+5.3) удалили тестовый класс
+5.4) в папке java переименовали пакет в pet.eshop.site
+5.5) заполнили application.properties (порт 80)
+5.6) в ресурсах новая папка templates
+5.7) в templates добавлена html страница index
+5.8) добавили класс MainController

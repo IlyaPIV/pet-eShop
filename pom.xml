@@ -8,6 +8,14 @@
     <artifactId>eShop</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
+    <description>Root project</description>
+    <packaging>pom</packaging>
+    <modules>
+        <module>eShop_Common</module>
+        <module>eShop_WebParent</module>
+    </modules>
+
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>

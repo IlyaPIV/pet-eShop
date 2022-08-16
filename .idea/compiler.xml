@@ -6,8 +6,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="pet_eShop" />
+        <module name="eShop_BackEnd" />
+        <module name="eShop_Common" />
+        <module name="eShop_FrontEnd" />
       </profile>
     </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="eShop_BackEnd" options="-parameters" />
+      <module name="eShop_Common" options="-parameters" />
+      <module name="eShop_FrontEnd" options="-parameters" />
+      <module name="eShop_WebParent" options="" />
+    </option>
   </component>
 </project>
