@@ -1,0 +1,20 @@
+1. В WebParent добавляются депенденси от Bootstrap, jQuery, webjars-locator-core и SpringDevTools
+2. В BackEnd в папке src/main/resources создается папка для статик объектов, там отдельный каталог images, туда закидывается лого
+3. Редактируется index.html у BackEnd:
+3.1. менятся в шапке:
+<html lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+3.2. меняется <meta>:
+    <meta charset="UTF-8"
+        http-equiv="Content-Type" content="text/html">
+<!--    для мобильных устройств-->
+    <meta name="viewport" content="width=device-width,
+                                    initial-scale=1.0,
+                                    minimum-scale=1.0">
+3.3. прописываются ссылки для подгрузки bootstrap и jquery:
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+3.4. в тело добавляется глобальный блок-контейнер bootstrap:
+    <div class="container-fluid"></div>
+3.5. настройка меню
