@@ -28,6 +28,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>pet.eshop</groupId>
+            <artifactId>eShop_Common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
@@ -47,11 +53,19 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
         </dependency>
+
+
+
         <!-- https://mvnrepository.com/artifact/org.webjars/bootstrap -->
         <dependency>
             <groupId>org.webjars</groupId>

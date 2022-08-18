@@ -1,0 +1,11 @@
+1. в Common модуле в папке java создал пакет pet.eshop.common.entity
+2. в нем создался класс Role для Entity, настройки соответственно таблице в БД
+3. в BackEnd модуле создал пакет pet.eshop.admin.users
+4. в этом пакете создался интерфейс RoleRepository
+5. настраивается как наследник класса CrudRepository для класса Role
+6. в main класс BackEndApplication добавил следующую аннотацию для указания пакетов с entity классами:
+   @EntityScan({"pet.eshop.common.entity", "pet.eshop.admin.users"})
+7. создал тесты для работы с интерфейсом RoleRepository
+7.1. импорт статик метода для тестов:
+import static org.assertj.core.api.Assertions.assertThat;
+7.2 после проверки работоспособности тестов, отключил @Rollback и внёс значения в БД

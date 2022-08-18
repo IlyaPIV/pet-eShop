@@ -1,3 +1,5 @@
 1. Создал в MySQL базу данных
 2. в WebParent в pom.xml добавил зависимости от spring-boot-starter-data-jpa
 3. прописал в BackEnd в файл application.properties настройки подключения к БД и настройки Hibernate
+4. добавил в WebParent зависимость от Common модуля
+5. Там же добавил зависимость mysql-connector-java
