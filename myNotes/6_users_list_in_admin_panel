@@ -1,0 +1,4 @@
+1. в пакете admin.users модуля BackEnd создали класс UserService
+2. там же создали контроллер UserController
+3. Создали Html страницу users.html
+4. Настроили вывод табличной части на странице
