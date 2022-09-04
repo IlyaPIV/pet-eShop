@@ -1,0 +1,4 @@
+1. в Common модуле в пакете entity создаём класс User
+2. в классе Role добавляются методы equals & hashCode & toString
+3. в BackEnd модуле в пакете admin.users добавляется интерфейс UserRepository
+4. в тесты добавили UserRepositoryTests
