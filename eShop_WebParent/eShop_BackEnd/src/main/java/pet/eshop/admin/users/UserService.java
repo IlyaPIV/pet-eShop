@@ -1,6 +1,7 @@
 package pet.eshop.admin.users;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pet.eshop.common.entity.Role;
 import pet.eshop.common.entity.User;
@@ -16,6 +17,9 @@ public class UserService {
     @Autowired
     private RoleRepository roleRepo;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public List<User> listAll(){
         return (List<User>) userRepo.findAll();
     }
@@ -25,6 +29,12 @@ public class UserService {
     }
 
     public void save(User user) {
+        encodePassword(user);
         userRepo.save(user);
+    }
+
+    private void encodePassword(User user){
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
     }
 }
