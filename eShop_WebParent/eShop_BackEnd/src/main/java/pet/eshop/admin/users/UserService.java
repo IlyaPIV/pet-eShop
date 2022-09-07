@@ -6,10 +6,12 @@ import org.springframework.stereotype.Service;
 import pet.eshop.common.entity.Role;
 import pet.eshop.common.entity.User;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
+@Transactional
 public class UserService {
 
     @Autowired
@@ -80,5 +82,9 @@ public class UserService {
         }
 
         userRepo.deleteById(id);
+    }
+
+    public void updateUserEnabledStatus(Integer id, boolean enabled){
+        userRepo.updateEnabledStatus(id, enabled);
     }
 }
