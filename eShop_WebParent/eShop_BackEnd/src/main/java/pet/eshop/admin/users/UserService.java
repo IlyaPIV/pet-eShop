@@ -1,6 +1,9 @@
 package pet.eshop.admin.users;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pet.eshop.common.entity.Role;
@@ -14,6 +17,8 @@ import java.util.NoSuchElementException;
 @Transactional
 public class UserService {
 
+    public static final int USERS_PER_PAGE = 5;
+
     @Autowired
     private UserRepository userRepo;
 
@@ -25,6 +30,11 @@ public class UserService {
 
     public List<User> listAll(){
         return (List<User>) userRepo.findAll();
+    }
+
+    public Page<User> listByPage(int pageNum) {
+        Pageable pageable = PageRequest.of(pageNum - 1, USERS_PER_PAGE);
+        return userRepo.findAll(pageable);
     }
 
     public List<Role> listRoles() {
