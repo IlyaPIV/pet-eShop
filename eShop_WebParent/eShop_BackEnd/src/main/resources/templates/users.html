@@ -79,16 +79,29 @@
     </div>
 
     <div>
+        <form th:action="@{/users/page/1}" class="form-inline m-3">
+            <input type="hidden" name="sortField" th:value="${sortField}">
+            <input type="hidden" name="sortDir" th:value="${sortDir}">
+            Filter:&nbsp;
+            <input type="search" name="keyword" class="form-control" th:value="${keyword}" required/>
+            &nbsp;&nbsp;
+            <input type="submit" value="Search" class="btn btn-primary"/>
+            &nbsp;&nbsp;
+            <input type="button" value="Clear" class="btn btn-secondary" onclick="clearFilter()"/>
+        </form>
+    </div>
+
+    <div>
         <table class="table table-bordered table-striped table-hover table-responsive-xl">
             <thead class="thead-dark">
             <tr>
-                <th>User ID</th>
+                <th th:replace="fragments :: column_link('id', 'User ID')"></th>
                 <th>Photos</th>
-                <th>Email</th>
-                <th>First Name</th>
-                <th>Last Name</th>
+                <th th:replace="fragments :: column_link('email', 'E-mail')"></th>
+                <th th:replace="fragments :: column_link('firstName', 'First Name')"></th>
+                <th th:replace="fragments :: column_link('lastName', 'Last Name')"></th>
                 <th>Roles</th>
-                <th>Enabled</th>
+                <th th:replace="fragments :: column_link('enabled', 'Enabled')"></th>
                 <th></th>
             </tr>
             </thead>
@@ -126,26 +139,24 @@
     <div class="text-center m-1" th:unless="${totalItems > 0}">
         <span>No users found</span>
     </div>
-    <div>
+    <div th:if="${totalPages > 1}">
         <nav>
             <ul class="pagination justify-content-center">
                 <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-                    <a class="page-link" th:href="@{/users/page/1}">First</a>
+                    <a th:replace="fragments :: page_link(1, 'First')"></a>
                 </li>
                 <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-                    <a class="page-link" th:href="@{'/users/page/' + ${currentPage - 1}}">Previous</a>
+                    <a th:replace="fragments :: page_link(${currentPage}-1, 'Previous')"></a>
                 </li>
-
                 <li th:class="${currentPage != i ? 'page-item': 'page-item active'}"
                     th:each="i : ${#numbers.sequence(1, totalPages)}">
-                    <a class="page-link" th:href="@{'users/page/' + ${i}}">[[${i}]]</a>
-                </li>
-
-                <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-                    <a class="page-link" th:href="@{'/users/page/' + ${currentPage + 1}}">Next</a>
+                    <a th:replace="fragments :: page_link(${i}, ${i})"></a>
                 </li>
                 <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-                    <a class="page-link" th:href="@{'users/page/' + ${totalPages}}">Last</a>
+                    <a th:replace="fragments :: page_link(${currentPage} + 1, 'Next')"></a>
+                </li>
+                <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+                    <a th:replace="fragments :: page_link(${totalPages}, 'Last')"></a>
                 </li>
             </ul>
         </nav>
@@ -185,8 +196,12 @@
             $("#yesButton").attr("href", link.attr("href"));
             $("#confirmText").text("Are you sure you want to delete this user (ID=" + userID + ")?");
             $("#confirmModal").modal();
-        })
-    })
+        });
+    });
+
+    function clearFilter(){
+        window.location = "[[@{/users}]]"
+    }
 </script>
 </body>
 </html>

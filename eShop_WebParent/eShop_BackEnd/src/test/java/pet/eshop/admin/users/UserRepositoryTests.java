@@ -15,6 +15,7 @@ import pet.eshop.common.entity.User;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest(showSql = false)
@@ -136,5 +137,19 @@ public class UserRepositoryTests {
         listUsers.forEach(System.out::println);
 
         assertThat(listUsers.size()).isEqualTo(pageSize);
+    }
+
+    @Test
+    public void testSearchUsers(){
+        String keyword = "bruce";
+        int pageNumber = 0;
+        int pageSize = 5;
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<User> page = repo.findAll(keyword, pageable);
+
+        List<User> listUsers = page.getContent();
+        listUsers.forEach(System.out::println);
+
+        assertThat(listUsers.size()).isGreaterThan(0);
     }
 }
