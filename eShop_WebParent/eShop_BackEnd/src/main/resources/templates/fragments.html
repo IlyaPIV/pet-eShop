@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+<head th:fragment="page_head(title)">
+    <meta charset="UTF-8"
+          http-equiv="Content-Type" content="text/html">
+    <!--    для мобильных устройств-->
+    <meta name="viewport" content="width=device-width,
+                                    initial-scale=1.0,
+                                    minimum-scale=1.0">
+    <title>[[${title}]]</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 <body>
-      <th th:fragment="column_link(fieldName, columnLabel)">
+    <th th:fragment="column_link(fieldName, columnLabel, removeTag)" th:remove="${removeTag}">
         <a class="text-white"
            th:href="@{'/users/page/' + ${currentPage} + '?sortField=' + ${fieldName}
                               + '&sortDir=' + ${sortField != fieldName ? sortDir : reverseSortDir}
@@ -15,12 +27,68 @@
 
         <span th:if="${sortField == fieldName}"
               th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-      </th>
+    </th>
 
     <a th:fragment="page_link(pageNum, label)" class="page-link"
             th:href="@{'/users/page/' + ${pageNum}
                             + '?sortField=' + ${sortField}
                             + '&sortDir=' + ${sortDir}
                             + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${label}]]</a>
+
+    <div th:fragment="menu_bar">
+          <!--            CSS стиль + темный фон + темное меню-->
+          <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+              <!--            клик по лого - переход на домашнюю страницу админки    -->
+              <a class="navbar-brand" th:href="@{/}">
+                  <img th:src="@{/images/LogoSmall.png}">
+              </a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavbar">
+                  <span class="navbar-toggler-collapse"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="topNavbar">
+                  <ul class="navbar-nav">
+                      <li class="navbar-item">
+                          <a class="nav-link" th:href="@{/users}">Users</a>
+                      </li>
+                      <li class="navbar-item">
+                          <a class="nav-link" th:href="@{/categories}">Categories</a>
+                      </li>
+                      <li class="navbar-item">
+                          <a class="nav-link" th:href="@{/brands}">Brands</a>
+                      </li>
+                      <li class="navbar-item">
+                          <a class="nav-link" th:href="@{/products}">Products</a>
+                      </li>
+                      <li class="navbar-item">
+                          <a class="nav-link" th:href="@{/customers}">Customers</a>
+                      </li>
+                      <li class="navbar-item">
+                          <a class="nav-link" th:href="@{/orders}">Orders</a>
+                      </li>
+                      <li class="navbar-item">
+                          <a class="nav-link" th:href="@{/shipping}">Shipping</a>
+                      </li>
+                      <li class="navbar-item">
+                          <a class="nav-link" th:href="@{/report}">Sales Report</a>
+                      </li>
+                      <li class="navbar-item">
+                          <a class="nav-link" th:href="@{/articles}">Articles</a>
+                      </li>
+                      <li class="navbar-item">
+                          <a class="nav-link" th:href="@{/menus}">Menus</a>
+                      </li>
+                      <li class="navbar-item">
+                          <a class="nav-link" th:href="@{/settings}">Settings</a>
+                      </li>
+
+                  </ul>
+              </div>
+          </nav>
+    </div>
+
+    <div th:fragment="footer" class="text-center m-2">
+        <p>eShop Control Panel - Copyright &copy; Shopme</p>
+    </div>
+
 </body>
 </html>

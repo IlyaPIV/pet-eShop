@@ -1,83 +1,20 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"
-          http-equiv="Content-Type" content="text/html">
-    <!--    для мобильных устройств-->
-    <meta name="viewport" content="width=device-width,
-                                    initial-scale=1.0,
-                                    minimum-scale=1.0">
-    <title>Home - eShop Admin</title>
-
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
-    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
-    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-</head>
+<head th:replace="fragments :: page_head('Users - eShop Admin')"></head>
 <body>
 <div class="container-fluid">
-    <div>
-        <!--            CSS стиль + темный фон + темное меню-->
-        <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-            <!--            клик по лого - переход на домашнюю страницу админки    -->
-            <a class="navbar-brand" th:href="@{/}">
-                <img th:src="@{/images/LogoSmall.png}">
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavbar">
-                <span class="navbar-toggler-collapse"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="topNavbar">
-                <ul class="navbar-nav">
-                    <li class="navbar-item">
-                        <a class="nav-link" th:href="@{/users}">Users</a>
-                    </li>
-                    <li class="navbar-item">
-                        <a class="nav-link" th:href="@{/categories}">Categories</a>
-                    </li>
-                    <li class="navbar-item">
-                        <a class="nav-link" th:href="@{/brands}">Brands</a>
-                    </li>
-                    <li class="navbar-item">
-                        <a class="nav-link" th:href="@{/products}">Products</a>
-                    </li>
-                    <li class="navbar-item">
-                        <a class="nav-link" th:href="@{/customers}">Customers</a>
-                    </li>
-                    <li class="navbar-item">
-                        <a class="nav-link" th:href="@{/orders}">Orders</a>
-                    </li>
-                    <li class="navbar-item">
-                        <a class="nav-link" th:href="@{/shipping}">Shipping</a>
-                    </li>
-                    <li class="navbar-item">
-                        <a class="nav-link" th:href="@{/report}">Sales Report</a>
-                    </li>
-                    <li class="navbar-item">
-                        <a class="nav-link" th:href="@{/articles}">Articles</a>
-                    </li>
-                    <li class="navbar-item">
-                        <a class="nav-link" th:href="@{/menus}">Menus</a>
-                    </li>
-                    <li class="navbar-item">
-                        <a class="nav-link" th:href="@{/settings}">Settings</a>
-                    </li>
-
-                </ul>
-            </div>
-        </nav>
-    </div>
+    <div th:replace="navigationMenu :: menu"></div>
 
     <div>
         <h2>Manage Users</h2>
-        <a th:href="@{/users/new}">Create New User</a>
-        &nbsp;|&nbsp;
-        <a th:href="@{/users/export/csv}">Export to CSV</a>
-        &nbsp;|&nbsp;
-        <a th:href="@{/users/export/excel}">Export to Excel</a>
-        &nbsp;|&nbsp;
-        <a th:href="@{/users/export/pdf}">Export to PDF</a>
+        <a th:href="@{/users/new}" class="fas fa-solid fa-user-plus fa-2x icon-dark mr-2" title="Add new user"></a>
+        &nbsp;
+        <a th:href="@{/users/export/csv}" class="fa-solid fa-file-csv fa-2x icon-dark mr-2 ml-2" title="Export to CSV"></a>
+        &nbsp;
+        <a th:href="@{/users/export/excel}" class="fa-solid fa-file-excel fa-2x icon-dark mr-2 ml-2" title="Export to Excel"></a>
+        &nbsp;
+        <a th:href="@{/users/export/pdf}" class="fa-solid fa-file-pdf fa-2x icon-dark ml-2" title="Export to PDF"></a>
     </div>
 
     <div th:if="${message != null}" class="alert alert-success text-center">
@@ -91,35 +28,43 @@
             Filter:&nbsp;
             <input type="search" name="keyword" class="form-control" th:value="${keyword}" required/>
             &nbsp;&nbsp;
-            <input type="submit" value="Search" class="btn btn-primary"/>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search"></i>
+            </button>
             &nbsp;&nbsp;
-            <input type="button" value="Clear" class="btn btn-secondary" onclick="clearFilter()"/>
+            <button type="button" class="btn btn-secondary" onclick="clearFilter()">
+                <i class="fas fa-delete-left"></i>
+            </button>
         </form>
     </div>
 
-    <div>
+    <div class="full-details">
         <table class="table table-bordered table-striped table-hover table-responsive-xl">
             <thead class="thead-dark">
             <tr>
-                <th th:replace="fragments :: column_link('id', 'User ID')"></th>
+                <th class="hideable-column">
+                    <th th:replace="fragments :: column_link('id', 'User ID', 'tag')"></th>
+                </th>
                 <th>Photos</th>
-                <th th:replace="fragments :: column_link('email', 'E-mail')"></th>
-                <th th:replace="fragments :: column_link('firstName', 'First Name')"></th>
-                <th th:replace="fragments :: column_link('lastName', 'Last Name')"></th>
+                <th class="hideable-column">
+                    <th th:replace="fragments :: column_link('email', 'E-mail', 'tag')"></th>
+                </th>
+                <th th:replace="fragments :: column_link('firstName', 'First Name', 'none')"></th>
+                <th th:replace="fragments :: column_link('lastName', 'Last Name', 'none')"></th>
                 <th>Roles</th>
-                <th th:replace="fragments :: column_link('enabled', 'Enabled')"></th>
+                <th th:replace="fragments :: column_link('enabled', 'Enabled', 'none')"></th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
                 <tr th:each="user : ${listUsers}">
-                    <td>[[${user.id}]]</td>
+                    <td class="hideable-column">[[${user.id}]]</td>
                     <td>
                         <span th:if="${user.photos == null}" class="fas fa-portrait fa-3x icon-silver"></span>
                         <img th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}"
                             style="width: 100px"/>
                     </td>
-                    <td>[[${user.email}]]</td>
+                    <td class="hideable-column">[[${user.email}]]</td>
                     <td>[[${user.firstName}]]</td>
                     <td>[[${user.lastName}]]</td>
                     <td>[[${user.roles}]]</td>
@@ -129,14 +74,43 @@
                         <a th:if="${user.enabled != true}" class="fa-solid fa-x fa-2x icon-dark"
                            th:href="@{'/users/' + ${user.id} + '/enabled/true'}" title="Enable user"></a>
                     </td>
-                    <td><a class="fas fa-edit fa-2x icon-green"
+                    <td>
+                        <a class="fas fa-edit fa-2x icon-green"
                            th:href="@{'/users/edit/' + ${user.id}}" title="Edit this user"></a>
                         &nbsp;
                         <a class="fas fa-user-slash fa-2x icon-dark link-delete" th:userId="${user.id}"
-                            th:href="@{'/users/delete/' + ${user.id}}" title="Delete this user"></a></td>
+                            th:href="@{'/users/delete/' + ${user.id}}" title="Delete this user"></a>
+                    </td>
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div class="less-details">
+        <div th:each="user: ${listUsers}" class="row m-1">
+            <div class="col-4">
+                <span th:if="${user.photos == null}" class="fas fa-portrait fa-3x icon-silver"></span>
+                <img th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}"
+                     style="width: 100px"/>
+            </div>
+            <div class="col-8">
+                <div>[[${user.fullName}]]</div>
+                <div>[[${user.roles}]]</div>
+                <div class="mt-2">
+                    <a th:if="${user.enabled == true}" class="fa-solid fa-square-check fa-2x icon-green"
+                       th:href="@{'/users/' + ${user.id} + '/enabled/false'}" title="Disable user"></a>
+                    <a th:if="${user.enabled != true}" class="fa-solid fa-x fa-2x icon-dark"
+                       th:href="@{'/users/' + ${user.id} + '/enabled/true'}" title="Enable user"></a>
+                    &nbsp;
+                    <a class="fas fa-edit fa-2x icon-green"
+                       th:href="@{'/users/edit/' + ${user.id}}" title="Edit this user"></a>
+                    &nbsp;
+                    <a class="fas fa-user-slash fa-2x icon-dark link-delete" th:userId="${user.id}"
+                       th:href="@{'/users/delete/' + ${user.id}}" title="Delete this user"></a>
+                </div>
+            </div>
+
+            <div>&nbsp;</div>
+        </div>
     </div>
 
     <div class="text-center m-1" th:if="${totalItems > 0}">
@@ -147,7 +121,7 @@
     </div>
     <div th:if="${totalPages > 1}">
         <nav>
-            <ul class="pagination justify-content-center">
+            <ul class="pagination justify-content-center flex-wrap">
                 <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
                     <a th:replace="fragments :: page_link(1, 'First')"></a>
                 </li>
@@ -187,9 +161,7 @@
         </div>
     </div>
 
-    <div class="text-center">
-        <p>eShop Control Panel - Copyright &copy; Shopme</p>
-    </div>
+    <div th:replace="fragments :: footer"> </div>
 
 </div>
 <script type="text/javascript">
