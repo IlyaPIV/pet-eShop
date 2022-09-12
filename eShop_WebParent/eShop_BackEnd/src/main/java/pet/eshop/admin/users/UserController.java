@@ -13,9 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pet.eshop.admin.users.export.UserCsvExporter;
+import pet.eshop.admin.users.export.UserExcelExporter;
+import pet.eshop.admin.users.export.UserPdfExporter;
 import pet.eshop.admin.util.FileUploadUtil;
 import pet.eshop.common.entity.User;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -143,5 +147,26 @@ public class UserController {
         redirectAttributes.addFlashAttribute("message", message);
 
         return "redirect:/users";
+    }
+
+    @GetMapping("/users/export/csv")
+    public void exportToCSV(HttpServletResponse response) throws IOException {
+        List<User> listUsers = service.listAll();
+        UserCsvExporter exporter = new UserCsvExporter();
+        exporter.export(listUsers, response);
+    }
+
+    @GetMapping("/users/export/excel")
+    public void exportToExcel(HttpServletResponse response) throws IOException {
+        List<User> listUsers = service.listAll();
+        UserExcelExporter exporter = new UserExcelExporter();
+        exporter.export(listUsers, response);
+    }
+
+    @GetMapping("/users/export/pdf")
+    public void exportToPDF(HttpServletResponse response) throws IOException {
+        List<User> listUsers = service.listAll();
+        UserPdfExporter exporter = new UserPdfExporter();
+        exporter.export(listUsers, response);
     }
 }

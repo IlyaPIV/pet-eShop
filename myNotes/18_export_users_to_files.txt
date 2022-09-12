@@ -1,0 +1,10 @@
+1. Добавили кнопки для экспорта информации о пользователях в разные форматы
+2. добавили новую зависимость super-csv в pom.xml модуля BackEnd (документация тут - super-csv.github.io)
+3. создали новый класс UserCsvExporter в пакете admin.users
+4. добавили в UserController маппинг для csv
+5. добавили новую зависимость poi-ooxml в pom.xml модуля BackEnd (документация тут - poi.apache.org/index.html)
+6. создали новый класс UserExcelExporter в пакете admin.users
+7. добавили в UserController маппинг для excel
+8. добавили новую зависимость openpdf в pom.xml модуля BackEnd (документация тут - github.com/LibrePDF/OpenPDF)
+9. создали новый класс UserPdfExporter в пакете admin.users
+10. добавили в UserController маппинг для pdf
