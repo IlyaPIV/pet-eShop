@@ -1,0 +1,11 @@
+1. Доработали WebSecurityConfig класс:
+1.1. переписали метод configure(WebSecurity web) для игнора модулем безопасности наших картинок и бутстрапа
+1.2. переписали метод configure(HttpSecurity http) для настроек окна авторизации
+2. Добавили в MainController маппинг на окно авторизации
+3. Создали и натсроили страницу login.html
+4. в пакете admin.security создали класс EShopUserDetails implements UserDetails
+5. переписали методы в этом классе
+6. в том же пакете добавили класс EShopUserDetailsService implements UserDetailsService
+7. добавили в WebSecurityConfig бин userDetailsService() и метод authenticationProvider()
+8. переписали метод configure(AuthenticationManagerBuilder auth)
+9. в entity классе User для ролей добавили Eager загрузку
