@@ -45,9 +45,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login")
-                .usernameParameter("email")                     // вместо логина для авторизации
-                .permitAll();
+                    .formLogin().loginPage("/login")
+                    .usernameParameter("email")                     // вместо логина для авторизации
+                    .permitAll()
+                .and().logout().permitAll();
     }
 
     @Override

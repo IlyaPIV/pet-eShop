@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:replace="fragments :: page_head('Home - eShop Admin')"></head>
 <body>
 <div class="container-fluid">
+
     <div th:replace="navigationMenu :: menu"></div>
 
     <div>
@@ -13,5 +15,13 @@
     <div th:replace="fragments :: footer"> </div>
 
 </div>
+<script type="text/javascript">
+    $(document).ready(function (){
+       $("#logoutLink").on("click", function (e) {
+          e.preventDefault();
+          document.logoutForm.submit();
+       });
+    });
+</script>
 </body>
 </html>

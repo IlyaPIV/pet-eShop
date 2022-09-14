@@ -1,0 +1,9 @@
+1. Добавили в pom.xml модуля WebParent зависимость thymeleaf-extras-springsecurity5
+2. в index.html добавили xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" (и в fragments.html)
+3. добавили в html иконку пользователя в меню навигации
+4. в классе EShopUserDetails добавили метод возвращающий Full Name пользователя
+5. добавили в html ссылку со значением полного имени пользователя
+6. добавили в html блок меню скрытый элемент logoutForm
+7. в index.html добавили javascript для нажатия кнопки Logout
+8. добавили в классе WebSecurityConfig в методе configure(HttpSecurity http) права на logout
+9. на форме login.html добавили секцию вывода сообщения при logout

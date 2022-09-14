@@ -15,8 +15,7 @@ public class EShopUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.getUserByEmail(email);
-        System.out.println(email);
-        System.out.println(user);
+
         if (user != null) {
             return new EShopUserDetails(user);
         }
