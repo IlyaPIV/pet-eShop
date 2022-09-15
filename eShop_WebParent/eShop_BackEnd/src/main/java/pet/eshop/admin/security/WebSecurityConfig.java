@@ -48,7 +48,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .formLogin().loginPage("/login")
                     .usernameParameter("email")                     // вместо логина для авторизации
                     .permitAll()
-                .and().logout().permitAll();
+                .and().logout().permitAll()                         // для логаута
+                .and().rememberMe()                                 // включаем возможность "remember me"
+                    .key("AbcDefgHijklmNOprs_1234567890")           // теперь cookies сохраняются при рестарте приложения
+                        .tokenValiditySeconds(7 * 24 * 60 * 60);    // время жизни cookies
     }
 
     @Override
