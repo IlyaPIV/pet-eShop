@@ -1,0 +1,12 @@
+1. добавили ссылку в имя пользователя в меню
+2. добавили js скрипт в общий шаблон - function customizeDropDownMenu()
+3. в UserService добавили метод поиска по емейлу - User getByEmail(String email)
+4. с пакете admin.users добавили контроллер AccountController
+5. добавили в него обработчик перехода по "/account" - viewDetails
+6. на основе user_form.html создали account_form.html
+7. убрали лишние и добавили новые элементы на форму
+8. добавили js функцию валидации подтверждения пароля
+9. добавили в UserService метод для обновления аккаунта пользователя - User updateAccount(User userInForm)
+10. добавили в AccountController метод маппинга для /account/update - updateAccount
+11. в EShopUserDetails добавили методы обновления имени пользователя
+12.
