@@ -9,7 +9,9 @@
     <div th:replace="navigationMenu :: menu"></div>
 
     <div>
-        <h1>Welcome to eShop Admin Control Panel</h1>
+        <h2>Welcome to eShop Admin Control Panel</h2>
+        Welcome <a th:href="@{/account}" sec:authentication="principal.fullName"></a>
+        <span sec:authentication="principal.authorities"></span> !!!
     </div>
 
     <div th:replace="fragments :: footer"> </div>
