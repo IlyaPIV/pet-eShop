@@ -1,4 +1,4 @@
-package pet.eshop.admin.users;
+package pet.eshop.admin.users.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pet.eshop.admin.security.EShopUserDetails;
+import pet.eshop.admin.users.UserService;
 import pet.eshop.admin.util.FileUploadUtil;
 import pet.eshop.common.entity.User;
 
@@ -29,7 +30,7 @@ public class AccountController {
         User user = service.getByEmail(email);
         model.addAttribute("user", user);
 
-        return "account_form";
+        return "users/account_form";
     }
 
     @PostMapping("/account/update")

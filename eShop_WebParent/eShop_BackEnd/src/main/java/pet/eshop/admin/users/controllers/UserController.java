@@ -1,4 +1,4 @@
-package pet.eshop.admin.users;
+package pet.eshop.admin.users.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pet.eshop.admin.users.UserNotFoundException;
+import pet.eshop.admin.users.UserService;
 import pet.eshop.admin.users.export.UserCsvExporter;
 import pet.eshop.admin.users.export.UserExcelExporter;
 import pet.eshop.admin.users.export.UserPdfExporter;
@@ -49,7 +51,7 @@ public class UserController {
         Page<User> page = service.listByPage(pageNum, sortField, sortDir, keyword);
         List<User> listUsers = page.getContent();
 
-        long startCount = (pageNum - 1) * UserService.USERS_PER_PAGE + 1;
+        long startCount = (long) (pageNum - 1) * UserService.USERS_PER_PAGE + 1;
         long endCount = startCount + UserService.USERS_PER_PAGE - 1;
         if (endCount > page.getTotalElements()) {
             endCount = page.getTotalElements();
@@ -68,7 +70,7 @@ public class UserController {
         model.addAttribute("reverseSortDir", reverseSortDir);
         model.addAttribute("keyword", keyword);
 
-        return "users";
+        return "users/users";
     }
 
     @GetMapping("/users/new")
@@ -78,7 +80,7 @@ public class UserController {
         model.addAttribute("user", newUser);
         model.addAttribute("listRoles", service.listRoles());
         model.addAttribute("pageTitle", "Create new user");
-        return "user_form";
+        return "users/user_form";
     }
 
     @PostMapping("/users/save")
@@ -117,7 +119,7 @@ public class UserController {
             model.addAttribute("user", user);
             model.addAttribute("listRoles", service.listRoles());
             model.addAttribute("pageTitle", "Edit user (ID: " + id + ")");
-            return "user_form";
+            return "users/user_form";
         } catch (UserNotFoundException ex) {
             redirectAttributes.addFlashAttribute("message", ex.getMessage());
             return "redirect:/users";
