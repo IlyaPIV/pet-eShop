@@ -1,0 +1,7 @@
+1. добавить настройки Spring Security (в WebSecurityConfig) по правам для работы с категориями (только админ и эдитор)
+2. создали CategoryService
+3. создали CategoryController и настроили @GetMapping("/categories")
+4. создали categories.html
+5. создали category_form.html
+6. в CategoryController настроили @GetMapping("categories/new")
+7. в CategoryService
