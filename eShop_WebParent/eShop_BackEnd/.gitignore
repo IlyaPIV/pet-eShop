@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 /user-photos/
 /src/main/resources/static/images/samples/
+*.log
 
 ### STS ###
 .apt_generated

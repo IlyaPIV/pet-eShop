@@ -1,0 +1,2 @@
+1. ввели настройки в application.properties
+2. добавили Logger в класс FileUploadUtil переписав вывод сообщений об ошибке
