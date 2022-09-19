@@ -4,4 +4,5 @@
 4. создали categories.html
 5. создали category_form.html
 6. в CategoryController настроили @GetMapping("categories/new")
-7. в CategoryService
+7. в CategoryService добавили метод получения иерархического списка - List<Category> listCategoriesUsedInForm()
+8. в контроллере добавили передачу иерархического списка на форму одиночного элемента

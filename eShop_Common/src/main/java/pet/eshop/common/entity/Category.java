@@ -39,6 +39,11 @@ public class Category {
         this.id = id;
     }
 
+    public Category(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Category(String name) {
         this.name   = name;
         this.alias  = name;
@@ -113,4 +118,12 @@ public class Category {
     /*
     * МЕТОДЫ
      */
+
+    public static Category copyIdAndName(Integer id, String name){
+        Category catCopy= new Category();
+        catCopy.setName(name);
+        catCopy.setId(id);
+
+        return catCopy;
+    }
 }

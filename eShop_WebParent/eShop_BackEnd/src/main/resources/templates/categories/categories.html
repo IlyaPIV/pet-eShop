@@ -6,15 +6,15 @@
   <div class="container-fluid">
     <div th:replace="navigationMenu :: menu"></div>
 
-    <div th:if="${message != null}" class="alert alert-success text-center">
-      [[${message}]]
-    </div>
-
     <div>
       <h2>Manage Categories</h2>
       <a th:href="@{/categories/new}" class="fas fa-solid fa-folder-plus fa-2x icon-dark mr-2" title="Add new category"></a>
       &nbsp;
       <a th:href="@{/categories/export/csv}" class="fa-solid fa-file-csv fa-2x icon-dark mr-2 ml-2" title="Export to CSV"></a>
+    </div>
+
+    <div th:if="${message != null}" class="alert alert-success text-center">
+      [[${message}]]
     </div>
 
     <div>

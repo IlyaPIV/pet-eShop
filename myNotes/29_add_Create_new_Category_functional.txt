@@ -1,0 +1,4 @@
+1. добавили в CategoryService метод вызова save()
+2. добавили в CategoryController метод для перехвата @PostMapping("/categories/save")
+3. доработали форму category_form.html
+4.

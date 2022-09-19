@@ -34,11 +34,11 @@ public class CategoryService {
 
         for (Category category : categoriesInDB) {
             if (category.getParent() == null) {
-                categoriesUsedInForm.add(new Category(category.getName()));
+                categoriesUsedInForm.add(Category.copyIdAndName(category.getId(), category.getName()));
 
                 Set<Category> children = category.getChildren();
                 for (Category subCategory : children) {
-                    categoriesUsedInForm.add(new Category("--" + subCategory.getName()));
+                    categoriesUsedInForm.add(Category.copyIdAndName(subCategory.getId(),"--" + subCategory.getName()));
                     listChildrenCat(subCategory, 1, categoriesUsedInForm);
                 }
             }
@@ -55,10 +55,13 @@ public class CategoryService {
             for (int i = 0; i < curLevel; i++) {
                 prefix.append("--");
             }
-            categoriesUsedInForm.add(new Category(prefix + subCategory.getName()));
+            categoriesUsedInForm.add(Category.copyIdAndName(subCategory.getId(),prefix + subCategory.getName()));
             listChildrenCat(subCategory, curLevel, categoriesUsedInForm);
         }
     }
 
+    public Category save(Category category) {
+        return repo.save(category);
+    }
 
 }
