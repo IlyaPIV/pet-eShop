@@ -29,7 +29,7 @@ public class Category {
     private Set<Category> children = new HashSet<>();
 
     /*
-    * КОНСТРУКТОРЫ
+     * КОНСТРУКТОРЫ
      */
 
     public Category() {
@@ -45,9 +45,9 @@ public class Category {
     }
 
     public Category(String name) {
-        this.name   = name;
-        this.alias  = name;
-        this.image  = "default.png";
+        this.name = name;
+        this.alias = name;
+        this.image = "default.png";
     }
 
     public Category(String name, Category parent) {
@@ -115,15 +115,40 @@ public class Category {
         this.children = children;
     }
 
+
     /*
-    * МЕТОДЫ
+     * МЕТОДЫ
      */
 
-    public static Category copyIdAndName(Integer id, String name){
-        Category catCopy= new Category();
+    public static Category copyIdAndName(Integer id, String name) {
+        Category catCopy = new Category();
         catCopy.setName(name);
         catCopy.setId(id);
 
         return catCopy;
     }
+
+    public static Category copyFull(Category category) {
+        Category catCopy = new Category();
+        catCopy.setName(category.getName());
+        catCopy.setId(category.getId());
+        catCopy.setImage(category.getImage());
+        catCopy.setEnabled(category.isEnabled());
+        catCopy.setAlias(category.getAlias());
+
+        return catCopy;
+    }
+
+    public static Category copyFull(Category category, String prefix) {
+        Category catCopy = copyFull(category);
+        catCopy.setName(prefix + category.getName());
+
+        return catCopy;
+    }
+
+    @Transient
+    public String getImagePath(){
+        return "/category-images/" + this.id + "/" + this.image;
+    }
+
 }

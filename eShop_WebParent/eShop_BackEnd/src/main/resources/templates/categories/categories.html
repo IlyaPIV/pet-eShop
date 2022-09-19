@@ -55,7 +55,9 @@
             <td class="hideable-column">[[${category.id}]]</td>
             <td>
 <!--              <span th:if="${category.image == null}" class="fa-regular fa-folder-open fa-3x icon-silver"></span>-->
-              <span class="fa-regular fa-folder-open fa-3x icon-silver"></span>
+              <img th:if="${category.image != 'default.png'}" th:src="@{${category.imagePath}}"
+                   style="width: 100px" class="img-fluid"/>
+              <span th:if="${category.image == 'default.png'}" class="fa-regular fa-folder-open fa-3x icon-silver"></span>
             </td>
             <td>[[${category.name}]]</td>
             <td>[[${category.alias}]]</td>

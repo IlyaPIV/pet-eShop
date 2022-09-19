@@ -1,7 +1,6 @@
 package pet.eshop.admin.categories;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pet.eshop.common.entity.Category;
 
@@ -18,13 +17,43 @@ public class CategoryService {
     private CategoryRepository repo;
 
     public List<Category> listAll() {
-        return (List<Category>) repo.findAll();
+//       return (List<Category>) repo.findAll();
+        List<Category> rootCategories = repo.findRootCategories();
+        return listHierarchicalCategories(rootCategories);
     }
 
-    public List<Category> listCategories(String sortField, String sortDir, String keyword){
-//        Sort sort = Sort.by(sortField);
-//        sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
-        return (List<Category>) repo.findAll(keyword);
+    /*
+    * добавляет в список поочерёдно категории верхнего уровня, при этом вызывая заполнение вложенных в него категорий
+     */
+    private List<Category> listHierarchicalCategories(List<Category> rootCategories){
+        List<Category> hierarchicalCategories = new ArrayList<>();
+
+        for (Category rootCat: rootCategories) {
+            hierarchicalCategories.add(Category.copyFull(rootCat));
+
+            Set<Category> children = rootCat.getChildren();
+            for (Category child: children) {
+                hierarchicalCategories.add(Category.copyFull(child, "-- "));
+
+                listSubHierarchicalCategories(hierarchicalCategories, child, 1);
+            }
+        }
+
+        return hierarchicalCategories;
+    }
+
+    /*
+    * рекурсивное заполнение категорий в глубину иерархии
+     */
+    private void listSubHierarchicalCategories(List<Category> hierarchicalCategories, Category parent, int subLevel){
+        int curLevel = subLevel + 1;
+        Set<Category> children = parent.getChildren();
+        for (Category subCategory : children) {
+            String prefix = "--".repeat(Math.max(0, curLevel)) +
+                    " ";
+            hierarchicalCategories.add(Category.copyFull(subCategory, prefix));
+            listSubHierarchicalCategories(hierarchicalCategories, subCategory, curLevel);
+        }
     }
 
     public List<Category> listCategoriesUsedInForm(){
@@ -38,8 +67,8 @@ public class CategoryService {
 
                 Set<Category> children = category.getChildren();
                 for (Category subCategory : children) {
-                    categoriesUsedInForm.add(Category.copyIdAndName(subCategory.getId(),"--" + subCategory.getName()));
-                    listChildrenCat(subCategory, 1, categoriesUsedInForm);
+                    categoriesUsedInForm.add(Category.copyIdAndName(subCategory.getId(),"-- " + subCategory.getName()));
+                    listSubCategoriesUsedInForm(subCategory, 1, categoriesUsedInForm);
                 }
             }
         }
@@ -47,16 +76,14 @@ public class CategoryService {
         return categoriesUsedInForm;
     }
 
-    private void listChildrenCat(Category parent, int subLevel, List<Category> categoriesUsedInForm){
+    private void listSubCategoriesUsedInForm(Category parent, int subLevel, List<Category> categoriesUsedInForm){
         int curLevel = subLevel + 1;
         Set<Category> children = parent.getChildren();
         for (Category subCategory : children) {
-            StringBuilder prefix = new StringBuilder();
-            for (int i = 0; i < curLevel; i++) {
-                prefix.append("--");
-            }
-            categoriesUsedInForm.add(Category.copyIdAndName(subCategory.getId(),prefix + subCategory.getName()));
-            listChildrenCat(subCategory, curLevel, categoriesUsedInForm);
+            String prefix = "--".repeat(Math.max(0, curLevel)) +
+                    " ";
+            categoriesUsedInForm.add(Category.copyIdAndName(subCategory.getId(), prefix + subCategory.getName()));
+            listSubCategoriesUsedInForm(subCategory, curLevel, categoriesUsedInForm);
         }
     }
 

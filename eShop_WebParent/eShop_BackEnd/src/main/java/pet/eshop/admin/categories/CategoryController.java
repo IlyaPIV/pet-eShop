@@ -24,30 +24,11 @@ public class CategoryController {
     @GetMapping("/categories")
     public String listFirstPage(Model model){
 
-//      return listWithSort(model, "id", "asc", null);
-
         List<Category> listCategories = service.listAll();
         model.addAttribute("listCategories", listCategories);
         model.addAttribute("keyword", null);
         model.addAttribute("sortDir", null);
         model.addAttribute("sortField", null);
-
-        return "categories/categories";
-    }
-
-    //@GetMapping("/categories/page/{pageNum}")
-    public String listWithSort(Model model,
-                               String sortField, String sortDir, String keyword) { //@Param("имя_парам")
-
-        List<Category> listCategories = null;
-        if (keyword == null) listCategories = service.listAll();
-                else listCategories = service.listCategories(sortField, sortDir, keyword);
-        System.out.println(listCategories);
-
-        model.addAttribute("listCategories", listCategories);
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("sortField", sortField);
 
         return "categories/categories";
     }

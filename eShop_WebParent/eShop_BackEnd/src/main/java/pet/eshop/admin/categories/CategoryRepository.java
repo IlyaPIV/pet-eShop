@@ -12,4 +12,7 @@ public interface CategoryRepository extends PagingAndSortingRepository<Category,
 
     @Query("SELECT c FROM Category c WHERE CONCAT(c.id, ' ', c.name, ' ', c.alias) LIKE %?1%")
     public List<Category> findAll(String keyword);
+
+    @Query("SELECT c FROM Category c WHERE c.parent.id is NULL")
+    public List<Category> findRootCategories();
 }
