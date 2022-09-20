@@ -1,0 +1,5 @@
+1. обновили CategoryRepository добавив сортировку в findRootCategories()
+2. добавили метод сортировки дочерних категорий в CategoryService - sortSubCategories(Set<Category> children)
+3. добавили на форму списка элементы для работы с сортировкой
+4. доработали Controller для работы с сортировкой
+5. доработали методы Service для работы с сортировкой

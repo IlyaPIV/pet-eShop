@@ -19,8 +19,6 @@
 
     <div>
       <form th:action="@{/categories}" class="form-inline m-3">
-        <input type="hidden" name="sortField" th:value="${sortField}">
-        <input type="hidden" name="sortDir" th:value="${sortDir}">
         Filter:&nbsp;
         <input type="search" name="keyword" class="form-control" th:value="${keyword}" required/>
         &nbsp;&nbsp;
@@ -38,15 +36,14 @@
       <table class="table table-bordered table-striped table-hover table-responsive-xl">
         <thead class="thead-dark">
           <tr>
-            <th class="hideable-column">
-              <th th:replace="fragments :: column_link('id', 'ID', 'tag')"></th>
-            </th>
+            <th>ID</th>
             <th>Category image</th>
-            <th th:replace="fragments :: column_link('name', 'Category name', 'none')"></th>
-            <th class="hideable-column">
-              <th th:replace="fragments :: column_link('alias', 'Alias', 'tag')"></th>
+            <th>
+              <a class="text-white" th:href="@{'/categories?sortDir=' + ${reverseSortDir}}">Category Name</a>
+              <span th:class="${reverseSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
             </th>
-            <th th:replace="fragments :: column_link('enabled', 'Enabled', 'none')"></th>
+            <th>Alias</th>
+            <th>Enabled</th>
             <th></th>
           </tr>
         </thead>
@@ -54,7 +51,6 @@
           <tr th:each="category : ${listCategories}">
             <td class="hideable-column">[[${category.id}]]</td>
             <td>
-<!--              <span th:if="${category.image == null}" class="fa-regular fa-folder-open fa-3x icon-silver"></span>-->
               <img th:if="${category.image != 'default.png'}" th:src="@{${category.imagePath}}"
                    style="width: 100px" class="img-fluid"/>
               <span th:if="${category.image == 'default.png'}" class="fa-regular fa-folder-open fa-3x icon-silver"></span>

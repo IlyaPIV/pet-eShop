@@ -1,6 +1,7 @@
 package pet.eshop.admin.categories;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -23,13 +24,17 @@ public class CategoryController {
     private CategoryService service;
 
     @GetMapping("/categories")
-    public String listFirstPage(Model model){
+    public String listFirstPage(@Param("sortDir") String sortDir, Model model){
 
-        List<Category> listCategories = service.listAll();
+        if (sortDir == null || sortDir.isEmpty()) {
+            sortDir = "asc";
+        }
+
+        List<Category> listCategories = service.listAll(sortDir);
+
         model.addAttribute("listCategories", listCategories);
         model.addAttribute("keyword", null);
-        model.addAttribute("sortDir", null);
-        model.addAttribute("sortField", null);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 
         return "categories/categories";
     }
