@@ -44,6 +44,11 @@ public class Category {
         this.name = name;
     }
 
+    public Category(Integer id, String name, String alias) {
+        this(id, name);
+        this.alias = alias;
+    }
+
     public Category(String name) {
         this.name = name;
         this.alias = name;

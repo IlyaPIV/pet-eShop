@@ -1,0 +1,8 @@
+1. добавили в Repo функции findByName(name) и findByAlias(name)
+2. добавили в Service функцию проверки уникальности checkUnique(name, alias)
+3. дорабивили класс для тестов Сервиса с Mockito
+4. написали тесты проверки для 6 случаев (3 для нового элемента, 3 для редактируемого)
+5. добавили класс CategoryRestController, добавили в него метод вызова проверки уникальности checkUnique(name, alias)
+6. на форме category_form.html добавили вызов проверки уникальности js: onsubmit="return checkUnique(this);"
+7. добавили скрипт function checkUnique(form);
+8. доработали вывод модального информ сообщения в случае неуникальности
