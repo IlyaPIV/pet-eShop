@@ -7,6 +7,7 @@ import pet.eshop.common.entity.Category;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 @Service
@@ -89,6 +90,14 @@ public class CategoryService {
 
     public Category save(Category category) {
         return repo.save(category);
+    }
+
+    public Category get(Integer id) throws CategoryNotFoundException {
+        try {
+            return repo.findById(id).get();
+        } catch (NoSuchElementException ex) {
+            throw new CategoryNotFoundException("Could not find any category with ID " + id);
+        }
     }
 
 }

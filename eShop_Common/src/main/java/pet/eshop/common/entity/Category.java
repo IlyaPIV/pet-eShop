@@ -148,7 +148,8 @@ public class Category {
 
     @Transient
     public String getImagePath(){
-        return "/category-images/" + this.id + "/" + this.image;
+        if (id == null || image.equals("default.png")) return "/images/image-thumbnail.png";
+            else return "/category-images/" + this.id + "/" + this.image;
     }
 
 }

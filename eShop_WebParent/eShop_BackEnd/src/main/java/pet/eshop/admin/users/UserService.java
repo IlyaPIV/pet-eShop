@@ -107,7 +107,6 @@ public class UserService {
         } catch (NoSuchElementException ex) {
             throw new UserNotFoundException("Could not find any user with ID " + id);
         }
-
     }
 
     public User getByEmail(String email) {
