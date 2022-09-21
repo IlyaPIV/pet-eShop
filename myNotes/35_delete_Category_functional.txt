@@ -1,0 +1,5 @@
+1. в Category бин добавили @Transient метод hasChildren
+2. на форме списка настроили иконку удаления только для тех, у кого нет дочерних директорий
+3. добавили в контроллер маппинг  @GetMapping("/categories/delete/{id}")
+4. добавили в сервис метод void delete(Integer id)
+5. добавили в Репозиторий метод countById(Integer id)

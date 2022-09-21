@@ -147,6 +147,7 @@ public class Category {
     public static Category copyFull(Category category, String prefix) {
         Category catCopy = copyFull(category);
         catCopy.setName(prefix + category.getName());
+        catCopy.setHasChildren(!category.getChildren().isEmpty());
 
         return catCopy;
     }
@@ -155,6 +156,17 @@ public class Category {
     public String getImagePath(){
         if (id == null || image.equals("default.png")) return "/images/image-thumbnail.png";
             else return "/category-images/" + this.id + "/" + this.image;
+    }
+
+    @Transient
+    public boolean hasChildren;
+
+    public boolean isHasChildren(){
+        return hasChildren;
+    }
+
+    public void setHasChildren(boolean hasChildren){
+        this.hasChildren = hasChildren;
     }
 
 }
