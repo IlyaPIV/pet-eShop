@@ -1,0 +1,4 @@
+1. доработали форму categories.html добавив гиперссылки для переключения статуса
+2. добавили в контроллер маппинг для @GetMapping("/categories/{id}/enabled/{status}")
+3. добавили метод изменения статуса в Service - void updateCategoryEnabledStatus(Integer id, boolean enabled)
+4. добавили метод в Repository

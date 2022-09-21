@@ -59,11 +59,9 @@
             <td>[[${category.alias}]]</td>
             <td>
               <a th:if="${category.enabled == true}" class="fa-solid fa-toggle-on fa-2x icon-green"
-                  title="Disable category"></a>
-<!--                 th:href="@{'/users/' + ${user.id} + '/enabled/false'}" title="Disable user"></a>-->
+                  th:href="@{'/categories/' + ${category.id} + '/enabled/false'}" title="Disable category"></a>
               <a th:if="${category.enabled != true}" class="fa-solid fa-toggle-off fa-2x icon-red"
-                 title="Enable category"></a>
-<!--                 th:href="@{'/users/' + ${user.id} + '/enabled/true'}" title="Enable user"></a>-->
+                 th:href="@{'/categories/' + ${category.id} + '/enabled/true'}" title="Enable category"></a>
             </td>
             <td>
               <a class="fas fa-edit fa-2x icon-green"

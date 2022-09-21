@@ -73,7 +73,6 @@ public class CategoryController {
 
     @GetMapping("/categories/edit/{id}")
     public String editCategory(@PathVariable(name = "id") Integer id, Model model, RedirectAttributes redirectAttributes){
-
         try {
             Category cat = service.get(id);
             model.addAttribute("category", cat);
@@ -88,6 +87,18 @@ public class CategoryController {
             redirectAttributes.addFlashAttribute("message", ex.getMessage());
             return "redirect:/categories";
         }
-
     }
+
+    @GetMapping("/categories/{id}/enabled/{status}")
+    public String updateCategoryEnabledStatus(@PathVariable(name = "id") Integer id,
+                                              @PathVariable(name = "status") boolean enabled,
+                                              RedirectAttributes redirectAttributes) {
+        service.updateCategoryEnabledStatus(id, enabled);
+        String status = enabled ? "enabled" : "disabled";
+        String message = "The Category ID " + id + " has been " + status;
+        redirectAttributes.addFlashAttribute("message", message);
+
+        return "redirect:/categories";
+    }
+
 }

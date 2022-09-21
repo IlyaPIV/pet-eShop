@@ -1,6 +1,7 @@
 package pet.eshop.admin.categories;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
@@ -26,4 +27,8 @@ public interface CategoryRepository extends PagingAndSortingRepository<Category,
     public Category findByName(String name);
 
     public Category findByAlias(String alias);
+
+    @Modifying
+    @Query("UPDATE Category c SET c.enabled = ?2 WHERE c.id = ?1")
+    void updateEnabledStatus(Integer id, boolean enabled);
 }

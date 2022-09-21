@@ -154,5 +154,8 @@ public class CategoryService {
         return "OK";
     }
 
+    public void updateCategoryEnabledStatus(Integer id, boolean enabled) {
+        repo.updateEnabledStatus(id, enabled);
+    }
 
 }
