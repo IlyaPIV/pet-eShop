@@ -7,8 +7,8 @@ This is my repeating and combination of materials from 6 courses:
 - "Spring Boot E-Commerce Ultimate Course" by Nam Ha Minh on Udemy platform.
 
 Used tehnologies:
-DataBase: MySQL + Spring Data JPA with Hybernate
-BackEnd: Spring Boot, Spring REST 
-FrontEnd: HTML/CSS, Bootstrap, FontAwesome, Thymeleaf, jQuery
-Tests: Spring Tests, Mockito
-Authentication & Autorization: Spring Security
+- DataBase: MySQL + Spring Data JPA with Hybernate;
+- BackEnd: Spring Boot, Spring REST;
+- FrontEnd: HTML/CSS, Bootstrap, FontAwesome, Thymeleaf, jQuery;
+- Tests: Spring Tests, Mockito;
+- Authentication & Autorization: Spring Security.
