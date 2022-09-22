@@ -1,0 +1,7 @@
+1. В репозиторий добавили метод public List<Category> findRootCategories(Pageable pageable);
+2. в сервис добавили константу ROOT_CATEGORIES_PER_PAGE
+3. в сервисе добавили метод public List<Category> listByPage(int pageNum, String sortDir)
+4. в контроллер добавили маппинг для  @GetMapping("/categories/page/{pageNum}")
+5. в контроллере изменили listFirstPage() для вызова нового метода - вызывает 1ую страницу
+6. в пакет добавили простой класс CategoryPageInfo
+7. добавили на форму списка кнопки управления страницами

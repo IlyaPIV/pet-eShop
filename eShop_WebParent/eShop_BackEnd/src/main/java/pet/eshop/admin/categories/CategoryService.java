@@ -1,6 +1,9 @@
 package pet.eshop.admin.categories;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pet.eshop.common.entity.Category;
@@ -11,6 +14,8 @@ import java.util.*;
 @Service
 @Transactional
 public class CategoryService {
+
+    private static final int ROOT_CATEGORIES_PER_PAGE = 4;
 
     @Autowired
     private CategoryRepository repo;
@@ -27,6 +32,25 @@ public class CategoryService {
         List<Category> rootCategories = repo.findRootCategories(sort);
 
         return listHierarchicalCategories(rootCategories, sortDir);
+    }
+
+    public List<Category> listByPage(CategoryPageInfo pageInfo, int pageNum, String sortDir) {
+        Sort sort = Sort.by("name");
+
+        if (sortDir.equals("asc")) {
+            sort = sort.ascending();
+        } else if (sortDir.equals("desc")){
+            sort = sort.descending();
+        }
+
+        Pageable pageable = PageRequest.of(pageNum -1, ROOT_CATEGORIES_PER_PAGE, sort);
+
+        Page<Category> pageCategories = repo.findRootCategories(pageable);
+
+        pageInfo.setTotalElements(pageCategories.getTotalElements());
+        pageInfo.setTotalPages(pageCategories.getTotalPages());
+
+        return listHierarchicalCategories(pageCategories.getContent(), sortDir);
     }
 
     /*
