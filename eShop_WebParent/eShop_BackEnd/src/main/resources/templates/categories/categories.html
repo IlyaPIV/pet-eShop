@@ -17,20 +17,7 @@
       [[${message}]]
     </div>
 
-    <div>
-      <form th:action="@{/categories}" class="form-inline m-3">
-        Filter:&nbsp;
-        <input type="search" name="keyword" class="form-control" th:value="${keyword}" required/>
-        &nbsp;&nbsp;
-        <button type="submit" class="btn btn-primary">
-          <i class="fas fa-search"></i>
-        </button>
-        &nbsp;&nbsp;
-        <button type="button" class="btn btn-secondary" onclick="clearFilter()">
-          <i class="fas fa-delete-left"></i>
-        </button>
-      </form>
-    </div>
+    <div th:replace="fragments :: search_form('/categories/page/1')"></div>
 
     <div class="full-details">
       <table class="table table-bordered table-striped table-hover table-responsive-xl">
@@ -39,7 +26,8 @@
             <th>ID</th>
             <th>Category image</th>
             <th>
-              <a class="text-white" th:href="@{'/categories/page/' + ${pageNum} + '?sortDir=' + ${reverseSortDir}}">Category Name</a>
+              <a class="text-white" th:href="@{'/categories/page/' + ${pageNum} + '?sortDir=' + ${reverseSortDir}
+                                              + ${keyword != null ? '&keyword=' + keyword : ''}}">Category Name</a>
               <span th:class="${reverseSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
             </th>
             <th>Alias</th>
@@ -77,7 +65,13 @@
 
     <div th:replace="modal_fragments :: modal_confirmation('Delete Confirmation')"></div>
 
-    <div th:replace="fragments :: pagination('/categories', 'Top-Level Categories')"></div>
+    <div th:if="${keyword != null}" class="text-center">
+      <span>Search result does not show categories in hierarchical form</span>
+      <div th:replace="fragments :: pagination('/categories', 'Categories')"></div>
+    </div>
+    <th:block th:unless="${keyword != null}">
+      <div th:replace="fragments :: pagination('/categories', 'Top-Level Categories')"></div>
+    </th:block>
 
     <div th:replace="fragments :: footer"></div>
 

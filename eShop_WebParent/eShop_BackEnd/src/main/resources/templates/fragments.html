@@ -30,6 +30,25 @@
               th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
     </th>
 
+    <div th:fragment="search_form(moduleURL)">
+        <form th:action="@{${moduleURL}}" class="form-inline m-3">
+            <input type="hidden" name="sortField" th:value="${sortField}"/>
+            <input type="hidden" name="sortDir" th:value="${sortDir}"/>
+            <label>
+                Filter:&nbsp;
+                <input type="search" name="keyword" class="form-control" th:value="${keyword}" required/>
+            </label>
+            &nbsp;&nbsp;
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search"></i>
+            </button>
+            &nbsp;&nbsp;
+            <button type="button" class="btn btn-secondary" onclick="clearFilter()">
+                <i class="fas fa-delete-left"></i>
+            </button>
+        </form>
+    </div>
+
     <a th:fragment="page_link(moduleURL, pageNum, label)" class="page-link"
             th:href="@{${moduleURL} + '/page/' + ${pageNum}
                             + '?sortField=' + ${sortField}
@@ -39,7 +58,7 @@
     <div th:fragment="pagination(moduleURL, entityName)" th:remove="tag">
 
         <div class="text-center m-1" th:if="${totalItems > 0}">
-            <span>Showing [[${entityName}]] № [[${endCount}]] of [[${totalItems}]]</span>
+            <span>Showing [[${entityName}]]  #[[${startCount}]] - #[[${endCount}]] of [[${totalItems}]]</span>
         </div>
         <div class="text-center m-1" th:unless="${totalItems > 0}">
             <span>No [[${entityName}]] found</span>

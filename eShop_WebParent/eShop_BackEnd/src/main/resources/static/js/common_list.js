@@ -1,5 +1,6 @@
-function clearFilter(){
-    window.location = moduleURL;
+function clearFilter(linkURL){
+    // window.location = moduleURL;
+    window.location = linkURL;
 }
 
 function showDeleteConfirmModal(link, entityName){

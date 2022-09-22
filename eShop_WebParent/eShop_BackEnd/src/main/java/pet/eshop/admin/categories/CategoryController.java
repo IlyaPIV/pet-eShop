@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pet.eshop.admin.users.UserService;
 import pet.eshop.admin.util.FileUploadUtil;
 import pet.eshop.common.entity.Category;
 
@@ -37,27 +38,38 @@ public class CategoryController {
 //        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 //
 //        return "categories/categories";
-        return listByPage(1, sortDir, model);
+        return listByPage(1, sortDir,null, model);
     }
 
     @GetMapping("/categories/page/{pageNum}")
-    public String listByPage(@PathVariable(name = "pageNum") int pageNum, @Param("sortDir") String sortDir,
+    public String listByPage(@PathVariable(name = "pageNum") int pageNum,
+                             @Param("sortDir") String sortDir,
+                             @Param("keyword") String keyword,
                                     Model model){
         if (sortDir == null || sortDir.isEmpty()) {
             sortDir = "asc";
         }
 
         CategoryPageInfo pageInfo = new CategoryPageInfo(0 , 0);
-        List<Category> listCategories = service.listByPage(pageInfo, pageNum, sortDir);
+        List<Category> listCategories = service.listByPage(pageInfo, pageNum, sortDir, keyword);
+
+        long startCount = (long) (pageNum - 1) * CategoryService.ROOT_CATEGORIES_PER_PAGE + 1;
+        long endCount = startCount + CategoryService.ROOT_CATEGORIES_PER_PAGE - 1;
+        if (endCount > pageInfo.getTotalElements()) {
+            endCount = pageInfo.getTotalElements();
+        }
+
 
         model.addAttribute("listCategories", listCategories);
-        model.addAttribute("keyword", null);
+        model.addAttribute("keyword", keyword);
         model.addAttribute("sortField", "name");
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("totalItems", pageInfo.getTotalElements());
         model.addAttribute("totalPages", pageInfo.getTotalPages());
         model.addAttribute("currentPage", pageNum);
+        model.addAttribute("startCount", startCount);
+        model.addAttribute("endCount", endCount);
 
         return "categories/categories";
 
