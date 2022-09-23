@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-public class CategoriesCsvExporter extends AbstractExporter {
+public class CategoryCsvExporter extends AbstractExporter {
 
     public void export(List<Category> categoryList, HttpServletResponse response) throws IOException {
 

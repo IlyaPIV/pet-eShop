@@ -147,7 +147,7 @@ public class CategoryController {
     @GetMapping("/categories/export/csv")
     public void exportToCSV(HttpServletResponse response) throws IOException {
         List<Category> listCategories = service.listCategoriesUsedInForm();
-        CategoriesCsvExporter exporter = new CategoriesCsvExporter();
+        CategoryCsvExporter exporter = new CategoryCsvExporter();
         exporter.export(listCategories, response);
     }
 

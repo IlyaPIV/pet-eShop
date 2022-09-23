@@ -125,6 +125,16 @@ public class Category {
      * МЕТОДЫ
      */
 
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", enabled=" + enabled +
+                ", parent=" + parent +
+                '}';
+    }
+
     public static Category copyIdAndName(Integer id, String name) {
         Category catCopy = new Category();
         catCopy.setName(name);
