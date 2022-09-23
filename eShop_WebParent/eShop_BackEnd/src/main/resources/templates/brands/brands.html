@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('Brands - eShop Admin')"></head>
+<body>
+    <div class="container-fluid">
+        <div th:replace="navigationMenu :: menu"></div>
+
+        <div>
+            <h2>Manage Brands</h2>
+            <a th:href="@{/brands/new}" class="fas fa-solid fa-user-plus fa-2x icon-dark mr-2" title="Add new Brand"></a>
+            &nbsp;
+            <a th:href="@{/brands/export/csv}" class="fa-solid fa-file-csv fa-2x icon-dark mr-2 ml-2" title="Export to CSV"></a>
+        </div>
+
+        <div th:replace="fragments :: search_form_and_message">  </div>
+
+        <div class="full-details">
+            <table class="table table-bordered table-striped table-hover table-responsive-xl">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Brand ID</th>
+                    <th>Logo</th>
+                    <th>Brand Name</th>
+                    <th>Categories</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="brand : ${listBrands}">
+                        <td>[[${brand.id}]]</td>
+                        <td></td>
+                        <td>[[${brand.name}]]</td>
+                        <td>
+                            <span th:each="cat : ${brand.getCategories()}" class="badge badge-secondary mr-1">[[${cat.name}]]</span>
+                        </td>
+                        <td>
+                            <a th:replace="fragments :: entity_edit('/brands/edit/' + ${brand.id}, 'Brand')"></a>
+                            &nbsp;
+                            <a th:replace="fragments :: entity_delete('/brands/delete/' + ${brand.id}, 'Brand', ${brand.id})"></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="less-details">
+
+        </div>
+
+        <div th:replace="modal_fragments :: modal_confirmation('Delete Confirmation')"></div>
+
+        <div th:replace="fragments :: footer"> </div>
+
+    </div>
+<script type="text/javascript">
+        $(document).ready(function (){
+            $(".link-delete").on("click", function (e){
+                e.preventDefault();
+                showDeleteConfirmModal($(this), 'brand');
+            });
+        });
+
+        function clearFilter(){
+            window.location = "[[@{/brands}]]"
+        }
+</script>
+<script th:src="@{/js/common_list.js}"></script>
+</body>
+</html>

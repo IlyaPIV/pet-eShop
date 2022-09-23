@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //http.authorizeRequests().anyRequest().permitAll();    //  позволяет логиниться минуя окно авторизации
         http.authorizeRequests()
                 .antMatchers("/users/**").hasAuthority("Admin")         // права авторизации
-                .antMatchers("/categories/**").hasAnyAuthority("Admin", "Editor")
+                .antMatchers("/categories/**" , "/brands/**").hasAnyAuthority("Admin", "Editor")
                 .anyRequest().authenticated()
                 .and()
                     .formLogin().loginPage("/login")
