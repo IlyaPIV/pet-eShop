@@ -31,13 +31,6 @@ public class UserController {
     @Autowired
     private UserService service;
 
-//    @GetMapping("/users")
-//    public String listAll(Model model){
-//        List<User> listUsers = service.listAll();
-//        model.addAttribute("listUsers", listUsers);
-//
-//        return "users";
-//    }
 
     @GetMapping("/users")
     public String listFirstPage(Model model){
@@ -69,6 +62,7 @@ public class UserController {
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", reverseSortDir);
         model.addAttribute("keyword", keyword);
+        model.addAttribute("moduleURL", "/users");
 
         return "users/users";
     }

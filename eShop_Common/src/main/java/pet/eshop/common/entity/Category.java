@@ -140,6 +140,7 @@ public class Category {
         catCopy.setImage(category.getImage());
         catCopy.setEnabled(category.isEnabled());
         catCopy.setAlias(category.getAlias());
+        catCopy.setHasChildren(!category.getChildren().isEmpty());
 
         return catCopy;
     }
@@ -147,7 +148,7 @@ public class Category {
     public static Category copyFull(Category category, String prefix) {
         Category catCopy = copyFull(category);
         catCopy.setName(prefix + category.getName());
-        catCopy.setHasChildren(!category.getChildren().isEmpty());
+
 
         return catCopy;
     }

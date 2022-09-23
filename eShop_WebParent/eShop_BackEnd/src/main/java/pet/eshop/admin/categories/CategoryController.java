@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import pet.eshop.admin.users.UserService;
 import pet.eshop.admin.util.FileUploadUtil;
 import pet.eshop.common.entity.Category;
 
@@ -28,17 +27,6 @@ public class CategoryController {
     @GetMapping("/categories")
     public String listFirstPage(@Param("sortDir") String sortDir, Model model){
 
-//        if (sortDir == null || sortDir.isEmpty()) {
-//            sortDir = "asc";
-//        }
-//
-//        List<Category> listCategories = service.listAll(sortDir);
-//
-//        model.addAttribute("listCategories", listCategories);
-//        model.addAttribute("keyword", null);
-//        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-//
-//        return "categories/categories";
         return listByPage(1, sortDir,null, model);
     }
 
@@ -71,6 +59,7 @@ public class CategoryController {
         model.addAttribute("currentPage", pageNum);
         model.addAttribute("startCount", startCount);
         model.addAttribute("endCount", endCount);
+        model.addAttribute("moduleURL", "/categories");
 
         return "categories/categories";
 

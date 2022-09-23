@@ -1,5 +1,4 @@
 function clearFilter(linkURL){
-    // window.location = moduleURL;
     window.location = linkURL;
 }
 
