@@ -1,0 +1,4 @@
+1. вынесли в общий пакет абстрактный класс AbstractExprorter, добавили в него параметр префикса для формирования имени
+1.2. отредактировали экспорт для пакета users
+2. добавили в пакет categories класс CategoriesCsvExporter extends AbstractExporter
+3. добавили в контроллер метод для маппинга @GetMapping("/categories/export/csv")

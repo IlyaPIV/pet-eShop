@@ -2,6 +2,7 @@ package pet.eshop.admin.users.export;
 
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.xssf.usermodel.*;
+import pet.eshop.admin.AbstractExporter;
 import pet.eshop.common.entity.User;
 
 import javax.servlet.ServletOutputStream;
@@ -9,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-public class UserExcelExporter extends AbstractExporter{
+public class UserExcelExporter extends AbstractExporter {
 
     private final XSSFWorkbook workbook;
     private final XSSFSheet sheet;
@@ -72,7 +73,7 @@ public class UserExcelExporter extends AbstractExporter{
         cell.setCellStyle(style);
     }
     public void export(List<User> listUsers, HttpServletResponse response) throws IOException {
-        super.setResponseHeader(response, "application/octet-stream", "xlsx");
+        super.setResponseHeader(response, "application/octet-stream", "xlsx", "users_");
 
         writeHeaderLine();
         writeDataLines(listUsers);

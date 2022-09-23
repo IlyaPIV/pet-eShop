@@ -15,6 +15,7 @@ import pet.eshop.admin.users.UserService;
 import pet.eshop.admin.util.FileUploadUtil;
 import pet.eshop.common.entity.Category;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -153,4 +154,12 @@ public class CategoryController {
 
         return "redirect:/categories";
     }
+
+    @GetMapping("/categories/export/csv")
+    public void exportToCSV(HttpServletResponse response) throws IOException {
+        List<Category> listCategories = service.listCategoriesUsedInForm();
+        CategoriesCsvExporter exporter = new CategoriesCsvExporter();
+        exporter.export(listCategories, response);
+    }
+
 }
