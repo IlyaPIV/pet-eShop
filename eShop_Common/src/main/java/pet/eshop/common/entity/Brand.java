@@ -106,4 +106,10 @@ public class Brand {
     public void addCategory(Category category){
         categories.add(category);
     }
+
+    @Transient
+    public String getLogoPath(){
+        if (id == null || logo.equals("brand-logo.png")) return "/images/image-thumbnail.png";
+        else return "/brand-logos/" + this.id + "/" + this.logo;
+    }
 }

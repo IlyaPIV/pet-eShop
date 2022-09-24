@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import pet.eshop.admin.categories.CategoryService;
 import pet.eshop.common.entity.Brand;
+import pet.eshop.common.entity.Category;
 
 import java.util.List;
 
@@ -20,4 +21,7 @@ public class BrandService {
         return (List<Brand>) repo.findAll();
     }
 
+    public List<Category> listCategoriesUsedInForm() {
+        return catService.listCategoriesUsedInForm();
+    }
 }
