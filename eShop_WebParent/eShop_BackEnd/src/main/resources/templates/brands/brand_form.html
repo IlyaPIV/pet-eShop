@@ -68,6 +68,7 @@
   <script>
       moduleURL = "[[@{/brands}]]";
 
+
       $(document).ready(function (){
           dropdownCategories = $("#categories");
           divChosenCategories = $("#chosenCategories");
@@ -76,6 +77,8 @@
               divChosenCategories.empty();
               showChosenCategories();
           })
+
+          showChosenCategories();
       });
 
       function showChosenCategories(){
@@ -89,6 +92,8 @@
       }
 
       function checkUnique(form){
+          return true;
+
         // catId       = $("#id").val();
         // catName     = $("#name").val();
         // catAlias    = $("#alias").val();
@@ -112,7 +117,7 @@
         // }).fail(function (){
         //   showErrorModal("Could not connect to the server.")
         // });
-        return false;
+        // return false;
       }
 
   </script>

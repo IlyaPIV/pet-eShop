@@ -1,0 +1,8 @@
+1. в контроллере добавили метод сохранения для @PostMapping("/brands/save")
+2. в сервисе класса добавили метод save
+3. добавили класс для перехвата ошибок BrandNotFoundException
+4. в сервисном классе добавили метод получения по id - public Brand get(Integer id)
+5. в контроллере добавили метод открытия формы редактирования для @GetMapping("/brands/edit/{id}")
+6. в репозиторий добавили метод countById(id)
+7. в сервисном классе добавили метод удаления по id - public void delete(Integer id)
+8. в контроллере добавили метод удаления для @GetMapping("/brands/delete/{id}")

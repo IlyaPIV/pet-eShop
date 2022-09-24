@@ -29,7 +29,7 @@ public class MvcConfig implements WebMvcConfigurer {
                 .addResourceLocations("file:/" + categoryImagesPath + "/");
 
 
-        String brandLogosDirName = "../category-images";
+        String brandLogosDirName = "../brand-logos";
         Path brandLogosDir = Paths.get(brandLogosDirName);
 
         String brandLogosPath = brandLogosDir.toFile().getAbsolutePath();

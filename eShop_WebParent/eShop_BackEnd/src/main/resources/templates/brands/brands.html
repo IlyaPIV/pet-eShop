@@ -29,7 +29,11 @@
                 <tbody>
                     <tr th:each="brand : ${listBrands}">
                         <td>[[${brand.id}]]</td>
-                        <td></td>
+                        <td>
+                            <img th:if="${brand.logo != 'brand-logo.png'}" th:src="@{${brand.logoPath}}"
+                                 style="width: 100px" class="img-fluid"/>
+                            <span th:if="${brand.logo == 'brand-logo.png'}" class="fa-regular fa-folder-open fa-3x icon-silver"></span>
+                        </td>
                         <td>[[${brand.name}]]</td>
                         <td>
                             <span th:each="cat : ${brand.getCategories()}" class="badge badge-secondary mr-1">[[${cat.name}]]</span>
