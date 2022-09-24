@@ -1,0 +1,9 @@
+1. в BrandRepository добавили метод для получения страницы с фильтром по имени и без:
+1.1. с фильтром - public Page<Brand> findAll(String keyword, Pageable pageable)
+1.2. без фильтра - не добавляем, а стандартный используем
+2. в сервисный класс добавили константу BRANDS_PER_PAGE
+3. там же добавили метод public Page<Brand> listByPage(int pageNum, String sortField, String sortDirection, String keyword)
+4. в контроллере доработали:
+4.1. вместо метода listAll для маппинга  @GetMapping("/brands") прописали метод listFirstPage
+4.2. добавили метод listByPage для маппинга @GetMapping("/brands/page/{pageNum}")
+5. на форму списка добавили кнопки управления страницами и изменили заголовок колонки для сортировки
