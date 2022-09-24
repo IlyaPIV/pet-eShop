@@ -36,6 +36,11 @@ public class Brand {
         this.logo = "brand-logo.png";
     }
 
+    public Brand(Integer id, String name) {
+        this(name);
+        this.id = id;
+    }
+
     public Brand(String name, String logo){
         this.name = name;
         this.logo = logo;

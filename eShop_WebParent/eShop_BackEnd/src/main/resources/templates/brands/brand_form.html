@@ -92,32 +92,28 @@
       }
 
       function checkUnique(form){
-          return true;
 
-        // catId       = $("#id").val();
-        // catName     = $("#name").val();
-        // catAlias    = $("#alias").val();
-        //
-        // csrfValue   = $("input[name='_csrf']").val();
-        //
-        // url = "[[@{/categories/check_unique}]]";
-        //
-        // params = {id: catId, name: catName, alias: catAlias, _csrf: csrfValue};
-        //
-        // $.post(url, params, function (response){
-        //   if (response === "OK") {
-        //     form.submit();
-        //   } else if (response === "DuplicateName") {
-        //     showWarningModal("There is another category having same name - " + catName);
-        //   } else if (response === "DuplicateAlias") {
-        //     showWarningModal("There is another category having same alias - " + catAlias);
-        //   } else {
-        //     showErrorModal("Unknown response from server");
-        //   }
-        // }).fail(function (){
-        //   showErrorModal("Could not connect to the server.")
-        // });
-        // return false;
+        brandId     = $("#id").val();
+        catName     = $("#name").val();
+        csrfValue   = $("input[name='_csrf']").val();
+
+        url = "[[@{/brands/check_unique}]]";
+
+        params = {id: catId, name: catName, _csrf: csrfValue};
+
+        $.post(url, params, function (response){
+            if (response === "OK") {
+                 form.submit();
+            } else if (response === "Duplicate") {
+                showWarningModal("There is another brand having same name - " + catName);
+            } else {
+                showErrorModal("Unknown response from server");
+            }
+        }).fail(function (){
+            showErrorModal("Could not connect to the server.")
+        });
+
+        return false;
       }
 
   </script>

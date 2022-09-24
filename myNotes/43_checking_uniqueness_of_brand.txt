@@ -1,0 +1,6 @@
+1. создали RestController класс в пакете admin.brands
+2. в классе репозитория добавили метод получения бренда по имени - public Brand findByName(String name)
+3. в сервисном классе добавили метод проверки уникальности - public String checkUnique(Integer id, String name)
+4. в REST контроллере добавили метод для @PostMapping("/brands/check_unique")
+5. на форме brand_form.html доработали скрипт проверки уникальности
+6. добавили тесты в классе BrandServiceTests
