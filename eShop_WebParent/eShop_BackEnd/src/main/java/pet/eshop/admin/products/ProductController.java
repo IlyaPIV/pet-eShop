@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pet.eshop.admin.brands.BrandService;
 import pet.eshop.common.entity.Brand;
 import pet.eshop.common.entity.Product;
@@ -45,11 +46,11 @@ public class ProductController {
     }
 
     @PostMapping("/products/save")
-    public String saveProduct(Product product) {
+    public String saveProduct(Product product, RedirectAttributes redirectAttributes) {
 
-        System.out.println("Prod Name = "   + product.getName());
-        System.out.println("Brand = "       + product.getBrand().getName());
-        System.out.println("Cat = "         + product.getCategory().getName());
+        productService.save(product);
+
+        redirectAttributes.addFlashAttribute("message", "The Product has been saved successfully!");
 
         return "redirect:/products";
     }
