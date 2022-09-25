@@ -1,0 +1,7 @@
+1. в контроллер класса вынесли маппинг метода для @GetMapping("/products/{id}/enabled/{status}")
+2. в сервисе добавили метод void updateProductEnabledStatus(Integer id, boolean enabled)
+3. в репозиторий добавили одноименный метод для изменения статуса
+4. в пакет admin.products добавили класс ошибки ProductNotFoundException
+5. в класс репозитория добавили метод для подсчета кол-ва объектов с указанным id - Long countById(id)
+6. в сервисный класс добавали метод void delete(id)
+7. в контроллере добавили метод для маппинга @GetMapping("/products/delete/{id}")
