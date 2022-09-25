@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments :: page_head(${pageTitle})"></head>
+<head>
+    <head th:replace="fragments :: page_head(${pageTitle}, 'tag')"></head>
+    <link rel="stylesheet" th:href="@{/rich_text/richtext.min.css}"/>
+    <script th:src="@{/rich_text/jquery.richtext.min.js}"></script>
+</head>
 <body>
   <div class="container-fluid">
       <div th:replace="navigationMenu :: menu"></div>
@@ -39,20 +43,19 @@
               <!-- Tab panes -->
               <div class="tab-content">
                   <div class="tab-pane active p-3" id="overview" role="tabpanel">
-                      <div th:replace="products/product_overview :: content">
-                      </div>
+                      <div th:replace="products/product_overview :: content"></div>
                   </div>
-                  <div class="tab-pane" id="description" role="tabpanel">
-                      <h2>Description</h2>
+                  <div class="tab-pane p-3" id="description" role="tabpanel">
+                      <div th:replace="products/product_description :: content"></div>
                   </div>
-                  <div class="tab-pane" id="images" role="tabpanel">
+                  <div class="tab-pane p-3" id="images" role="tabpanel">
                       <h2>Images</h2>
                   </div>
-                  <div class="tab-pane" id="details" role="tabpanel">
+                  <div class="tab-pane p-3" id="details" role="tabpanel">
                       <h2>Details</h2>
                   </div>
-                  <div class="tab-pane" id="shipping" role="tabpanel">
-                      <h2>Shipping</h2>
+                  <div class="tab-pane p-3" id="shipping" role="tabpanel">
+                      <div th:replace="products/product_shipping :: content"></div>
                   </div>
               </div>
           </div>
@@ -77,6 +80,10 @@
       dropdownCategories = $("#category");
 
       $(document).ready(function (){
+
+            $("#shortDescription").richText();
+            $("#fullDescription").richText();
+
             dropdownBrands.change(function (){
                 dropdownCategories.empty();
                 getCategories();
