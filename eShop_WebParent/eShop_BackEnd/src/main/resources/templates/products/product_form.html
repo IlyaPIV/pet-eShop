@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head(${pageTitle})"></head>
+<body>
+  <div class="container-fluid">
+      <div th:replace="navigationMenu :: menu"></div>
+
+      <div>
+        <h2>Manage Products | [[${pageTitle}]]</h2>
+      </div>
+
+      <form th:action="@{/products/save}" method="post" style="max-width: 80pc; margin: 0 auto"
+            th:object="${product}">
+<!--            onsubmit="return checkUnique(this);"-->
+
+            <input type="hidden" th:field="*{id}">
+
+          <div>
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item">
+                      <a class="nav-link active"  data-toggle="tab" href="#overview" role="tab">Overview</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link"  data-toggle="tab" href="#description" role="tab">Description</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link"  data-toggle="tab" href="#images" role="tab">Images</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link"  data-toggle="tab" href="#details" role="tab">Details</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link"  data-toggle="tab" href="#shipping" role="tab">Shipping</a>
+                  </li>
+              </ul>
+
+              <!-- Tab panes -->
+              <div class="tab-content">
+                  <div class="tab-pane active p-3" id="overview" role="tabpanel">
+                      <div th:replace="products/product_overview :: content">
+                      </div>
+                  </div>
+                  <div class="tab-pane" id="description" role="tabpanel">
+                      <h2>Description</h2>
+                  </div>
+                  <div class="tab-pane" id="images" role="tabpanel">
+                      <h2>Images</h2>
+                  </div>
+                  <div class="tab-pane" id="details" role="tabpanel">
+                      <h2>Details</h2>
+                  </div>
+                  <div class="tab-pane" id="shipping" role="tabpanel">
+                      <h2>Shipping</h2>
+                  </div>
+              </div>
+          </div>
+
+
+          <div class="text-center">
+              <input type="submit" value="Save" class="btn btn-primary m-3"/>
+              <input type="button" value="Cancel" class="btn btn-secondary" id="buttonCancel"/>
+          </div>
+
+      </form>
+
+      <div th:replace="modal_fragments :: modal_dialog"></div>
+
+      <div th:replace="fragments :: footer"> </div>
+  </div>
+  <script>
+      moduleURL = "[[@{/products}]]";
+      brandModuleURL = "[[@{/brands}]]";
+
+      dropdownBrands = $("#brand");
+      dropdownCategories = $("#category");
+
+      $(document).ready(function (){
+            dropdownBrands.change(function (){
+                dropdownCategories.empty();
+                getCategories();
+            });
+          getCategories();
+      });
+
+      function getCategories() {
+          brandId = dropdownBrands.val();
+          url = brandModuleURL + "/" + brandId + "/categories";
+
+          $.get(url, function (responseJson){
+              $.each(responseJson, function (index, category){
+                  $("<option>").val(category.id).text(category.name).appendTo(dropdownCategories);
+              });
+          });
+      }
+
+      function checkUnique(form){
+
+        prodId     = $("#id").val();
+        prodName     = $("#name").val();
+        csrfValue   = $("input[name='_csrf']").val();
+
+        url = "[[@{/products/check_unique}]]";
+
+        params = {id: prodId, name: prodName, _csrf: csrfValue};
+
+        $.post(url, params, function (response){
+            if (response === "OK") {
+                 form.submit();
+            } else if (response === "Duplicate") {
+                showWarningModal("There is another brand having same name - " + catName);
+            } else {
+                showErrorModal("Unknown response from server");
+            }
+        }).fail(function (){
+            showErrorModal("Could not connect to the server.")
+        });
+
+        return false;
+      }
+
+
+
+  </script>
+  <script th:src="@{/js/common_form.js}"></script>
+</body>
+</html>

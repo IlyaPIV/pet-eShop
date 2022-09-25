@@ -94,18 +94,18 @@
       function checkUnique(form){
 
         brandId     = $("#id").val();
-        catName     = $("#name").val();
+        brandName     = $("#name").val();
         csrfValue   = $("input[name='_csrf']").val();
 
         url = "[[@{/brands/check_unique}]]";
 
-        params = {id: catId, name: catName, _csrf: csrfValue};
+        params = {id: brandId, name: brandName, _csrf: csrfValue};
 
         $.post(url, params, function (response){
             if (response === "OK") {
                  form.submit();
             } else if (response === "Duplicate") {
-                showWarningModal("There is another brand having same name - " + catName);
+                showWarningModal("There is another brand having same name - " + brandName);
             } else {
                 showErrorModal("Unknown response from server");
             }
