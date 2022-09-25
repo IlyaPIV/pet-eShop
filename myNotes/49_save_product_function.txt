@@ -6,7 +6,3 @@
 
 1. добавили в Сервис метод сохранения (в нём же обрабатываем данные) - public Product save(Product product)
 2. в классе контроллере обработали метод для маппинга @PostMapping("/products/save")
-3. в репозитории добавили метод findByName(String name)
-4. в сервисном классе добавили метод public String checkUnique(Integer id, String name)
-5. создали класс ProductRestController и добавили в него функцию проверки уникальности
-6. доработали цепочку проверки уникальности с вызова js скрипта на форме

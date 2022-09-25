@@ -1,0 +1,4 @@
+1. в репозитории добавили метод findByName(String name)
+2. в сервисном классе добавили метод public String checkUnique(Integer id, String name)
+3. создали класс ProductRestController и добавили в него функцию проверки уникальности
+4. доработали цепочку проверки уникальности с вызова js скрипта на форме
