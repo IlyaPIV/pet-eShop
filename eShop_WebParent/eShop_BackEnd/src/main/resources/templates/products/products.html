@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('Products - eShop Admin')"></head>
+<body>
+    <div class="container-fluid">
+      <div th:replace="navigationMenu :: menu"></div>
+
+      <div>
+        <h2>Manage Products</h2>
+        <a th:href="@{/products/new}" class="fas fa-solid fa-square-plus fa-2x icon-dark mr-2" title="Add new Product"></a>
+        &nbsp;
+        <a th:href="@{/products/export/csv}" class="fa-solid fa-file-csv fa-2x icon-dark mr-2 ml-2" title="Export to CSV"></a>
+      </div>
+
+      <div th:replace="fragments :: search_form_and_message">  </div>
+
+      <div class="full-details">
+        <table class="table table-bordered table-striped table-hover table-responsive-xl">
+          <thead class="thead-dark">
+            <tr>
+              <th class="hideable-column">ID</th>
+              <th>Main Image</th>
+              <th>Product Name</th>
+              <th>Brand</th>
+              <th>Category</th>
+              <th>Enabled</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="product : ${listProducts}">
+              <td class="hideable-column">[[${product.id}]]</td>
+              <td>
+                image.png
+              </td>
+              <td>[[${product.name}]]</td>
+              <td>[[${product.brand.name}]]</td>
+              <td>[[${product.category.name}]]</td>
+              <td><div th:replace="fragments :: entity_status(${product.enabled}, 'Product', '/products/'+${product.id} )"></div></td>
+              <td>
+                <a class="fas fa-file-alt fa-2x icon-green"
+                   th:href="@{'/products/detail/' + ${product.id}}"
+                   title="View details of this product"></a>
+                &nbsp;
+                <a th:replace="fragments :: entity_edit('/products/edit/' + ${product.id}, 'Product')"></a>
+                &nbsp;
+                <a th:replace="fragments :: entity_delete('/products/delete/' + ${product.id}, 'Product', ${product.id})"></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="less-details">
+
+      </div>
+
+<!--      <div th:replace="fragments :: pagination(${moduleURL}, 'Products')"></div>-->
+
+      <div th:replace="modal_fragments :: modal_confirmation('Delete Confirmation')"></div>
+
+      <div th:replace="fragments :: footer"> </div>
+
+
+    </div>
+    <script type="text/javascript">
+      $(document).ready(function (){
+        $(".link-delete").on("click", function (e){
+          e.preventDefault();
+          showDeleteConfirmModal($(this), 'product');
+        });
+      });
+
+      function clearFilter(){
+        window.location = "[[@{/products}]]"
+      }
+    </script>
+    <script th:src="@{/js/common_list.js}"></script>
+</body>
+</html>
