@@ -15,8 +15,8 @@
       </div>
 
       <form th:action="@{/products/save}" method="post" style="max-width: 80pc; margin: 0 auto"
+            onsubmit="return checkUnique(this);"
             th:object="${product}">
-<!--            onsubmit="return checkUnique(this);"-->
 
             <input type="hidden" th:field="*{id}">
 
@@ -116,7 +116,7 @@
             if (response === "OK") {
                  form.submit();
             } else if (response === "Duplicate") {
-                showWarningModal("There is another brand having same name - " + catName);
+                showWarningModal("There is another brand having same name - " + prodName);
             } else {
                 showErrorModal("Unknown response from server");
             }

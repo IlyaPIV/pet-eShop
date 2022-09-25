@@ -2,6 +2,7 @@ package pet.eshop.admin.products;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pet.eshop.common.entity.Brand;
 import pet.eshop.common.entity.Product;
 
 import java.util.Date;
@@ -32,5 +33,17 @@ public class ProductService {
         product.setUpdatedTime(new Date());
 
         return repo.save(product);
+    }
+
+    public String checkUnique(Integer id, String name) {
+        boolean isCreatingNew = (id == null || id == 0);
+        Product prodByName = repo.findByName(name);
+        if (isCreatingNew) {
+            if (prodByName != null) return "Duplicate";
+        } else {
+            if (prodByName != null && prodByName.getId() != id) return "Duplicate";
+        }
+
+        return "OK";
     }
 }
