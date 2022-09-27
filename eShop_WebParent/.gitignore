@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 /category-images/
 /brand-logos/
+/product-images/
 
 ### STS ###
 .apt_generated
