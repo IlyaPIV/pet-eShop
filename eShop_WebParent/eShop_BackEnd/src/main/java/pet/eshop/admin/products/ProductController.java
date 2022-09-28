@@ -55,10 +55,14 @@ public class ProductController {
     public String saveProduct(Product product,
                               @RequestParam("fileImage") MultipartFile mainImageMultipart,
                               @RequestParam("extraImage") MultipartFile[] extraImageMultipart,
+                              @RequestParam(name = "detailNames", required = false) String[] detailNames,
+                              @RequestParam(name = "detailValues", required = false) String[] detailValues,
                               RedirectAttributes redirectAttributes) throws IOException {
 
+        setProductDetails(detailNames, detailValues, product);
         setMainImageName(mainImageMultipart, product);
         setExtraImageNames(extraImageMultipart, product);
+
 
         Product savedProd = productService.save(product);
         saveUploadedImages(mainImageMultipart, extraImageMultipart, savedProd);
@@ -66,6 +70,19 @@ public class ProductController {
         redirectAttributes.addFlashAttribute("message", "The Product has been saved successfully!");
 
         return "redirect:/products";
+    }
+
+    private void setProductDetails(String[] detailNames, String[] detailValues, Product product) {
+        if (detailNames == null || detailNames.length == 0) return;
+
+        for (int count = 0; count < detailNames.length; count++) {
+            String name = detailNames[count];
+            String value = detailValues[count];
+
+            if (!name.isEmpty() && !value.isEmpty()) {
+                product.addDetail(name, value);
+            }
+        }
     }
 
     private void saveUploadedImages(MultipartFile mainImageMultipart,
