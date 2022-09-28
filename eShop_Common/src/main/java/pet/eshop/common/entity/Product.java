@@ -1,9 +1,7 @@
 package pet.eshop.common.entity;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "products")
@@ -45,6 +43,9 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<ProductImage> images = new HashSet<>();
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductDetails> details = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -225,6 +226,14 @@ public class Product {
         this.images = images;
     }
 
+    public List<ProductDetails> getDetails() {
+        return details;
+    }
+
+    public void setDetails(List<ProductDetails> details) {
+        this.details = details;
+    }
+
     /*
      *  МЕТОДЫ
      */
@@ -245,5 +254,9 @@ public class Product {
     public String getMainImagePath(){
         if (id == null || mainImage == null) return "/images/image-thumbnail.png";
         else return "/product-images/" + this.id + "/" + this.mainImage;
+    }
+
+    public void addDetail(String name, String value) {
+        this.details.add(new ProductDetails(name, value, this));
     }
 }

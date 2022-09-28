@@ -105,4 +105,15 @@ public class ProductRepositoryTests {
 
         assertThat(savedProd.getImages().size()).isEqualTo(3);
     }
+
+    @Test
+    public void testSaveProductWithDetails(){
+        Integer productId = 1;
+        Product product = repo.findById(productId).get();
+
+        product.addDetail("Test Detail", "Test value");
+
+        Product savedProduct = repo.save(product);
+        assertThat(savedProduct.getDetails()).isNotEmpty();
+    }
 }
