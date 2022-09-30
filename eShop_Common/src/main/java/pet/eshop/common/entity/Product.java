@@ -41,10 +41,10 @@ public class Product {
     @Column(name = "main_image", nullable = false)
     private String mainImage;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProductImage> images = new HashSet<>();
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductDetails> details = new ArrayList<>();
 
     @ManyToOne
@@ -258,5 +258,18 @@ public class Product {
 
     public void addDetail(String name, String value) {
         this.details.add(new ProductDetails(name, value, this));
+    }
+
+    public void addDetail(Integer id, String name, String value) {
+        this.details.add(new ProductDetails(id, name, value, this));
+    }
+
+    public boolean containsImageName(String imageName) {
+        for (ProductImage image : images) {
+            if (image.getName().equals(imageName)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

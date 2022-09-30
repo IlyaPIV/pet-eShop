@@ -1,7 +1,8 @@
 package pet.eshop.admin.products;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -15,13 +16,20 @@ import pet.eshop.admin.brands.BrandService;
 import pet.eshop.admin.util.FileUploadUtil;
 import pet.eshop.common.entity.Brand;
 import pet.eshop.common.entity.Product;
+import pet.eshop.common.entity.ProductImage;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class ProductController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
     @Autowired
     private ProductService productService;
     @Autowired
@@ -57,32 +65,79 @@ public class ProductController {
     public String saveProduct(Product product,
                               @RequestParam("fileImage") MultipartFile mainImageMultipart,
                               @RequestParam("extraImage") MultipartFile[] extraImageMultipart,
+                              @RequestParam(name = "detailIDs", required = false) String[] detailIDs,
                               @RequestParam(name = "detailNames", required = false) String[] detailNames,
                               @RequestParam(name = "detailValues", required = false) String[] detailValues,
+                              @RequestParam(name = "imageIDs", required = false) String[] imageIDs,
+                              @RequestParam(name = "imageNames", required = false) String[] imageNames,
                               RedirectAttributes redirectAttributes) throws IOException {
 
-        setProductDetails(detailNames, detailValues, product);
+        setProductDetails(detailNames, detailValues, detailIDs, product);
         setMainImageName(mainImageMultipart, product);
-        setExtraImageNames(extraImageMultipart, product);
+        setExistingExtraImageNames(imageIDs, imageNames, product);
+        setNewExtraImageNames(extraImageMultipart, product);
 
 
         Product savedProd = productService.save(product);
         saveUploadedImages(mainImageMultipart, extraImageMultipart, savedProd);
+        deleteRemovedOnFormExtraImages(product);
 
         redirectAttributes.addFlashAttribute("message", "The Product has been saved successfully!");
 
         return "redirect:/products";
     }
 
-    private void setProductDetails(String[] detailNames, String[] detailValues, Product product) {
+    private void deleteRemovedOnFormExtraImages(Product product) {
+        String extraImageDir = "../product-images/" + product.getId() + "/extras";
+        Path dirPath = Paths.get(extraImageDir);
+
+        try {
+            Files.list(dirPath).forEach(file -> {
+                String filename = file.toFile().getName();
+                if (!product.containsImageName(filename)) {
+                    try {
+                        Files.delete(file);
+                        LOGGER.info("Deleted extra image: " + filename);
+                    } catch (IOException e){
+                        LOGGER.error("Could not delete extra image: " + filename);
+                    }
+                }
+            });
+        } catch (IOException ex) {
+            LOGGER.error("Could not list directory: " + dirPath);
+        }
+    }
+
+    private void setExistingExtraImageNames(String[] imageIDs, String[] imageNames, Product product) {
+        if (imageIDs == null || imageIDs.length == 0) return;
+
+        Set<ProductImage> images = new HashSet<>();
+
+        for (int count = 0; count <imageIDs.length; count++){
+            Integer id = Integer.parseInt(imageIDs[count]);
+            String name = imageNames[count];
+            images.add(new ProductImage(id, name, product));
+        }
+
+        product.setImages(images);
+    }
+
+    private void setProductDetails(String[] detailNames,
+                                   String[] detailValues,
+                                   String[] detailIDs, Product product) {
         if (detailNames == null || detailNames.length == 0) return;
 
         for (int count = 0; count < detailNames.length; count++) {
             String name = detailNames[count];
             String value = detailValues[count];
+            int id = Integer.parseInt(detailIDs[count]);
 
-            if (!name.isEmpty() && !value.isEmpty()) {
-                product.addDetail(name, value);
+            if (id !=0 ){
+                product.addDetail(id, name, value);
+            } else {
+                if (!name.isEmpty() && !value.isEmpty()) {
+                    product.addDetail(name, value);
+                }
             }
         }
     }
@@ -99,7 +154,7 @@ public class ProductController {
         }
 
         String uploadDir = "../product-images/" + savedProd.getId() + "/extras";
-        FileUploadUtil.cleanDir(uploadDir);
+        //FileUploadUtil.cleanDir(uploadDir);
         if (extraImageMultipart.length > 0) {
             for (MultipartFile multipartFile : extraImageMultipart) {
                 if (multipartFile.isEmpty()) continue;
@@ -116,12 +171,16 @@ public class ProductController {
         }
     }
 
-    private void setExtraImageNames(MultipartFile[] extraImageMultipart, Product product){
+    private void setNewExtraImageNames(MultipartFile[] extraImageMultipart, Product product){
         if (extraImageMultipart.length > 0) {
             for(MultipartFile multipartFile: extraImageMultipart) {
                 if (!multipartFile.isEmpty()) {
                     String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-                    product.addExtraImage(fileName);
+
+                    if (!product.containsImageName(fileName)) {
+                        product.addExtraImage(fileName);
+                    }
+
                 }
             }
         }
