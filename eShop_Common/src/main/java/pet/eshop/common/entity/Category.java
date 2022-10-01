@@ -25,6 +25,9 @@ public class Category {
     @JoinColumn(name = "parent_id")
     private Category parent;
 
+    @Column(name = "all_parent_ids", length = 256, nullable = true)
+    private String allParentsIDs;
+
     @OneToMany(mappedBy = "parent")
     private Set<Category> children = new HashSet<>();
 
@@ -120,6 +123,13 @@ public class Category {
         this.children = children;
     }
 
+    public String getAllParentsIDs() {
+        return allParentsIDs;
+    }
+
+    public void setAllParentsIDs(String allParentsIDs) {
+        this.allParentsIDs = allParentsIDs;
+    }
 
     /*
      * МЕТОДЫ

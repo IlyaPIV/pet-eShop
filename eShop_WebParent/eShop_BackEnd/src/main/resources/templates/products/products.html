@@ -13,7 +13,32 @@
         <a th:href="@{/products/export/csv}" class="fa-solid fa-file-csv fa-2x icon-dark mr-2 ml-2" title="Export to CSV"></a>
       </div>
 
-      <div th:replace="fragments :: search_form_and_message">  </div>
+      <div>
+        <form th:action="@{/products/page/1}" class="form-inline m-3" id="searchForm">
+          <input type="hidden" name="sortField" th:value="${sortField}"/>
+          <input type="hidden" name="sortDir" th:value="${sortDir}"/>
+          Category:&nbsp;
+          <select class="form-control" name="categoryId" id="dropdownCategory">
+            <option value="0">All Categories</option>
+            <th:block th:each="cat : ${listCategories}">
+              <option th:value="${cat.id}" th:selected="(${categoryId} == ${cat.id})">[[${cat.name}]]</option>
+            </th:block>
+          </select>
+          &nbsp;&nbsp;
+          <label>
+            Filter:&nbsp;
+            <input type="search" name="keyword" class="form-control" th:value="${keyword}" required/>
+          </label>
+          &nbsp;&nbsp;
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-search"></i>
+          </button>
+          &nbsp;&nbsp;
+          <button type="button" class="btn btn-secondary" onclick="clearFilter()">
+            <i class="fas fa-delete-left"></i>
+          </button>
+        </form>
+      </div>
 
       <div class="full-details">
         <table class="table table-bordered table-striped table-hover table-responsive-xl">
@@ -99,9 +124,10 @@
         $("#detailModal").modal("show").find(".modal-content").load(linkDetailURL);
       });
 
-      function clearFilter(){
-        window.location = "[[@{/products}]]"
-      }
+      $("#dropdownCategory").on("change", function (){
+        $("#searchForm").submit();
+      });
+
     </script>
     <script th:src="@{/js/common_list.js}"></script>
 </body>

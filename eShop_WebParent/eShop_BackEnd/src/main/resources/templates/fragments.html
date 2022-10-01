@@ -22,7 +22,8 @@
         <a class="text-white"
            th:href="@{${moduleURL} + '/page/' + ${currentPage} + '?sortField=' + ${fieldName}
                               + '&sortDir=' + ${sortField != fieldName ? sortDir : reverseSortDir}
-                              + ${keyword != null ? '&keyword=' + keyword : ''}}">
+                              + ${keyword != null ? '&keyword=' + keyword : ''}
+                              + ${categoryId != null ? '&categoryId=' + categoryId : ''}}">
           [[${columnLabel}]]
         </a>
 
@@ -71,7 +72,8 @@
             th:href="@{${moduleURL} + '/page/' + ${pageNum}
                             + '?sortField=' + ${sortField}
                             + '&sortDir=' + ${sortDir}
-                            + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${label}]]</a>
+                            + ${keyword != null ? '&keyword=' + keyword : ''}
+                            + ${categoryId != null ? '&categoryId=' + categoryId : ''}}">[[${label}]]</a>
 
     <div th:fragment="pagination(moduleURL, entityName)" th:remove="tag">
 

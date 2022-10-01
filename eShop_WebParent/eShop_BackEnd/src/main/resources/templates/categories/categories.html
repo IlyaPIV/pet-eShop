@@ -88,6 +88,7 @@
   </div>
 
   <script type="text/javascript">
+    moduleURL = "[[@{/categories}]]";
 
     $(document).ready(function (){
       $(".link-delete").on("click", function (e){
@@ -95,10 +96,6 @@
         showDeleteConfirmModal($(this), 'category');
       });
     });
-
-    function clearFilter(){
-      window.location = "[[@{/categories}]]"
-    }
 
   </script>
   <script th:src="@{/js/common_list.js}"></script>

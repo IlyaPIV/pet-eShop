@@ -94,6 +94,8 @@
 
 </div>
 <script type="text/javascript">
+    moduleURL = "[[@{/users}]]";
+
     $(document).ready(function (){
         $(".link-delete").on("click", function (e){
             e.preventDefault();
@@ -101,9 +103,6 @@
         });
     });
 
-    function clearFilter(){
-        window.location = "[[@{/users}]]"
-    }
 </script>
 <script th:src="@{/js/common_list.js}"></script>
 </body>

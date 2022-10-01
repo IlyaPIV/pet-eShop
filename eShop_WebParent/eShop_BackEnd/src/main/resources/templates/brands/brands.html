@@ -74,6 +74,9 @@
 
     </div>
 <script type="text/javascript">
+
+    moduleURL = "[[@{/brands}]]";
+
         $(document).ready(function (){
             $(".link-delete").on("click", function (e){
                 e.preventDefault();
@@ -81,9 +84,6 @@
             });
         });
 
-        function clearFilter(){
-            window.location = "[[@{/brands}]]"
-        }
 </script>
 <script th:src="@{/js/common_list.js}"></script>
 </body>

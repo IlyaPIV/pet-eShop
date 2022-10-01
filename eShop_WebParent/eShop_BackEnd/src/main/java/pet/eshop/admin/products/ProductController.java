@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pet.eshop.admin.brands.BrandService;
+import pet.eshop.admin.categories.CategoryService;
 import pet.eshop.admin.util.FileUploadUtil;
 import pet.eshop.common.entity.Brand;
+import pet.eshop.common.entity.Category;
 import pet.eshop.common.entity.Product;
 import pet.eshop.common.entity.ProductImage;
 
@@ -36,6 +38,8 @@ public class ProductController {
     private ProductService productService;
     @Autowired
     private BrandService brandService;
+    @Autowired
+    private CategoryService categoryService;
 
    // @GetMapping("/products")
     public String listAll(Model model){
@@ -49,16 +53,18 @@ public class ProductController {
 
     @GetMapping("/products")
     public String listFirstPage(Model model){
-        return listByPage(1, model, "name", "asc", null);
+        return listByPage(1, model, "name", "asc", null, 0);
     }
 
     @GetMapping("/products/page/{pageNum}")
     public String listByPage(@PathVariable(name = "pageNum") int pageNum, Model model,
                              @Param("sortField") String sortField, @Param("sortDir") String sortDir,
-                             @Param("keyword") String keyword) {
+                             @Param("keyword") String keyword,
+                             @Param("categoryId") Integer categoryId) {
 
-        Page<Product> page = productService.listByPage(pageNum, sortField, sortDir, keyword);
+        Page<Product> page = productService.listByPage(pageNum, sortField, sortDir, keyword, categoryId);
         List<Product> productList = page.getContent();
+        List<Category> listCategories = categoryService.listCategoriesUsedInForm();
 
         long startCount = (long) (pageNum - 1) * ProductService.PRODUCTS_PER_PAGE + 1;
         long endCount = startCount + ProductService.PRODUCTS_PER_PAGE - 1;
@@ -67,6 +73,8 @@ public class ProductController {
         }
 
         String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
+
+        if (categoryId != null) model.addAttribute("categoryId", categoryId);
 
         model.addAttribute("currentPage", pageNum);
         model.addAttribute("totalPages", page.getTotalPages());
@@ -79,6 +87,8 @@ public class ProductController {
         model.addAttribute("keyword", keyword);
         model.addAttribute("listProducts", productList);
         model.addAttribute("moduleURL", "/products");
+        model.addAttribute("listCategories", listCategories);
+
 
         return "products/products";
 
