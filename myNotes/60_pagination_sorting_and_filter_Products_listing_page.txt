@@ -1,0 +1,11 @@
+sortable columns: ID, name, brand & category
+default sorting: by name in ascending order
+searchable columns: name, alias, short description, full description, brand name & category name
+
+1. в ProductRepository добавили новый метод - Page<Product> findAll(String keyword, Pageable pageable)
+2. добавили метод в ProductService - public Page<Product> listByPage()
+3. доработали маппинг в контроллере для работы со страницами - listFirstPage и listByPage
+4. добавили на форму элементы работы с фильтром и страницами
+5. изменили заголовки колонок в таблице для работы с сортировкой
+6. сделали на форме вывод короткого имени вместо полного (если длина символов >70), добавив в entity метод
+

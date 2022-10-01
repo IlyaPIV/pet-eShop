@@ -19,11 +19,13 @@
         <table class="table table-bordered table-striped table-hover table-responsive-xl">
           <thead class="thead-dark">
             <tr>
-              <th class="hideable-column">ID</th>
+              <th class="hideable-column">
+                <th th:replace="fragments :: column_link('/products', 'id', 'ID', 'tag')"></th>
+              </th>
               <th>Main Image</th>
-              <th>Product Name</th>
-              <th>Brand</th>
-              <th>Category</th>
+              <th th:replace="fragments :: column_link('/products', 'name', 'Product Name', 'none')"></th>
+              <th th:replace="fragments :: column_link('/products', 'brand', 'Brand', 'none')"></th>
+              <th th:replace="fragments :: column_link('/products', 'category', 'Category', 'none')"></th>
               <th>Enabled</th>
               <th></th>
             </tr>
@@ -39,8 +41,8 @@
               <td>
                 <a class="link-detail"
                    th:href="@{'/products/detail/' + ${product.id}}"
-                   title="View details of this product">
-                  [[${product.name}]]
+                   th:title="${product.name}">
+                  [[${product.shortName}]]
                 </a>
               </td>
               <td>[[${product.brand.name}]]</td>
@@ -63,7 +65,7 @@
 
       </div>
 
-<!--      <div th:replace="fragments :: pagination(${moduleURL}, 'Products')"></div>-->
+      <div th:replace="fragments :: pagination(${moduleURL}, 'Products')"></div>
 
       <div th:replace="modal_fragments :: modal_confirmation('Delete Confirmation')"></div>
 
