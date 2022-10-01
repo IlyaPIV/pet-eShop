@@ -230,14 +230,27 @@ public class ProductController {
             model.addAttribute("listBrands", brandsList);
             model.addAttribute("numberOfExistingExtraImages", numberOfExistingExtraImages);
 
-
-
             return "products/product_form";
 
         } catch (ProductNotFoundException ex) {
             redirectAttributes.addFlashAttribute("message", ex.getMessage());
             return "redirect:/products";
         }
+    }
 
+    @GetMapping("/products/detail/{id}")
+    public String viewProduct(@PathVariable("id") Integer id, Model model,
+                              RedirectAttributes redirectAttributes){
+        try {
+            Product product = productService.get(id);
+
+            model.addAttribute("product", product);
+
+            return "products/product_detail_modal";
+
+        } catch (ProductNotFoundException ex) {
+            redirectAttributes.addFlashAttribute("message", ex.getMessage());
+            return "redirect:/products";
+        }
     }
 }

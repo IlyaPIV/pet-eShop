@@ -36,12 +36,18 @@
                      style="width: 150px" class="img-fluid"/>
                 <span th:if="${product.mainImage == ''}" class="fa-solid fa-image fa-3x icon-silver"></span>
               </td>
-              <td>[[${product.name}]]</td>
+              <td>
+                <a class="link-detail"
+                   th:href="@{'/products/detail/' + ${product.id}}"
+                   title="View details of this product">
+                  [[${product.name}]]
+                </a>
+              </td>
               <td>[[${product.brand.name}]]</td>
               <td>[[${product.category.name}]]</td>
               <td><div th:replace="fragments :: entity_status(${product.enabled}, 'Product', '/products/'+${product.id} )"></div></td>
               <td>
-                <a class="fas fa-file-alt fa-2x icon-green"
+                <a class="fas fa-file-alt fa-2x icon-green link-detail"
                    th:href="@{'/products/detail/' + ${product.id}}"
                    title="View details of this product"></a>
                 &nbsp;
@@ -61,16 +67,34 @@
 
       <div th:replace="modal_fragments :: modal_confirmation('Delete Confirmation')"></div>
 
+      <div class="modal fade" id="detailModal">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+
+          </div>
+        </div>
+      </div>
+
       <div th:replace="fragments :: footer"> </div>
 
 
     </div>
     <script type="text/javascript">
+      moduleURL = "[[@{/products}]]";
+
       $(document).ready(function (){
         $(".link-delete").on("click", function (e){
           e.preventDefault();
           showDeleteConfirmModal($(this), 'product');
         });
+      });
+
+
+      $(".link-detail").on("click", function (e) {
+        e.preventDefault();
+        linkDetailURL = $(this).attr("href");
+
+        $("#detailModal").modal("show").find(".modal-content").load(linkDetailURL);
       });
 
       function clearFilter(){
