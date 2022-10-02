@@ -1,0 +1,14 @@
+в зависимости от ролей пользоваеля ограничен функционал в модуле
+
+1. настроили Spring Security по ролям для определённых URL
+2. обновили products.html для настройки элементов под разные роли
+2.1. кнопки "New" & "Export CSV"
+2.2. колонка Enabled
+2.3. кнопки редактирования и удаления
+3. обновили форму продукта, видимость полей для роли Salesperson
+3.1. ограничили доступ к полям на overview
+3.2. для секций description, images, details сделали readonly фрагменты и подставляем их вместо стандартных
+4. в ProductService добавили метод обновления ТОЛЬКО прайса продукта - void saveProductPrice(Product productInForm)
+5. в entity классе User добавили метод hasRole(String roleName)
+6. в security классе EShopUserDetails добавили метод boolean hasRole(String roleName)
+7. обновили метод saveProduct в контроллере Product

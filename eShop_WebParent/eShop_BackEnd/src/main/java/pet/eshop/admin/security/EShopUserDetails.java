@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import pet.eshop.common.entity.Role;
 import pet.eshop.common.entity.User;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -14,6 +15,8 @@ import java.util.Set;
 public class EShopUserDetails implements UserDetails {
 
     private User user;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     public EShopUserDetails(User user) {
         this.user = user;
@@ -80,5 +83,9 @@ public class EShopUserDetails implements UserDetails {
 
     public void setLastName(String lastName) {
         this.user.setLastName(lastName);
+    }
+
+    public boolean hasRole(String roleName){
+        return user.hasRole(roleName);
     }
 }

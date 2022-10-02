@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pet.eshop.admin.brands.BrandService;
 import pet.eshop.admin.categories.CategoryService;
+import pet.eshop.admin.security.EShopUserDetails;
 import pet.eshop.admin.util.FileUploadUtil;
 import pet.eshop.common.entity.Brand;
 import pet.eshop.common.entity.Category;
@@ -112,26 +114,31 @@ public class ProductController {
 
     @PostMapping("/products/save")
     public String saveProduct(Product product,
-                              @RequestParam("fileImage") MultipartFile mainImageMultipart,
-                              @RequestParam("extraImage") MultipartFile[] extraImageMultipart,
+                              @RequestParam(value = "fileImage", required = false) MultipartFile mainImageMultipart,
+                              @RequestParam(value = "extraImage", required = false) MultipartFile[] extraImageMultipart,
                               @RequestParam(name = "detailIDs", required = false) String[] detailIDs,
                               @RequestParam(name = "detailNames", required = false) String[] detailNames,
                               @RequestParam(name = "detailValues", required = false) String[] detailValues,
                               @RequestParam(name = "imageIDs", required = false) String[] imageIDs,
                               @RequestParam(name = "imageNames", required = false) String[] imageNames,
+                              @AuthenticationPrincipal EShopUserDetails loggedUser,
                               RedirectAttributes redirectAttributes) throws IOException {
 
-        setProductDetails(detailNames, detailValues, detailIDs, product);
-        setMainImageName(mainImageMultipart, product);
-        setExistingExtraImageNames(imageIDs, imageNames, product);
-        setNewExtraImageNames(extraImageMultipart, product);
+        if (loggedUser.hasRole("Salesperson")) {
+            productService.saveProductPrice(product);
+            redirectAttributes.addFlashAttribute("message", "The Product price has been updated successfully!");
+        } else {
+            setProductDetails(detailNames, detailValues, detailIDs, product);
+            setMainImageName(mainImageMultipart, product);
+            setExistingExtraImageNames(imageIDs, imageNames, product);
+            setNewExtraImageNames(extraImageMultipart, product);
 
+            Product savedProd = productService.save(product);
+            saveUploadedImages(mainImageMultipart, extraImageMultipart, savedProd);
+            deleteRemovedOnFormExtraImages(product);
 
-        Product savedProd = productService.save(product);
-        saveUploadedImages(mainImageMultipart, extraImageMultipart, savedProd);
-        deleteRemovedOnFormExtraImages(product);
-
-        redirectAttributes.addFlashAttribute("message", "The Product has been saved successfully!");
+            redirectAttributes.addFlashAttribute("message", "The Product has been saved successfully!");
+        }
 
         return "redirect:/products";
     }

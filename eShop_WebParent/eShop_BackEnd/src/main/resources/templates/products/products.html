@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:replace="fragments :: page_head('Products - eShop Admin', 'none')"></head>
 <body>
     <div class="container-fluid">
@@ -8,9 +9,11 @@
 
       <div>
         <h2>Manage Products</h2>
+        <th:block sec:authorize="hasAnyAuthority('Admin','Editor')">
         <a th:href="@{/products/new}" class="fas fa-solid fa-square-plus fa-2x icon-dark mr-2" title="Add new Product"></a>
         &nbsp;
         <a th:href="@{/products/export/csv}" class="fa-solid fa-file-csv fa-2x icon-dark mr-2 ml-2" title="Export to CSV"></a>
+        </th:block>
       </div>
 
       <div>
@@ -38,6 +41,9 @@
             <i class="fas fa-delete-left"></i>
           </button>
         </form>
+        <div th:if="${message != null}" class="alert alert-success text-center">
+          [[${message}]]
+        </div>
       </div>
 
       <div class="full-details">
@@ -51,7 +57,9 @@
               <th th:replace="fragments :: column_link('/products', 'name', 'Product Name', 'none')"></th>
               <th th:replace="fragments :: column_link('/products', 'brand', 'Brand', 'none')"></th>
               <th th:replace="fragments :: column_link('/products', 'category', 'Category', 'none')"></th>
-              <th>Enabled</th>
+              <th:block sec:authorize="hasAnyAuthority('Admin','Editor')">
+                <th>Enabled</th>
+              </th:block>
               <th></th>
             </tr>
           </thead>
@@ -72,15 +80,21 @@
               </td>
               <td>[[${product.brand.name}]]</td>
               <td>[[${product.category.name}]]</td>
-              <td><div th:replace="fragments :: entity_status(${product.enabled}, 'Product', '/products/'+${product.id} )"></div></td>
+              <th:block sec:authorize="hasAnyAuthority('Admin','Editor')">
+                  <td><div th:replace="fragments :: entity_status(${product.enabled}, 'Product', '/products/'+${product.id} )"></div></td>
+              </th:block>
               <td>
                 <a class="fas fa-file-alt fa-2x icon-green link-detail"
                    th:href="@{'/products/detail/' + ${product.id}}"
                    title="View details of this product"></a>
-                &nbsp;
-                <a th:replace="fragments :: entity_edit('/products/edit/' + ${product.id}, 'Product')"></a>
-                &nbsp;
-                <a th:replace="fragments :: entity_delete('/products/delete/' + ${product.id}, 'Product', ${product.id})"></a>
+                <th:block sec:authorize="hasAnyAuthority('Admin','Editor','Salesperson')">
+                  &nbsp;
+                  <a th:replace="fragments :: entity_edit('/products/edit/' + ${product.id}, 'Product')"></a>
+                </th:block>
+                <th:block sec:authorize="hasAnyAuthority('Admin','Editor')">
+                  &nbsp;
+                  <a th:replace="fragments :: entity_delete('/products/delete/' + ${product.id}, 'Product', ${product.id})"></a>
+                </th:block>
               </td>
             </tr>
           </tbody>

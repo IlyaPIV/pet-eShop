@@ -143,4 +143,12 @@ public class User {
     public String getFullName(){
         return firstName + " " + lastName;
     }
+
+    public boolean hasRole(String roleName) {
+        for (Role r:
+             roles) {
+            if (r.getName().equals(roleName)) return true;
+        }
+        return false;
+    }
 }
