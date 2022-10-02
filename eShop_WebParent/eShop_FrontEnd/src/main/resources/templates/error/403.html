@@ -2,15 +2,18 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head th:replace="fragments :: page_head('eShop', 'none')"></head>
+<head th:replace="fragments :: page_head('Error - eShop', 'none')"></head>
 <body>
-<div class="container-fluid">
+  <div class="container-fluid">
+
     <div th:replace="navigation :: header_menu"></div>
 
-    <h1> Welcome to eShop Commerce</h1>
+    <div class="m-3">
+      <h2>Sorry, you don't have permission to access this page</h2>
+    </div>
 
     <div th:replace="navigation :: footer_menu"></div>
 
-</div>
+  </div>
 </body>
 </html>
