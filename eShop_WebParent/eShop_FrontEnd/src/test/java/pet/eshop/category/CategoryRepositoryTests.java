@@ -8,6 +8,8 @@ import pet.eshop.common.entity.Category;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class CategoryRepositoryTests {
@@ -21,5 +23,13 @@ public class CategoryRepositoryTests {
         categories.forEach(category -> {
             System.out.println(category.getName() + " (" + category.isEnabled() + ")");
         });
+    }
+
+    @Test
+    public void testFindCategoryByAlias(){
+        String alias = "something";
+        Category category = repository.findByAliasEnabled(alias);
+
+        assertThat(category).isNotNull();
     }
 }

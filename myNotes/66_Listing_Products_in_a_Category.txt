@@ -1,0 +1,15 @@
+1. добавили в Category Repo метод - Category findByAliasEnabled(String alias)
+2. в CategoryService добавили метод - public Category getCategory(String alias)
+3. создали пакет product и создали в нём контроллер ProductController
+4. создали html страницу для отображения продуктов в категории - products_by_category.html
+5. в сервисном классе добавили метод получения списка пути по категориям до текущей - List<Category> getCategoryParents(Category child)
+6. в контроллере передаём этот список на форму
+7. создали класс ProductRepository, в нём метод для получения страниц с продуктами по категории (включая вложенные) - Page<Product> listByCategory(..)
+8. создали класс ProductService, в нём метод для работы со страницами продуктов
+9. обновили контроллер для работы со страницами:
+9.1. обновили маппинг для @GetMapping("/c/{category_alias}") - метод viewCategoryFirstPage(..)
+9.2. создали маппинг для @GetMapping("/c/{category_alias}/page/{pageNum}") - метод viewCategoryByPage(..)
+10. обновили html страницу для работы со страницами продуктов и отображением их
+11. добавили на страницу блок для ссылок на вложенные категории текущей для удобства перехода
+12. в класс бина Product добавили метод получения цены со скидкой
+13. вывели на форму цену (или цену со скидкой) под продуктом
