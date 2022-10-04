@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import pet.eshop.category.CategoryService;
 import pet.eshop.common.entity.Category;
 import pet.eshop.common.entity.Product;
+import pet.eshop.common.exception.CategoryNotFoundException;
+import pet.eshop.common.exception.ProductNotFoundException;
 
 import java.util.List;
 
@@ -29,30 +31,47 @@ public class ProductController {
     public String viewCategoryByPage(@PathVariable(name = "category_alias") String catAlias,
                                @PathVariable(name = "pageNum") int pageNum,
                                Model model) {
+        try {
+            Category category = categoryService.getCategory(catAlias);
 
-        Category category = categoryService.getCategory(catAlias);
-        if (category == null) {
+            List<Category> listCategoryParents = categoryService.getCategoryParents(category);
+            Page<Product> productPage = productService.listByCategory(pageNum, category.getId());
+            List<Product> productList = productPage.getContent();
+            long startCount = (long) (pageNum - 1) * ProductService.PRODUCTS_PER_PAGE + 1;
+            long endCount = startCount + ProductService.PRODUCTS_PER_PAGE - 1;
+            if (endCount > productPage.getTotalElements()) {
+                endCount = productPage.getTotalElements();
+            }
+
+            model.addAttribute("pageTitle", "eShop: " + category.getName());
+            model.addAttribute("listCategoryParents", listCategoryParents);
+            model.addAttribute("currentPage", pageNum);
+            model.addAttribute("totalPages", productPage.getTotalPages());
+            model.addAttribute("startCount", startCount);
+            model.addAttribute("endCount", endCount);
+            model.addAttribute("totalItems", productPage.getTotalElements());
+            model.addAttribute("listProducts", productList);
+            model.addAttribute("category", category);
+
+            return "product/products_by_category";
+        } catch (CategoryNotFoundException ex){
             return "error/404";
         }
-        List<Category> listCategoryParents = categoryService.getCategoryParents(category);
-        Page<Product> productPage = productService.listByCategory(pageNum, category.getId());
-        List<Product> productList = productPage.getContent();
-        long startCount = (long) (pageNum - 1) * ProductService.PRODUCTS_PER_PAGE + 1;
-        long endCount = startCount + ProductService.PRODUCTS_PER_PAGE - 1;
-        if (endCount > productPage.getTotalElements()) {
-            endCount = productPage.getTotalElements();
+    }
+
+    @GetMapping("/p/{product_alias}")
+    public String viewProductDetail(@PathVariable("product_alias") String alias, Model model) {
+        try {
+            Product product = productService.getProduct(alias);
+            List<Category> listCategoryParents = categoryService.getCategoryParents(product.getCategory());
+
+            model.addAttribute("pageTitle", "eShop: " + product.getShortName());
+            model.addAttribute("listCategoryParents", listCategoryParents);
+            model.addAttribute("product", product);
+
+            return "product/product_details";
+        } catch (ProductNotFoundException ex) {
+            return "error/404";
         }
-
-        model.addAttribute("pageTitle", "eShop: " + category.getName());
-        model.addAttribute("listCategoryParents", listCategoryParents);
-        model.addAttribute("currentPage", pageNum);
-        model.addAttribute("totalPages", productPage.getTotalPages());
-        model.addAttribute("startCount", startCount);
-        model.addAttribute("endCount", endCount);
-        model.addAttribute("totalItems", productPage.getTotalElements());
-        model.addAttribute("listProducts", productList);
-        model.addAttribute("category", category);
-
-        return "products_by_category";
     }
 }

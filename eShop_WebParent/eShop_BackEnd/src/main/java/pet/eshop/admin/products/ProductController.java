@@ -19,6 +19,7 @@ import pet.eshop.admin.util.FileUploadUtil;
 import pet.eshop.common.entity.Brand;
 import pet.eshop.common.entity.Category;
 import pet.eshop.common.entity.Product;
+import pet.eshop.common.exception.ProductNotFoundException;
 
 import java.io.IOException;
 import java.util.List;

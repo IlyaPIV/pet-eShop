@@ -29,6 +29,7 @@ public class Category {
     private String allParentsIDs;
 
     @OneToMany(mappedBy = "parent")
+    @OrderBy("name asc")
     private Set<Category> children = new HashSet<>();
 
     /*

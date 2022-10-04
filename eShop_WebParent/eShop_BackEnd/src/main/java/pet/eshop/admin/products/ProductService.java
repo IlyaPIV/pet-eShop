@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pet.eshop.common.entity.Product;
+import pet.eshop.common.exception.ProductNotFoundException;
 
 import javax.transaction.Transactional;
 import java.util.Date;

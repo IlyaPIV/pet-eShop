@@ -1,4 +1,4 @@
-package pet.eshop.admin.categories;
+package pet.eshop.common.exception;
 
 public class CategoryNotFoundException extends Exception {
     public CategoryNotFoundException(String message) {

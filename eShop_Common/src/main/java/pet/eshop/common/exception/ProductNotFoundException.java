@@ -1,4 +1,4 @@
-package pet.eshop.admin.products;
+package pet.eshop.common.exception;
 
 public class ProductNotFoundException extends Exception {
     public ProductNotFoundException(String message) {

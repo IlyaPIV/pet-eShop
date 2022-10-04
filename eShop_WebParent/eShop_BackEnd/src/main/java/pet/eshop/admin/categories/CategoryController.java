@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pet.eshop.admin.util.FileUploadUtil;
 import pet.eshop.common.entity.Category;
+import pet.eshop.common.exception.CategoryNotFoundException;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
