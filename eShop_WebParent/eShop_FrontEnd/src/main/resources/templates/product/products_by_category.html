@@ -6,6 +6,7 @@
 <body>
 <div class="container-fluid">
     <div th:replace="navigation :: header_menu"></div>
+    <div th:replace="navigation :: search_nav"></div>
 
     <div th:replace="breadcrum :: content"></div>
 
@@ -36,22 +37,7 @@
 
     <div class="row">
         <th:block th:each="product : ${listProducts}">
-        <div class="col">
-            <div>
-                <a th:href="@{'/p/' + ${product.alias}}">
-                    <img th:src="@{${product.mainImagePath}}" width="150px"/>
-                    <br/>
-                    <b>[[${product.shortName}]]</b>
-                </a>
-            </div>
-            <div th:if="${product.discountPercent <= 0}">
-                <span>$ [[${product.price}]]</span>
-            </div>
-            <div th:if="${product.discountPercent > 0}">
-                <span style="font-size: larger; color: darkred">$ [[${product.discountPrice}]]</span>
-                <del><span>$ [[${product.price}]]</span></del>
-            </div>
-        </div>
+            <div th:replace="product/product_fragment :: product_block"></div>
         </th:block>
     </div>
 

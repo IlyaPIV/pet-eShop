@@ -12,6 +12,7 @@ import pet.eshop.common.exception.ProductNotFoundException;
 public class ProductService {
 
     public static final int PRODUCTS_PER_PAGE = 10;
+    public static final int SEARCH_RESULTS_PER_PAGE = 8;
 
     @Autowired
     private ProductRepository repository;
@@ -30,5 +31,11 @@ public class ProductService {
             throw new ProductNotFoundException("Could not find any Product with alias = " + alias);
         }
         return product;
+    }
+
+    public Page<Product> search(String keyword, int pageNum) {
+        Pageable pageable = PageRequest.of(pageNum - 1, SEARCH_RESULTS_PER_PAGE);
+
+        return repository.search(keyword, pageable);
     }
 }
