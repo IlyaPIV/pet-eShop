@@ -1,0 +1,3 @@
+1. в common проекте создали entity классы для Setting и перечисления значений SettingCategory
+2. в BackEnd создали пакет settings и там добавили интерфейс SettingRepository
+3. через тесты внесли парочку значений в БД
