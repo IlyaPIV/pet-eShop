@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <head th:replace="fragments :: page_head(${pageTitle}, 'tag')"></head>
+    <link rel="stylesheet" th:href="@{/rich_text/richtext.min.css}"/>
+    <script th:src="@{/rich_text/jquery.richtext.min.js}"></script>
+</head>
+<body>
+  <div class="container-fluid">
+      <div th:replace="navigationMenu :: menu"></div>
+
+      <div>
+        <h2>Site Settings</h2>
+      </div>
+
+      <div th:if="${message != null}" class="alert alert-success text-center">
+          [[${message}]]
+      </div>
+
+      <div>
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" id="settingTab" role="tablist">
+              <li class="nav-item">
+                  <a class="nav-link active"  data-toggle="tab" href="#general" role="tab">General</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link"  data-toggle="tab" href="#countries" role="tab">Countries</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link"  data-toggle="tab" href="#states" role="tab">States</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link"  data-toggle="tab" href="#mailServer" role="tab">Mail Server</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link"  data-toggle="tab" href="#mailTemplate" role="tab">Mail Templates</a>
+              </li>
+          </ul>
+
+          <!-- Tab panes -->
+          <div class="tab-content">
+              <div class="tab-pane active p-3" id="general" role="tabpanel">
+                  <div th:replace="settings/general :: content"></div>
+              </div>
+              <div class="tab-pane p-3" id="countries" role="tabpanel">
+                  Countries
+              </div>
+              <div class="tab-pane p-3" id="states" role="tabpanel">
+                  States
+              </div>
+              <div class="tab-pane p-3" id="mailServer" role="tabpanel">
+                  Mail Server
+              </div>
+              <div class="tab-pane p-3" id="mailTemplate" role="tabpanel">
+                  Mail Templates
+              </div>
+          </div>
+      </div>
+
+      <div th:replace="fragments :: footer"> </div>
+  </div>
+  <script>
+      MAX_FILE_SIZE = 102400;           //100 Kb
+  </script>
+  <script th:src="@{/js/common_form.js}"></script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 package pet.eshop.common.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "settings")
@@ -21,6 +22,10 @@ public class Setting {
      */
 
     public Setting() {
+    }
+
+    public Setting(String key) {
+        this.key = key;
     }
 
     public Setting(String key, String value, SettingCategory category) {
@@ -55,5 +60,36 @@ public class Setting {
 
     public void setCategory(SettingCategory category) {
         this.category = category;
+    }
+
+    /*
+     * methods
+     */
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Setting setting = (Setting) o;
+        if (key == null) {
+            return setting.key == null;
+        } else return key.equals(setting.key);
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((key == null) ? 0 : key.hashCode());
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Setting{" +
+                "key='" + key + '\'' +
+                ", value='" + value + '\'' +
+                ", category=" + category +
+                '}';
     }
 }

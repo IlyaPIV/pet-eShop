@@ -1,0 +1,16 @@
+1. в CurrencyRepository добавили метод получения списка всех значений
+2. создали SettingService, добавили метод listAllSettings()
+3. создали SettingController, добавили маппинг для @GetMapping("/settings")
+4. сделали html страницу для работы с настройками - базовая страница + закладки
+5. настроили закладку general
+6. в entity классе Setting добавили методы equals() & hashCode()
+7. создали утилитарный класс SettingBag в пакете с entity классами
+8. в нём добавили методы Setting get(key), getValue(key), update(..) и list(..)
+9. в бэкенде создали в пакете settings класс GeneralSettingBag extends SettingBag, в нём добавили методы обновления
+    некоторых настроек
+10. в SettingRepository добавили метод получения списка настроек по категории - List<Setting> findByCategory
+11. в SettingService добавили метод получения настроек - GeneralSettingBag getGeneralSettings(), а так же void saveAll(..)
+12. в контроллере добавили маппинг для перехвата запроса сохранения -   @PostMapping("/settings/save_general")
+13. в MVC контроллере настроили маппинг пути к папке с логотипом сайта (для фронта и бэка)
+14. в контроллере добавили метод сохранения изменений текущего символа валюты - void saveCurrencySymbol(..)
+15. там же добавили метод обновления значений из списка параметров - void updateSettingValuesFromForm(..)
