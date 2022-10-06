@@ -1,4 +1,4 @@
-package pet.eshop.admin.settings;
+package pet.eshop.setting;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +14,8 @@ public class SettingService {
     @Autowired
     private SettingRepository repo;
 
-    public List<Setting> listAllSettings(){
-        return (List<Setting>) repo.findAll();
-    }
-
-    public GeneralSettingBag getGeneralSettings(){
-        return new GeneralSettingBag(repo.findByTwoCategories(SettingCategory.GENERAL, SettingCategory.CURRENCY));
+    public List<Setting> getGeneralSettings(){
+        return repo.findByTwoCategories(SettingCategory.GENERAL, SettingCategory.CURRENCY);
     }
 
     public void saveAll(Iterable<Setting> settings) {

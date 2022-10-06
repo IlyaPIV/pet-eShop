@@ -1,4 +1,4 @@
-package pet.eshop.admin.settings;
+package pet.eshop.setting;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
