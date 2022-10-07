@@ -1,0 +1,7 @@
+1. на бэкенде в пакете settings.country добавили класс CountryRestController
+2. добавили метод получения списка - List<Country> listAll()
+3. создали тестовый класс
+4. в pom файл добавили зависимость spring-security-test, чтобы использовать аннотацию @WithMockUser в тестах
+5. в Rest контроллере добавили маппинг для запросов на сохранение - @PostMapping("/countries/save")
+6. там же добавили метод для удаления по id -  @GetMapping("/countries/delete/{id}")
+6. настроили тесты с учетом SpringSecurity

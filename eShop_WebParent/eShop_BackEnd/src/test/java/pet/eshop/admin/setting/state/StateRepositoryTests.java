@@ -1,12 +1,12 @@
-package pet.eshop.admin.setting;
+package pet.eshop.admin.setting.state;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
-import pet.eshop.admin.settings.CountryRepository;
-import pet.eshop.admin.settings.StateRepository;
+import pet.eshop.admin.settings.country.CountryRepository;
+import pet.eshop.admin.settings.state.StateRepository;
 import pet.eshop.common.entity.Country;
 import pet.eshop.common.entity.State;
 

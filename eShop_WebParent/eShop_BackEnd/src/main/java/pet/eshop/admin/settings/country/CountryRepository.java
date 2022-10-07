@@ -1,4 +1,4 @@
-package pet.eshop.admin.settings;
+package pet.eshop.admin.settings.country;
 
 import org.springframework.data.repository.CrudRepository;
 import pet.eshop.common.entity.Country;
