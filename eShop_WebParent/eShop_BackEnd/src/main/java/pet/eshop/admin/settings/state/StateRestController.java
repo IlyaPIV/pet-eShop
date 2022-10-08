@@ -28,6 +28,8 @@ public class StateRestController {
 
     @PostMapping("/states/save")
     public String save(@RequestBody State state) {
+        System.out.println(state);
+
         State saved = repo.save(state);
 
         return String.valueOf(saved.getId());
