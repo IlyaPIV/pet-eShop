@@ -40,6 +40,10 @@ public class Country{
         this.code = countryCode;
     }
 
+    public Country(Integer countryId) {
+        this.id = countryId;
+    }
+
     /*
      *
      */

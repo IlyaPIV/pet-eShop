@@ -29,6 +29,17 @@ public class State {
         this.country = country;
     }
 
+    public State(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public State(Integer id, String name, Country country) {
+        this.id = id;
+        this.name = name;
+        this.country = country;
+    }
+
     /*
      *
      */
