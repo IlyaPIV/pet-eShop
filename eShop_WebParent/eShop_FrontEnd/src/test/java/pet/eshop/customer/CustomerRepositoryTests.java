@@ -43,6 +43,7 @@ public class CustomerRepositoryTests {
         newCustomer.setPostalCode("98765");
         newCustomer.setAddressLine1("98765 Main Street");
         newCustomer.setAddressLine2("135/1");
+        newCustomer.setVerificationCode("7940588");
 
         Customer savedCustomer = repo.save(newCustomer);
         assertThat(savedCustomer.getId()).isNotNull();
