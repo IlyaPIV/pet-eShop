@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import pet.eshop.common.entity.Setting;
 import pet.eshop.common.entity.SettingCategory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,5 +23,12 @@ public class SettingService {
 
     public void saveAll(Iterable<Setting> settings) {
         repo.saveAll(settings);
+    }
+
+    public List<Setting> getMailServerSettings(){
+        return repo.findByCategory(SettingCategory.MAIL_SERVER);
+    }
+    public List<Setting> getMailTemplateSettings(){
+        return repo.findByCategory(SettingCategory.MAIL_TEMPLATES);
     }
 }
