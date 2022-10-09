@@ -1,0 +1,7 @@
+1. в Common создали новый entity класс Customer, настроили его поля
+2. на FrontEnd создали пакет customer, в нём добавили интерфейс репозитория, в нём создали 3 метода
+2.1. поиск по емейл - public Customer findByEmail(String email)
+2.2. поиск по коду верификации - public Customer findByVerificationCode(String code)
+2.3. установка признака enabled в значение ИСТИНА - public void enable(Integer id);
+3. написали тесты для проверки репозитория
+3.1.
