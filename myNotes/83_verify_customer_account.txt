@@ -1,0 +1,3 @@
+1. в CustomerService добавили метод для включения пользователя
+по проверочному коду - public boolean verify(String verificationCode)
+2. в контроллере добавили маппинг
