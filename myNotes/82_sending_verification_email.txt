@@ -1,0 +1,11 @@
+1. на стороне фронта в WebSecurityConfig добавили Bean для криптографии пароля
+2. в CustomerService добавили метод сохранения пользователя - public void registerCustomer(Customer customer)
+3. в контроллере класса добавили метод перехвата @PostMapping("/create_customer")
+4. создали html страницу register_success.html
+5. в пакете settings создали утилитарный класс EmailSettingBag
+6. в нём добавили нужные методы получения значений настроек
+7. подключили spring-boot-starter-mail зависимость во фронте
+8. создали пакет util и в нём служебный класс Utility
+8.1. метод получения чистого URL
+8.2. метод получения настроек почтовых
+9. в Customer контроллер добавили метод отправки почтовых сообщений - void sendVerificationEmail(..)
