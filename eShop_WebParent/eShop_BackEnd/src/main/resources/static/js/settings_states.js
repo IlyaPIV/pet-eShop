@@ -98,6 +98,9 @@ function selectNewlyAddedState(stateId, stateName){
 }
 
 function addNewState(){
+
+    if (!validateFormStates()) return;
+
     url = contextPath + "states/save";
     stateName = fieldStateName.val();
     countryId = dropDownCountry.val().split("-")[0];
@@ -121,6 +124,9 @@ function addNewState(){
 }
 
 function updateState() {
+
+    if (!validateFormStates()) return;
+
     url = contextPath + "states/save";
     stateId = dropDownStates.val();
     stateName = fieldStateName.val();
@@ -161,4 +167,13 @@ function deleteState(){
     }).fail(function (){
         showToastMessage("ERROR: failed to delete state", toastStates);
     });
+}
+
+function validateFormStates(){
+    formStates = document.getElementById("statesForm");
+    if (!formStates.checkValidity()){
+        formStates.reportValidity();
+        return false;
+    }
+    return true;
 }

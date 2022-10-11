@@ -23,17 +23,19 @@
                 <select class="form-control m-2" style="height: 300px" size="3" id="dropDownStates"> </select>
             </div>
         </div>
-        <div class="form-group row">
-          <label class="col-form-label col-sm-2 mt-2" id="labelStateName">State/Province Name:</label>
-          <div class="col-md mt-2 col-sm-6">
-            <input type="text" class="form-control" id="fieldStateName" required minlength="3" maxlength="64"/>
-          </div>
-          <div class="col-lg-4 mt-2">
-            <input type="button" id="btnAddState" value="New" class="btn-secondary mr-2" />
-            <input type="button" id="btnUpdateState" value="Update" class="btn-secondary mr-2" disabled="disabled"/>
-            <input type="button" id="btnDeleteState" value="Delete" class="btn-secondary" disabled="disabled"/>
-          </div>
-        </div>
+        <form id="statesForm">
+            <div class="form-group row">
+              <label class="col-form-label col-sm-2 mt-2" id="labelStateName">State/Province Name:</label>
+              <div class="col-md mt-2 col-sm-6">
+                <input type="text" class="form-control" id="fieldStateName" required minlength="3" maxlength="64"/>
+              </div>
+              <div class="col-lg-4 mt-2">
+                <input type="button" id="btnAddState" value="New" class="btn-secondary mr-2" />
+                <input type="button" id="btnUpdateState" value="Update" class="btn-secondary mr-2" disabled="disabled"/>
+                <input type="button" id="btnDeleteState" value="Delete" class="btn-secondary" disabled="disabled"/>
+              </div>
+            </div>
+        </form>
 
         <div id="toastStates" class="toast justify-content-center d-flex" role="alert" aria-live="polite" aria-atomic="true" data-delay="5000">
             <div role="alert" aria-live="assertive" aria-atomic="true">
