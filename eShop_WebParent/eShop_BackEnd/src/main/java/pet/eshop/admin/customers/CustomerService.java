@@ -8,7 +8,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pet.eshop.common.entity.Customer;
 
+import javax.transaction.Transactional;
+
 @Service
+@Transactional
 public class CustomerService {
 
     @Autowired
@@ -28,5 +31,9 @@ public class CustomerService {
         } else {
             return repo.findAll(keyword, pageable);
         }
+    }
+
+    public void updateEnabledStatus(Integer id, boolean enabled){
+        repo.updateEnabledStatus(id, enabled);
     }
 }
