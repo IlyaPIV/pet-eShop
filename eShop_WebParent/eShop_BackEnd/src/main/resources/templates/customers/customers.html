@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('Customers - eShop Admin', 'none')"></head>
+<body>
+  <div class="container-fluid">
+    <div th:replace="navigationMenu :: menu"></div>
+
+    <div>
+      <h2>Manage Customers</h2>
+      <a th:href="@{/customers/export/csv}" class="fa-solid fa-file-csv fa-2x icon-dark mr-2 ml-2" title="Export to CSV"></a>
+    </div>
+
+    <div th:replace="fragments :: search_form_and_message"></div>
+
+    <div class="full-details">
+      <table class="table table-bordered table-striped table-hover table-responsive-xl">
+        <thead class="thead-dark">
+          <tr>
+            <th>ID</th>
+            <th th:replace="fragments :: column_link('/customers', 'firstName', 'First Name', 'none')"></th>
+            <th th:replace="fragments :: column_link('/customers', 'lastName', 'Last Name', 'none')"></th>
+            <th>E-mail</th>
+            <th class="hideable-column">City</th>
+            <th class="hideable-column">State</th>
+            <th>Country</th>
+            <th>Enabled</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="customer : ${listCustomers}">
+            <td>[[${customer.id}]]</td>
+            <td>[[${customer.firstName}]]</td>
+            <td>[[${customer.lastName}]]</td>
+            <td>[[${customer.email}]]</td>
+            <td class="hideable-column">[[${customer.city}]]</td>
+            <td class="hideable-column">[[${customer.state}]]</td>
+            <td>[[${customer.country.name}]]</td>
+            <td>
+              <div th:replace="fragments :: entity_status(${customer.enabled}, 'Customer', '/customers/'+${customer.id} )"></div>
+            </td>
+            <td>
+              <a class="fas fa-file-alt fa-2x icon-green link-detail"
+                 th:href="@{'/customer/detail/' + ${customer.id}}"
+                 title="View details of this customer"></a>
+              &nbsp;
+              <a th:replace="fragments :: entity_edit('/customers/edit/' + ${customer.id}, 'Customer')"></a>
+              &nbsp;
+              <a th:replace="fragments :: entity_delete('/customers/delete/' + ${customer.id}, 'Customer', ${customer.id})"></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div th:replace="modal_fragments :: modal_confirmation('Delete Confirmation')"></div>
+
+
+    <div th:replace="fragments :: pagination('/customers', 'Customers')"></div>
+
+
+    <div th:replace="fragments :: footer"></div>
+
+  </div>
+
+  <script type="text/javascript">
+    moduleURL = "[[@{/customers}]]";
+
+    $(document).ready(function (){
+      $(".link-delete").on("click", function (e){
+        e.preventDefault();
+        showDeleteConfirmModal($(this), 'customer');
+      });
+    });
+
+  </script>
+  <script th:src="@{/js/common_list.js}"></script>
+</body>
+
+</html>
