@@ -10,5 +10,6 @@ Used tehnologies:
 - DataBase: MySQL + Spring Data JPA with Hybernate;
 - BackEnd: Spring Boot, Spring REST;
 - FrontEnd: HTML/CSS, Bootstrap, FontAwesome, Thymeleaf, jQuery;
-- Tests: Spring Tests, Mockito;
+- Tests: Spring Tests, Mockito, MockMVC;
 - Authentication & Autorization: Spring Security.
+- Other: Spring Boot Mail
