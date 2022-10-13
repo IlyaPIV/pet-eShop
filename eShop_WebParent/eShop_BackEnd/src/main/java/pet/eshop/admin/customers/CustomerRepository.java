@@ -17,4 +17,8 @@ public interface CustomerRepository extends PagingAndSortingRepository<Customer,
     @Modifying
     @Query("UPDATE Customer c SET c.enabled = ?2 WHERE c.id = ?1")
     public void updateEnabledStatus(Integer id, boolean enabled);
+
+    public Customer findByEmail(String email);
+
+    public Long countById(Integer id);
 }

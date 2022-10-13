@@ -23,7 +23,7 @@
             <th>E-mail</th>
             <th class="hideable-column">City</th>
             <th class="hideable-column">State</th>
-            <th>Country</th>
+            <th class="hideable-column">Country</th>
             <th>Enabled</th>
             <th></th>
           </tr>
@@ -36,7 +36,7 @@
             <td>[[${customer.email}]]</td>
             <td class="hideable-column">[[${customer.city}]]</td>
             <td class="hideable-column">[[${customer.state}]]</td>
-            <td>[[${customer.country.name}]]</td>
+            <td class="hideable-column">[[${customer.country.name}]]</td>
             <td>
               <div th:replace="fragments :: entity_status(${customer.enabled}, 'Customer', '/customers/'+${customer.id} )"></div>
             </td>

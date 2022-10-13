@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pet.eshop.common.entity.Customer;
 
@@ -17,6 +18,9 @@ public class CustomerService {
 
     @Autowired
     private CustomerRepository repo;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public final static int CUSTOMERS_PER_PAGE = 10;
 
@@ -44,5 +48,37 @@ public class CustomerService {
         } catch (NoSuchElementException ex) {
             throw new CustomerNotFoundException("Could not find any Customer with ID = " + id);
         }
+    }
+
+    public boolean isEmailUnique(String email, Integer id) {
+        Customer customer = repo.findByEmail(email);
+
+        return customer == null || customer.getId() == id;
+    }
+
+    private void encodePassword(Customer customer){
+        String encodedPassword = passwordEncoder.encode(customer.getPassword());
+        customer.setPassword(encodedPassword);
+    }
+
+    public void save(Customer customer) {
+        Customer existingCustomer = repo.findById(customer.getId()).get();
+        if (customer.getPassword().isEmpty()){
+            customer.setPassword(existingCustomer.getPassword());
+        } else
+        {
+            encodePassword(customer);
+        }
+
+        repo.save(customer);
+    }
+
+    public void delete(Integer id) throws CustomerNotFoundException {
+        Long countByID = repo.countById(id);
+        if (countByID == null || countByID == 0){
+            throw new CustomerNotFoundException("Could not find any customer with ID = " + id);
+        }
+
+        repo.deleteById(id);
     }
 }

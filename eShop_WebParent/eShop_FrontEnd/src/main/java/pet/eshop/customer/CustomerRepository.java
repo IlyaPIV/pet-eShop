@@ -14,4 +14,5 @@ public interface CustomerRepository extends CrudRepository<Customer, Integer> {
     @Query("UPDATE Customer c SET c.enabled = true, c.verificationCode = null WHERE c.id = ?1")
     @Modifying
     public void enable(Integer id);
+
 }
