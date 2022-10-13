@@ -66,4 +66,18 @@ public class CustomerController {
 
         return "redirect:/customers";
     }
+
+    @GetMapping("/customers/detail/{id}")
+    public String viewCustomer(@PathVariable("id") Integer id, Model model, RedirectAttributes attributes){
+        try{
+            Customer customer = service.get(id);
+
+            model.addAttribute("customer", customer);
+
+            return "customers/customer_detail_modal";
+        } catch (CustomerNotFoundException ex){
+            attributes.addFlashAttribute("message", ex.getMessage());
+            return "redirect:/customers";
+        }
+    }
 }

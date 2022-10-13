@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import pet.eshop.common.entity.Customer;
 
 import javax.transaction.Transactional;
+import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -35,5 +36,13 @@ public class CustomerService {
 
     public void updateEnabledStatus(Integer id, boolean enabled){
         repo.updateEnabledStatus(id, enabled);
+    }
+
+    public Customer get(Integer id) throws CustomerNotFoundException {
+        try{
+            return repo.findById(id).get();
+        } catch (NoSuchElementException ex) {
+            throw new CustomerNotFoundException("Could not find any Customer with ID = " + id);
+        }
     }
 }

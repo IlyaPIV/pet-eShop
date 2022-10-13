@@ -42,7 +42,7 @@
             </td>
             <td>
               <a class="fas fa-file-alt fa-2x icon-green link-detail"
-                 th:href="@{'/customer/detail/' + ${customer.id}}"
+                 th:href="@{'/customers/detail/' + ${customer.id}}"
                  title="View details of this customer"></a>
               &nbsp;
               <a th:replace="fragments :: entity_edit('/customers/edit/' + ${customer.id}, 'Customer')"></a>
@@ -59,6 +59,13 @@
 
     <div th:replace="fragments :: pagination('/customers', 'Customers')"></div>
 
+    <div class="modal fade" id="detailModal">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+
+        </div>
+      </div>
+    </div>
 
     <div th:replace="fragments :: footer"></div>
 
@@ -72,6 +79,13 @@
         e.preventDefault();
         showDeleteConfirmModal($(this), 'customer');
       });
+    });
+
+    $(".link-detail").on("click", function (e) {
+      e.preventDefault();
+      linkDetailURL = $(this).attr("href");
+
+      $("#detailModal").modal("show").find(".modal-content").load(linkDetailURL);
     });
 
   </script>

@@ -1,0 +1,110 @@
+<div class="modal-header">
+    <h4 class="modal-title">Product Details</h4>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+<div class="modal-body">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#general" role="tab">General</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#address" role="tab">Address</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active p-3" id="general" role="tabpanel">
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Customer ID:</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control"
+                           th:value="${customer.id}" readonly/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Full Name:</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control"
+                           th:value="${customer.fullName}" readonly/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">E-Mail:</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control"
+                           th:value="${customer.email}" readonly/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Phone Number:</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control"
+                           th:value="${customer.phoneNumber}" readonly/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Enabled:</label>
+                <div class="col-sm-9">
+                    <input type="checkbox"
+                           th:checked="${customer.enabled}" onclick="return false;"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Created Time:</label>
+                <div class="col-sm-9">
+                    <span th:text="${#dates.format(customer.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane p3" id="address" role="tab">
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Address Line 1:</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control"
+                           th:value="${customer.addressLine1}" readonly/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Address Line 2:</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control"
+                           th:value="${customer.addressLine2}" readonly/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">City:</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control"
+                           th:value="${customer.city}" readonly/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">State:</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control"
+                           th:value="${customer.state}" readonly/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Country:</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control"
+                           th:value="${customer.country.name}" readonly/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Postal Code:</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control"
+                           th:value="${customer.postalCode}" readonly/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+</div>
