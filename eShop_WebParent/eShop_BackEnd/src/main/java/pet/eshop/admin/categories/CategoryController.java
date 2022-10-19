@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pet.eshop.admin.paging.PagingAndSortingHelper;
+import pet.eshop.admin.paging.PagingAndSortingParam;
 import pet.eshop.admin.util.FileUploadUtil;
 import pet.eshop.common.entity.Category;
 import pet.eshop.common.exception.CategoryNotFoundException;
@@ -27,7 +29,6 @@ public class CategoryController {
 
     @GetMapping("/categories")
     public String listFirstPage(@Param("sortDir") String sortDir, Model model){
-
         return listByPage(1, sortDir,null, model);
     }
 
@@ -35,7 +36,7 @@ public class CategoryController {
     public String listByPage(@PathVariable(name = "pageNum") int pageNum,
                              @Param("sortDir") String sortDir,
                              @Param("keyword") String keyword,
-                                    Model model){
+                             Model model){
         if (sortDir == null || sortDir.isEmpty()) {
             sortDir = "asc";
         }

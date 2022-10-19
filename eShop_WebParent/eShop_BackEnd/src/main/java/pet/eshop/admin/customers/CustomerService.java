@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pet.eshop.admin.paging.PagingAndSortingHelper;
 import pet.eshop.common.entity.Customer;
 
 import javax.transaction.Transactional;
@@ -25,17 +26,8 @@ public class CustomerService {
     public final static int CUSTOMERS_PER_PAGE = 10;
 
 
-    public Page<Customer> getPage(Integer pageNum, String sortField, String sortDir, String keyword) {
-        Sort sort = Sort.by(sortField);
-        sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
-
-        Pageable pageable = PageRequest.of(pageNum - 1, CUSTOMERS_PER_PAGE, sort);
-
-        if (keyword == null){
-            return  repo.findAll(pageable);
-        } else {
-            return repo.findAll(keyword, pageable);
-        }
+    public void listByPage(Integer pageNum, PagingAndSortingHelper helper) {
+        helper.listEntities(pageNum, CUSTOMERS_PER_PAGE, repo);
     }
 
     public void updateEnabledStatus(Integer id, boolean enabled){
@@ -61,16 +53,18 @@ public class CustomerService {
         customer.setPassword(encodedPassword);
     }
 
-    public void save(Customer customer) {
-        Customer existingCustomer = repo.findById(customer.getId()).get();
-        if (customer.getPassword().isEmpty()){
-            customer.setPassword(existingCustomer.getPassword());
-        } else
-        {
-            encodePassword(customer);
+    public void save(Customer customerInForm) {
+        Customer existingCustomer = repo.findById(customerInForm.getId()).get();
+        if (customerInForm.getPassword().isEmpty()){
+            customerInForm.setPassword(existingCustomer.getPassword());
+        } else  {
+            encodePassword(customerInForm);
         }
+        customerInForm.setEnabled(existingCustomer.isEnabled());
+        customerInForm.setCreatedTime(existingCustomer.getCreatedTime());
+        customerInForm.setVerificationCode(existingCustomer.getVerificationCode());
 
-        repo.save(customer);
+        repo.save(customerInForm);
     }
 
     public void delete(Integer id) throws CustomerNotFoundException {

@@ -51,15 +51,15 @@
           <thead class="thead-dark">
             <tr>
               <th class="hideable-column">
-                <th th:replace="fragments :: column_link('/products', 'id', 'ID', 'tag')"></th>
+                <th th:replace="fragments :: column_link('id', 'ID', 'tag')"></th>
               </th>
               <th>Main Image</th>
-              <th th:replace="fragments :: column_link('/products', 'name', 'Product Name', 'none')"></th>
+              <th th:replace="fragments :: column_link('name', 'Product Name', 'none')"></th>
               <th class="hideable-column">
-                <th th:replace="fragments :: column_link('/products', 'brand', 'Brand', 'tag')"></th>
+                <th th:replace="fragments :: column_link('brand', 'Brand', 'tag')"></th>
               </th>
               <th class="hideable-column">
-                <th th:replace="fragments :: column_link('/products', 'category', 'Category', 'tag')"></th>
+                <th th:replace="fragments :: column_link('category', 'Category', 'tag')"></th>
               </th>
               <th:block sec:authorize="hasAnyAuthority('Admin','Editor')">
                 <th>Enabled</th>
@@ -136,7 +136,7 @@
         </div>
       </div>
 
-      <div th:replace="fragments :: pagination(${moduleURL}, 'Products')"></div>
+      <div th:replace="fragments :: pagination('Products')"></div>
 
       <div th:replace="modal_fragments :: modal_confirmation('Delete Confirmation')"></div>
 

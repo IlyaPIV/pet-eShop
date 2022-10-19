@@ -14,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pet.eshop.admin.brands.BrandService;
 import pet.eshop.admin.categories.CategoryService;
+import pet.eshop.admin.paging.PagingAndSortingHelper;
+import pet.eshop.admin.paging.PagingAndSortingParam;
 import pet.eshop.admin.security.EShopUserDetails;
 import pet.eshop.admin.util.FileUploadUtil;
 import pet.eshop.common.entity.Brand;
@@ -34,54 +36,22 @@ public class ProductController {
     @Autowired
     private CategoryService categoryService;
 
-   // @GetMapping("/products")
-    public String listAll(Model model){
-
-        List<Product> productList = productService.listAll();
-
-        model.addAttribute("listProducts", productList);
-
-        return "products/products";
-    }
-
     @GetMapping("/products")
-    public String listFirstPage(Model model){
-        return listByPage(1, model, "name", "asc", null, 0);
+    public String listFirstPage(){
+        return "redirect:/products/page/1?sortField=name&sortDir=asc&categoryId=0";
     }
 
     @GetMapping("/products/page/{pageNum}")
-    public String listByPage(@PathVariable(name = "pageNum") int pageNum, Model model,
-                             @Param("sortField") String sortField, @Param("sortDir") String sortDir,
-                             @Param("keyword") String keyword,
+    public String listByPage(@PagingAndSortingParam(listName = "listProducts", moduleURL = "/products")PagingAndSortingHelper helper,
+                             @PathVariable(name = "pageNum") int pageNum, Model model,
                              @Param("categoryId") Integer categoryId) {
 
-        Page<Product> page = productService.listByPage(pageNum, sortField, sortDir, keyword, categoryId);
-        List<Product> productList = page.getContent();
+        productService.listByPage(pageNum, helper, categoryId);
+
         List<Category> listCategories = categoryService.listCategoriesUsedInForm();
 
-        long startCount = (long) (pageNum - 1) * ProductService.PRODUCTS_PER_PAGE + 1;
-        long endCount = startCount + ProductService.PRODUCTS_PER_PAGE - 1;
-        if (endCount > page.getTotalElements()) {
-            endCount = page.getTotalElements();
-        }
-
-        String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
-
         if (categoryId != null) model.addAttribute("categoryId", categoryId);
-
-        model.addAttribute("currentPage", pageNum);
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("startCount", startCount);
-        model.addAttribute("endCount", endCount);
-        model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", reverseSortDir);
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("listProducts", productList);
-        model.addAttribute("moduleURL", "/products");
         model.addAttribute("listCategories", listCategories);
-
 
         return "products/products";
 
@@ -115,21 +85,24 @@ public class ProductController {
                               @AuthenticationPrincipal EShopUserDetails loggedUser,
                               RedirectAttributes redirectAttributes) throws IOException {
 
-        if (loggedUser.hasRole("Salesperson")) {
-            productService.saveProductPrice(product);
-            redirectAttributes.addFlashAttribute("message", "The Product price has been updated successfully!");
-        } else {
-            ProductSaveHelper.setProductDetails(detailNames, detailValues, detailIDs, product);
-            ProductSaveHelper.setMainImageName(mainImageMultipart, product);
-            ProductSaveHelper.setExistingExtraImageNames(imageIDs, imageNames, product);
-            ProductSaveHelper.setNewExtraImageNames(extraImageMultipart, product);
-
-            Product savedProd = productService.save(product);
-            ProductSaveHelper.saveUploadedImages(mainImageMultipart, extraImageMultipart, savedProd);
-            ProductSaveHelper.deleteRemovedOnFormExtraImages(product);
-
-            redirectAttributes.addFlashAttribute("message", "The Product has been saved successfully!");
+        if (!loggedUser.hasRole("Admin") && !loggedUser.hasRole("Editor")) {
+            if (loggedUser.hasRole("Salesperson")){
+                productService.saveProductPrice(product);
+                redirectAttributes.addFlashAttribute("message", "The Product price has been updated successfully!");
+                return "redirect:/products";
+            }
         }
+
+        ProductSaveHelper.setProductDetails(detailNames, detailValues, detailIDs, product);
+        ProductSaveHelper.setMainImageName(mainImageMultipart, product);
+        ProductSaveHelper.setExistingExtraImageNames(imageIDs, imageNames, product);
+        ProductSaveHelper.setNewExtraImageNames(extraImageMultipart, product);
+
+        Product savedProd = productService.save(product);
+        ProductSaveHelper.saveUploadedImages(mainImageMultipart, extraImageMultipart, savedProd);
+        ProductSaveHelper.deleteRemovedOnFormExtraImages(product);
+
+        redirectAttributes.addFlashAttribute("message", "The Product has been saved successfully!");
 
         return "redirect:/products";
     }

@@ -1,0 +1,9 @@
+1. создали класс CustomerUserDetails implements UserDetails, переписав методы
+2. создали класс CustomerUserDetailsService implements UserDetailsService, переписав методы
+3. доработали класс WebSecurityConfig:
+3.1. добавили бин для userDetailsService
+3.2. добавили метод public DaoAuthenticationProvider authenticationProvider()
+3.3. перегрузили метод void configure(AuthenticationManagerBuilder auth)
+3.4. добавили настройки авторизации в методе void configure(HttpSecurity http)
+4. создали html страницу login.html
+5. в Main контроллере добавили маппинг для страницы /login

@@ -22,7 +22,7 @@
                     <th class="hideable-column">Brand ID</th>
                     <th>Logo</th>
 <!--                    <th>Brand Name</th>-->
-                    <th th:replace="fragments :: column_link(${moduleURL}, 'name', 'Brand name', 'none')"></th>
+                    <th th:replace="fragments :: column_link('name', 'Brand name', 'none')"></th>
                     <th>Categories</th>
                     <th></th>
                 </tr>
@@ -66,7 +66,7 @@
             </div>
         </div>
 
-        <div th:replace="fragments :: pagination(${moduleURL}, 'Brands')"></div>
+        <div th:replace="fragments :: pagination('Brands')"></div>
 
         <div th:replace="modal_fragments :: modal_confirmation('Delete Confirmation')"></div>
 

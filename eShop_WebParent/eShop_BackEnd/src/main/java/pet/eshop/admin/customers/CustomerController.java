@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pet.eshop.admin.paging.PagingAndSortingHelper;
+import pet.eshop.admin.paging.PagingAndSortingParam;
 import pet.eshop.admin.settings.country.CountryRepository;
 import pet.eshop.common.entity.Country;
 import pet.eshop.common.entity.Customer;
@@ -25,38 +27,15 @@ public class CustomerController {
     private CountryRepository countryRepo;
 
     @GetMapping("/customers")
-    public String listFirstPage(Model model){
-        return listByPage(1, model, "firstName", "asc", null);
+    public String listFirstPage(){
+        return "redirect:/customers/page/1?sortField=firstName&sortDir=asc";
     }
 
     @GetMapping("/customers/page/{pageNum}")
-    public String listByPage(@PathVariable("pageNum") Integer pageNum, Model model,
-                             @Param("sortField") String sortField,
-                             @Param("sortDir") String sortDir,
-                             @Param("keyword") String keyword){
+    public String listByPage(@PagingAndSortingParam(listName = "listCustomers", moduleURL = "/customers") PagingAndSortingHelper helper,
+                             @PathVariable("pageNum") Integer pageNum){
 
-        Page<Customer> customersPage = service.getPage(pageNum, sortField, sortDir, keyword);
-        List<Customer> customerList = customersPage.getContent();
-
-        long startCount = (long) (pageNum - 1) * CustomerService.CUSTOMERS_PER_PAGE + 1;
-        long endCount = startCount + CustomerService.CUSTOMERS_PER_PAGE - 1;
-        if (endCount > customersPage.getTotalElements()) {
-            endCount = customersPage.getTotalElements();
-        }
-
-        String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
-
-        model.addAttribute("currentPage", pageNum);
-        model.addAttribute("totalPages", customersPage.getTotalPages());
-        model.addAttribute("startCount", startCount);
-        model.addAttribute("endCount", endCount);
-        model.addAttribute("totalItems", customersPage.getTotalElements());
-        model.addAttribute("listCustomers", customerList);
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", reverseSortDir);
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("moduleURL", "/customers");
+       service.listByPage(pageNum, helper);
 
         return "customers/customers";
     }

@@ -18,8 +18,8 @@
         <thead class="thead-dark">
           <tr>
             <th>ID</th>
-            <th th:replace="fragments :: column_link('/customers', 'firstName', 'First Name', 'none')"></th>
-            <th th:replace="fragments :: column_link('/customers', 'lastName', 'Last Name', 'none')"></th>
+            <th th:replace="fragments :: column_link('firstName', 'First Name', 'none')"></th>
+            <th th:replace="fragments :: column_link('lastName', 'Last Name', 'none')"></th>
             <th>E-mail</th>
             <th class="hideable-column">City</th>
             <th class="hideable-column">State</th>
@@ -53,11 +53,36 @@
         </tbody>
       </table>
     </div>
+    <div class="less-details">
+      <div th:each="customer : ${listCustomers}" class="row m-1">
+        <div class="col-4">
+          <span><b>[[${customer.fullName}]]</b></span>
+        </div>
+        <div class="col-8">
+          <div class="mb-1">
+            <span>[[${customer.country.name}]]</span>
+          </div>
+          <div>
+            <div th:replace="fragments :: entity_status(${customer.enabled}, 'Customer', '/customers/'+${customer.id} )"></div>
+            &nbsp;
+            <a class="fas fa-file-alt fa-2x icon-green link-detail"
+               th:href="@{'/customers/detail/' + ${customer.id}}"
+               title="View details of this customer"
+            ></a>
+            &nbsp;
+            <a th:replace="fragments :: entity_edit('/customers/edit/' + ${customer.id}, 'Customer')"></a>
+            &nbsp;
+            <a th:replace="fragments :: entity_delete('/customers/delete/' + ${customer.id}, 'Customer', ${customer.id})"></a>
+          </div>
+        </div>
+        <div>&nbsp;</div>
+      </div>
+    </div>
 
     <div th:replace="modal_fragments :: modal_confirmation('Delete Confirmation')"></div>
 
 
-    <div th:replace="fragments :: pagination('/customers', 'Customers')"></div>
+    <div th:replace="fragments :: pagination('Customers')"></div>
 
     <div class="modal fade" id="detailModal">
       <div class="modal-dialog modal-xl">
