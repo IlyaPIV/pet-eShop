@@ -4,6 +4,7 @@ import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pet.eshop.common.entity.AuthenticationType;
 import pet.eshop.common.entity.Country;
 import pet.eshop.common.entity.Customer;
 import pet.eshop.setting.CountryRepository;
@@ -56,6 +57,12 @@ public class CustomerService {
         } else {
             customerRepo.enable(customer.getId());
             return true;
+        }
+    }
+
+    public void updateAuthentication(Customer customer, AuthenticationType type){
+        if (customer.getAuthenticationType() != type){
+            customerRepo.updateAuthenticationType(customer.getId(), type);
         }
     }
 }

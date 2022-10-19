@@ -1,0 +1,5 @@
+1. добавили перечисление AuthenticationType (Database, Google, Facebook)
+2. в классе Customer добавили поле authenticationType + getter/setter
+3. на фронте в репозитории класса добавили метод чтобы установить тип авторизации всем юзерам
+4. в тестовом классе написали метод-тест чтобы установить тип авторизации всем позициям в БД
+5. добавили в CustomerService метод обновления типа авторизации - void updateAuthentication(..)

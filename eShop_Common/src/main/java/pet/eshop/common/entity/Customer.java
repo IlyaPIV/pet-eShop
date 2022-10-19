@@ -52,6 +52,9 @@ public class Customer {
     @Column(name = "verification_code", length = 64)
     private String verificationCode;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "authentication_type", length = 10)
+    private AuthenticationType authenticationType;
     /*
      *
      */
@@ -181,6 +184,14 @@ public class Customer {
 
     public void setVerificationCode(String verificationCode) {
         this.verificationCode = verificationCode;
+    }
+
+    public AuthenticationType getAuthenticationType() {
+        return authenticationType;
+    }
+
+    public void setAuthenticationType(AuthenticationType authenticationType) {
+        this.authenticationType = authenticationType;
     }
 
     /*

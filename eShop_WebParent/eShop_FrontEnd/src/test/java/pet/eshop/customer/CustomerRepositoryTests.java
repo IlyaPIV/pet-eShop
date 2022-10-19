@@ -6,6 +6,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
+import pet.eshop.common.entity.AuthenticationType;
 import pet.eshop.common.entity.Country;
 import pet.eshop.common.entity.Customer;
 
@@ -108,5 +109,17 @@ public class CustomerRepositoryTests {
 
         Customer customer = entityManager.find(Customer.class, customerId);
         assertThat(customer.isEnabled()).isTrue();
+    }
+
+    @Test
+    public void testUpdateAuthenticationType(){
+        Integer customerId = 1;
+        AuthenticationType type = AuthenticationType.FACEBOOK;
+
+        repo.updateAuthenticationType(1, type);
+
+        Customer customer = repo.findById(customerId).get();
+
+        assertThat(customer.getAuthenticationType()).isEqualTo(type);
     }
 }
