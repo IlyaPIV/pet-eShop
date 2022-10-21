@@ -1,6 +1,7 @@
 package pet.eshop.security;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -12,11 +13,20 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import pet.eshop.security.oauth.CustomerOAuth2UserService;
+import pet.eshop.security.oauth.OAuth2LoginSuccessHandler;
 
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private CustomerOAuth2UserService oAuth2UserService;
+    @Autowired
+    private OAuth2LoginSuccessHandler oAuth2LoginHandler;
+    @Autowired
+    private DatabaseLoginSuccessHandler databaseLoginHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -51,9 +61,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                     .loginPage("/login")
                     .usernameParameter("email")                     // вместо логина для авторизации
+                    .successHandler(databaseLoginHandler)
                     .permitAll()
-                .and().logout().permitAll()                         // для логаута
-                .and().rememberMe()                                 // включаем возможность "remember me"
+                .and()
+                .oauth2Login()
+                    .loginPage("/login")
+                    .userInfoEndpoint()
+                    .userService(oAuth2UserService)
+                    .and()
+                    .successHandler(oAuth2LoginHandler)
+                .and()
+                .logout().permitAll()                         // для логаута
+                .and()
+                .rememberMe()                                 // включаем возможность "remember me"
                     .key("1234567890_AbcDefgHijklmNOprs")           // теперь cookies сохраняются при рестарте приложения
                         .tokenValiditySeconds(7 * 24 * 60 * 60);    // время жизни cookies
     }

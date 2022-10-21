@@ -38,10 +38,15 @@ public class CustomerService {
         encodePassword(customer);
         customer.setEnabled(false);
         customer.setCreatedTime(new Date());
+        customer.setAuthenticationType(AuthenticationType.DATABASE);
 
         customer.setVerificationCode(RandomString.make(64));
 
         customerRepo.save(customer);
+    }
+
+    public Customer getCustomerByEmail(String email){
+        return customerRepo.findByEmail(email);
     }
 
     private void encodePassword(Customer customer){
@@ -60,9 +65,40 @@ public class CustomerService {
         }
     }
 
-    public void updateAuthentication(Customer customer, AuthenticationType type){
+    public void updateAuthenticationType(Customer customer, AuthenticationType type){
         if (customer.getAuthenticationType() != type){
             customerRepo.updateAuthenticationType(customer.getId(), type);
+        }
+    }
+
+    public void addNewCustomerOAuthLogin(String name, String email, String countryCode,
+                                         AuthenticationType authenticationType) {
+        Customer customer = new Customer();
+        customer.setEmail(email);
+        setName(name, customer);
+        customer.setEnabled(true);
+        customer.setCreatedTime(new Date());
+        customer.setAuthenticationType(authenticationType);
+        customer.setPassword("");
+        customer.setAddressLine1("");
+        customer.setCity("");
+        customer.setState("");
+        customer.setPhoneNumber("");
+        customer.setPostalCode("");
+        customer.setCountry(countryRepo.findByCode(countryCode));
+
+        customerRepo.save(customer);
+    }
+
+    private void setName(String name, Customer customer){
+        String[] nameArray = name.split(" ");
+        if (nameArray.length < 2) {
+            customer.setFirstName(name);
+            customer.setLastName("");
+        } else {
+            customer.setFirstName(nameArray[0]);
+            String lastName = name.replaceFirst(nameArray[0] + " ", "");
+            customer.setLastName(lastName);
         }
     }
 }

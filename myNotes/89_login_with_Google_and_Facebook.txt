@@ -3,3 +3,22 @@
 3. на фронте в репозитории класса добавили метод чтобы установить тип авторизации всем юзерам
 4. в тестовом классе написали метод-тест чтобы установить тип авторизации всем позициям в БД
 5. добавили в CustomerService метод обновления типа авторизации - void updateAuthentication(..)
+6. в pom файл фронта добавили зависимость spring-boot-starter-oauth2-client
+7. в google консоли настроили OAuth 2.0 Client IDs
+8. добавили настройки в application.yaml
+9. на странице авторизации добавили элемент Continue with Google
+10. на фронте в пакете security добавили пакет oauth, в него добавили класс CustomerOAuth2User
+11. в том же пакете добавили сервисный классс CustomerOAuth2UserService
+12. в этом сервисном классе перегрузили метод OAuth2User loadUser(..)
+13. в этом же пакете добавили класс OAuth2LoginSuccessHandler
+14. перегрузили в нем метод void onAuthenticationSuccess(..)
+15. настроили WebSecurityConfig класс для работы с oAuth2 авторизацией
+16. в CustomerService добавили метод проверки наличия пользователя с таким емейл:
+- обновляет метод авторизации, если существует
+- создает нового если такого пользователя в БД нет
+17. в пакете security добавили класс DatabaseLoginSuccessHandler (если вход под юзером из БД)
+18. донастроили WebSecurityConfig класс добавив обработчик хендлера этого класса
+19. настроили в админке developers.facebook.com
+20. донастроили application.yaml данными из facebook
+21. в CustomerOAuth2User классе добавили поле clientName, обновили кнструктор и добавили геттер к этому полю
+22.
