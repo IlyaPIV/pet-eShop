@@ -1,0 +1,7 @@
+1. в контроллере Customer сделали маппинг для @GetMapping("/account_details")
+2. в шаблонах страниц сделали форму account_form.html
+3. в контроллере добавили метод получения пользователя по емейлу исходя из разных вариантов аутентификации - getEmailOfAuthenticatedCustomer
+4. в Customer service добавили метод для сохранения изменений - void update(Customer customerInForm)
+5. в контроллере сделали маппинг для сохранения изменений -  @PostMapping("/update_account_details")
+6. в этом же методе добавили вызов методов для обновления информации в авторизированном пользователе (имя)
+7. в WebSecurity классе настоили безопаснось для "/account_details" и "/update_account_details"

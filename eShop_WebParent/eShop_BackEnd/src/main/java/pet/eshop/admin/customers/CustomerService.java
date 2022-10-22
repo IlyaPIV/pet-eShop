@@ -63,6 +63,7 @@ public class CustomerService {
         customerInForm.setEnabled(existingCustomer.isEnabled());
         customerInForm.setCreatedTime(existingCustomer.getCreatedTime());
         customerInForm.setVerificationCode(existingCustomer.getVerificationCode());
+        customerInForm.setAuthenticationType(existingCustomer.getAuthenticationType());
 
         repo.save(customerInForm);
     }

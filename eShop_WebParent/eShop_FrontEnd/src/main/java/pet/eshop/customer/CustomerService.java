@@ -4,6 +4,7 @@ import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 import pet.eshop.common.entity.AuthenticationType;
 import pet.eshop.common.entity.Country;
 import pet.eshop.common.entity.Customer;
@@ -101,4 +102,28 @@ public class CustomerService {
             customer.setLastName(lastName);
         }
     }
+
+    public void update(Customer customerInForm) {
+        Customer existingCustomer = customerRepo.findById(customerInForm.getId()).get();
+
+        if (existingCustomer.getAuthenticationType().equals(AuthenticationType.DATABASE)) {
+            if (customerInForm.getPassword().isEmpty()) {
+                customerInForm.setPassword(existingCustomer.getPassword());
+            } else {
+                encodePassword(customerInForm);
+            }
+        } else {
+            customerInForm.setPassword(existingCustomer.getPassword());
+        }
+
+        customerInForm.setEnabled(existingCustomer.isEnabled());
+        customerInForm.setCreatedTime(existingCustomer.getCreatedTime());
+        customerInForm.setVerificationCode(existingCustomer.getVerificationCode());
+        customerInForm.setAuthenticationType(existingCustomer.getAuthenticationType());
+
+        customerRepo.save(customerInForm);
+    }
+
+
+
 }
