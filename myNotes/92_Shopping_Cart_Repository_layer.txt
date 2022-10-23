@@ -1,0 +1,10 @@
+1. создали entity класс CartItem
+2. на фронте создали пакет shoppingcart и в нём репозиторий CartItemRepository
+3. в тестах создали такой же пакет и тестовый класс
+4. написали тесты для 5 методов:
+- saveItem
+- FindByCustomer
+- FindBuCustomerAndProduct
+- UpdateQuantity
+- DeleteByCustomerAndProduct
+5. для пункта 4 добавили в репозиторий нужные методы
