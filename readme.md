@@ -12,4 +12,4 @@ Used tehnologies:
 - FrontEnd: HTML/CSS, Bootstrap, FontAwesome, Thymeleaf, jQuery;
 - Tests: Spring Tests, Mockito, MockMVC;
 - Authentication & Autorization: Spring Security.
-- Other: Spring Boot Mail
+- Other: Spring Boot Mail, OAuth 2.0
