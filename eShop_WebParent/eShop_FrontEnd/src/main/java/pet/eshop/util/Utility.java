@@ -1,6 +1,10 @@
 package pet.eshop.util;
 
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.security.authentication.RememberMeAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import pet.eshop.security.oauth.CustomerOAuth2User;
 import pet.eshop.setting.EmailSettingBag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,5 +32,22 @@ public class Utility {
         mailSender.setJavaMailProperties(mailProperties);
 
         return mailSender;
+    }
+
+    public static String getEmailOfAuthenticatedCustomer(HttpServletRequest request){
+        Object principal = request.getUserPrincipal();
+        if (principal == null) return null;
+
+        String customerEmail = null;
+
+        if (principal instanceof UsernamePasswordAuthenticationToken
+                || principal instanceof RememberMeAuthenticationToken) {
+            customerEmail = request.getUserPrincipal().getName();
+        } else if (principal instanceof OAuth2AuthenticationToken token){
+            CustomerOAuth2User oAuth2User = (CustomerOAuth2User) token.getPrincipal();
+            customerEmail = oAuth2User.getEmail();
+        }
+
+        return customerEmail;
     }
 }

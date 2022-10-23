@@ -1,0 +1,6 @@
+1. обновили видимость элемента работы с корзиной на product_details.html в зависимости от статуса In stock
+2. создали сервисный класс ShoppingCartService и добавили в него метод добавления товара в корзину - addProduct(..)
+3. создали Rest Controller ShoppingCartRestController и добавили в него метод добавления товара в корзину - @PostMapping("/cart/add/{productId}/{quantity}")
+4. добавили новый js файл "add_to_cart" с методами работы с Rest Controller-а
+5. в ShoppingCartService добавили проверку на максимальное кол-во при добавлении, в случае чего - ошибка
+6. в Rest контроллере доработали перехват этой ошибки
