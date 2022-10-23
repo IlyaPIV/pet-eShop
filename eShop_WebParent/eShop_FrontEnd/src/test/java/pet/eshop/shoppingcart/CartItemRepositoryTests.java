@@ -10,7 +10,6 @@ import pet.eshop.common.entity.CartItem;
 import pet.eshop.common.entity.Customer;
 import pet.eshop.common.entity.Product;
 
-import javax.persistence.criteria.CriteriaBuilder;
 
 import java.util.List;
 
