@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import pet.eshop.common.entity.AuthenticationType;
 import pet.eshop.common.entity.Country;
 import pet.eshop.common.entity.Customer;
+import pet.eshop.common.exception.CustomerNotFoundException;
 import pet.eshop.setting.CountryRepository;
 
 import javax.transaction.Transactional;
@@ -120,10 +121,38 @@ public class CustomerService {
         customerInForm.setCreatedTime(existingCustomer.getCreatedTime());
         customerInForm.setVerificationCode(existingCustomer.getVerificationCode());
         customerInForm.setAuthenticationType(existingCustomer.getAuthenticationType());
+        customerInForm.setResetPasswordToken(existingCustomer.getResetPasswordToken());
 
         customerRepo.save(customerInForm);
     }
 
+    public String updateResetPasswordToken(String email) throws CustomerNotFoundException {
+        Customer customer = customerRepo.findByEmail(email);
+        if (customer != null) {
+            String token = RandomString.make(30);
+            customer.setResetPasswordToken(token);
+            customerRepo.save(customer);
 
+            return token;
+        } else {
 
+            throw new CustomerNotFoundException("Could not find any customer with email " + email);
+        }
+    }
+
+    public Customer getByResetPasswordToken(String token) {
+        return customerRepo.findByResetPasswordToken(token);
+    }
+
+    public void updatePassword(String token, String newPassword) throws CustomerNotFoundException {
+        Customer customer = customerRepo.findByResetPasswordToken(token);
+        if (customer == null) {
+            throw new CustomerNotFoundException("No customer found: Invalid token");
+        }
+
+        customer.setPassword(newPassword);
+        customer.setResetPasswordToken(null);
+        encodePassword(customer);
+        customerRepo.save(customer);
+    }
 }
