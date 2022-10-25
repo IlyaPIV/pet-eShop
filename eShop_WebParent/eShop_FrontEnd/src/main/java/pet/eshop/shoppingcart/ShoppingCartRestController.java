@@ -33,11 +33,12 @@ public class ShoppingCartRestController {
         }
     }
 
-    private Customer getAuthenticatedCustomer(HttpServletRequest request) throws CustomerNotFoundException {
+    public Customer getAuthenticatedCustomer(HttpServletRequest request) throws CustomerNotFoundException {
         String customerEmail = Utility.getEmailOfAuthenticatedCustomer(request);
         if (customerEmail == null) {
             throw new CustomerNotFoundException("No authenticated customer");
         }
         return customerService.getCustomerByEmail(customerEmail);
     }
+
 }

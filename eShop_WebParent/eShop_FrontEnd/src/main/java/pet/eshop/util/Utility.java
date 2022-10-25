@@ -1,16 +1,23 @@
 package pet.eshop.util;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.stereotype.Service;
+import pet.eshop.common.entity.Customer;
+import pet.eshop.common.exception.CustomerNotFoundException;
+import pet.eshop.customer.CustomerService;
 import pet.eshop.security.oauth.CustomerOAuth2User;
 import pet.eshop.setting.EmailSettingBag;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Properties;
 
+@Service
 public class Utility {
+
 
     public static String getSiteURL(HttpServletRequest request){
         String siteURL = request.getRequestURL().toString();
@@ -50,4 +57,6 @@ public class Utility {
 
         return customerEmail;
     }
+
+
 }

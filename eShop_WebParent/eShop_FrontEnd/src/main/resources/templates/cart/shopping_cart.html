@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments :: page_head('Shopping Cart', 'none')"></head>
+<body>
+<div class="container-fluid">
+    <div th:replace="navigation :: header_menu"></div>
+    <div th:replace="navigation :: search_nav"></div>
+    <div class="text-center">
+        <h1>Your Shopping Cart</h1>
+    </div>
+
+    <div class="row m-1">
+        <div class="col-sm-8">
+            <th:block th:each="item, status : ${cartItems}">
+                <div class="row border rounded p-1" th:with="product = ${item.product}">
+                    <div class="col-1">
+                        <div>[[${status.count}]]</div>
+                        <div>
+                            <a class="fas fa-trash" href=""></a>
+                        </div>
+                    </div>
+                    <div></div>
+                    <div class="col-3">
+                        <img th:src="@{${product.mainImagePath}}" class="img-fluid"/>
+                    </div>
+                    <div class="col-8">
+                        <div>
+                            <a th:href="@{'/p/' + ${product.alias}}" target="_blank"
+                                th:title="${product.name}">
+                                <b>[[${product.shortName}]]</b>
+                            </a>
+                        </div>
+                        <div th:replace="cart/quantity_control :: quantity_control(${item.quantity}, ${product.id})"></div>
+                        <div class="row">
+                            <span>X&nbsp;</span>
+                            <div th:replace="product/product_fragment :: product_price"></div>
+                        </div>
+                        <div class="row">
+                            <span>=&nbsp;</span>
+                            <span th:if="${CURRENCY_SYMBOL_POSITION == 'Before price'}" th:remove="tag">[[${CURRENCY_SYMBOL}]]</span>
+                            <span class="h4">[[${#numbers.formatDecimal(item.subtotal, 1, THOUSANDS_POINT_TYPE, DECIMAL_DIGITS, DECIMAL_POINT_TYPE)}]]</span>
+                            <span th:if="${CURRENCY_SYMBOL_POSITION == 'After price'}" th:remove="tag">[[${CURRENCY_SYMBOL}]]</span>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-1">&nbsp;</div>
+            </th:block>
+        </div>
+
+        <div class="col-sm-4" th:unless="${#lists.isEmpty(cartItems)}">
+            <div>
+                <span class="h3">Estimated Total:</span>
+            </div>
+            <div class="mt-2">
+                <span th:if="${CURRENCY_SYMBOL_POSITION == 'Before price'}" th:remove="tag">[[${CURRENCY_SYMBOL}]]</span>
+                <span class="h2">[[${#numbers.formatDecimal(estimatedTotal, 1, THOUSANDS_POINT_TYPE, DECIMAL_DIGITS, DECIMAL_POINT_TYPE)}]]</span>
+                <span th:if="${CURRENCY_SYMBOL_POSITION == 'After price'}" th:remove="tag">[[${CURRENCY_SYMBOL}]]</span>
+            </div>
+            <div class="mt-2">
+                <button class="btn btn-danger p-3">Check Out</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center" th:if="${#lists.isEmpty(cartItems)}">
+        <h3>You have not chosen any products yet.</h3>
+    </div>
+
+    <div th:replace="navigation :: footer_menu"></div>
+
+</div>
+</body>
+</html>

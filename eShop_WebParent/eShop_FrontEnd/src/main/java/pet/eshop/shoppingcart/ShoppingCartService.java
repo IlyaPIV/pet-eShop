@@ -6,6 +6,8 @@ import pet.eshop.common.entity.CartItem;
 import pet.eshop.common.entity.Customer;
 import pet.eshop.common.entity.Product;
 
+import java.util.List;
+
 @Service
 public class ShoppingCartService {
     @Autowired
@@ -32,5 +34,9 @@ public class ShoppingCartService {
         cartRepo.save(cartItem);
 
         return updatedQuantity;
+    }
+
+    public List<CartItem> cartItemList(Customer customer){
+        return cartRepo.findByCustomer(customer);
     }
 }
