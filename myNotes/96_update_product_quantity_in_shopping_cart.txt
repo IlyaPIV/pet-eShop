@@ -1,0 +1,6 @@
+1. в ShoppingCartService добавили метод float updateQuantity(..)
+2. в REST контроллере добавили маппинг String updateQuantity
+3. подключили к shopping_Cart.html файл js с таким же именем
+4. добавили в html страницу фрагмент модульного сообщения, а в js файл - методы с работой с количеством
+5. для работы с форматированием цифр в js скачали jquery number plugin с github, и извлекли из него js файл  jquery.number.min.js
+6.
