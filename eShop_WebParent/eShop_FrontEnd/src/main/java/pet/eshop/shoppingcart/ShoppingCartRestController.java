@@ -1,6 +1,7 @@
 package pet.eshop.shoppingcart;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,6 +52,17 @@ public class ShoppingCartRestController {
             return String.valueOf(subtotal);
         } catch (CustomerNotFoundException e) {
             return "You must login to change quantity of product in your cart.";
+        }
+    }
+
+    @DeleteMapping("/cart/remove/{productId}")
+    public String removeProduct(@PathVariable("productId") Integer productId, HttpServletRequest request){
+        try {
+            Customer customer = getAuthenticatedCustomer(request);
+            cartService.removeProduct(productId, customer);
+            return "The product was successfully removed from shopping cart.";
+        } catch (CustomerNotFoundException e) {
+            return "You must login to delete product from your cart.";
         }
     }
 }

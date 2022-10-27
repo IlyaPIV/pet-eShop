@@ -51,4 +51,8 @@ public class ShoppingCartService {
         return product.getDiscountPrice() * quantity;
     }
 
+    public void removeProduct(Integer productId, Customer customer){
+        cartRepo.deleteByCustomerAndProduct(customer.getId(), productId);
+    }
+
 }
