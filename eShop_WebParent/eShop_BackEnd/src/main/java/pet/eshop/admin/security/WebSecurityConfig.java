@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -63,7 +64,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().logout().permitAll()                         // для логаута
                 .and().rememberMe()                                 // включаем возможность "remember me"
                     .key("AbcDefgHijklmNOprs_1234567890")           // теперь cookies сохраняются при рестарте приложения
-                        .tokenValiditySeconds(7 * 24 * 60 * 60);    // время жизни cookies
+                        .tokenValiditySeconds(7 * 24 * 60 * 60)     // время жизни cookies
+                .and()
+                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
     }
 
     @Override
