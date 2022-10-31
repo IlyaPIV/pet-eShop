@@ -1,0 +1,9 @@
+1. на форму shopping_cart.html вынесли 3 переменных, которые заполняются из фильтра настроек:
+- decimalDigits
+- decimalPointType
+- thousandsPointType
+2. в js файле shopping_cart.html вынесли:
+- получение символов разделителей
+- добавили функцию function formatCurrency(amount) , которая форматирует число в зависимости от настроек
+- заменили в функциях updateSubtotal() и updateTotal() использование новой функции
+- добавили функцию clearCurrencyFormat() и вставили её вызов в parseFloat функции updateTotal()
