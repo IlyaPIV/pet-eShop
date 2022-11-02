@@ -1,0 +1,14 @@
+1. создали entity класс ShippingRate
+2. на бэке создали пакет shipping_rates
+3. добавили интерфейс репозитория, прописали в нём 4 метода:
+- public Page<ShippingRate> findAll(String keyword, Pageable pageable)
+- public ShippingRate findByCountryAndState(Integer countryID, String state)
+- public void updateCODSupport(Integer id, boolean enabled)
+- public Long countById(Integer id)
+4. создали класс для теста репозитория и сделали в нём методы:
+- void testCreateNew()
+- void testUpdate()
+- void testFindAll()
+- void testFindByCountryAndState()
+- void testUpdateCODSupport()
+- void testDelete()
