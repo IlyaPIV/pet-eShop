@@ -4,11 +4,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import pet.eshop.admin.paging.SearchRepository;
 import pet.eshop.common.entity.ShippingRate;
 
 
-public interface ShippingRatesRepository extends PagingAndSortingRepository<ShippingRate, Integer> {
+public interface ShippingRatesRepository extends SearchRepository<ShippingRate, Integer> {
 
     @Query("SELECT sr FROM ShippingRate sr WHERE sr.country.name LIKE %?1% OR sr.state LIKE %?1%")
     public Page<ShippingRate> findAll(String keyword, Pageable pageable);

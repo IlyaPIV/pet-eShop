@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('Shipping Rates - eShop Admin', 'none')"></head>
+<body>
+<div class="container-fluid">
+  <div th:replace="navigationMenu :: menu"></div>
+
+  <div>
+    <h2>Manage Shipping Rates</h2>
+    <a th:href="@{/shipping/new}" class="fas fa-solid fa-square-plus fa-2x icon-dark mr-2" title="Add new rate"></a>
+    &nbsp;
+    <a th:href="@{/shipping/export/csv}" class="fa-solid fa-file-csv fa-2x icon-dark mr-2 ml-2" title="Export to CSV"></a>
+  </div>
+
+  <div th:replace="fragments :: search_form_and_message"></div>
+
+  <div class="full-details">
+    <table class="table table-bordered table-striped table-hover table-responsive-xl">
+      <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th th:replace="fragments :: column_link('country', 'Country', 'none')"></th>
+        <th th:replace="fragments :: column_link('state', 'State', 'none')"></th>
+        <th>Rate</th>
+        <th>Days</th>
+        <th>COD Supported</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="rate : ${listShippingRates}">
+        <td>[[${rate.id}]]</td>
+        <td>[[${rate.country.name}]]</td>
+        <td>[[${rate.state}]]</td>
+        <td>[[${rate.rate}]]</td>
+        <td>[[${rate.days}]]</td>
+        <td>
+          <a th:if="${rate.codSupported == true}" class="fa-solid fa-hand-holding-usd fa-2x icon-green"
+             th:href="@{'/shipping/supported/false'}" th:title="'Turn supporting OFF'"></a>
+          <a th:if="${rate.codSupported != true}" class="fa-solid fa-hand-holding-usd fa-2x icon-red"
+             th:href="@{'/shipping/supported/true'}" th:title="'Turn supporting ON'"></a>
+        </td>
+        <td>
+          <a th:replace="fragments :: entity_edit('/shipping/edit/' + ${rate.id}, 'Shipping Rate')"></a>
+          &nbsp;
+          <a th:replace="fragments :: entity_delete('/shipping/delete/' + ${rate.id}, 'Shipping Rate', ${rate.id})"></a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="less-details">
+    <div th:each="rate : ${listShippingRates}" class="row m-1">
+      <div class="col-4">
+        <span><b>[[${rate.country.name}]]</b></span>
+        <div class="mb-1">
+          <span>[[${rate.state}]]</span>
+        </div>
+      </div>
+      <div class="col-8">
+        <div>
+          <a th:if="${rate.codSupported == true}" class="fa-solid fa-hand-holding-usd fa-2x icon-green"
+             th:href="@{'/shipping/supported/false'}" th:title="'Turn supporting OFF'"></a>
+          <a th:if="${rate.codSupported != true}" class="fa-solid fa-hand-holding-usd fa-2x icon-red"
+             th:href="@{'/shipping/supported/true'}" th:title="'Turn supporting ON'"></a>
+          &nbsp;
+          <a th:replace="fragments :: entity_edit('/shipping/edit/' + ${rate.id}, 'Shipping Rate')"></a>
+          &nbsp;
+          <a th:replace="fragments :: entity_delete('/shipping/delete/' + ${rate.id}, 'Shipping Rate', ${rate.id})"></a>
+        </div>
+      </div>
+      <div>&nbsp;</div>
+    </div>
+  </div>
+
+  <div th:replace="modal_fragments :: modal_confirmation('Delete Confirmation')"></div>
+
+
+  <div th:replace="fragments :: pagination('Shipping')"></div>
+
+  <div class="modal fade" id="detailModal">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+
+      </div>
+    </div>
+  </div>
+
+  <div th:replace="fragments :: footer"></div>
+
+</div>
+
+<script type="text/javascript">
+  moduleURL = "[[@{/shipping}]]";
+
+  $(document).ready(function (){
+    $(".link-delete").on("click", function (e){
+      e.preventDefault();
+      showDeleteConfirmModal($(this), 'rate');
+    });
+  });
+
+  $(".link-detail").on("click", function (e) {
+    e.preventDefault();
+    linkDetailURL = $(this).attr("href");
+
+    $("#detailModal").modal("show").find(".modal-content").load(linkDetailURL);
+  });
+
+</script>
+<script th:src="@{/js/common_list.js}"></script>
+</body>
+
+</html>

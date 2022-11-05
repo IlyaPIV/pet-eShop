@@ -1,0 +1,5 @@
+1. добавили Service класс и добавили в нём метод получения страницы списка - void listByPage(..)
+2. добавили контроллер класса и добавили маппинги для:
+- @GetMapping("/shipping")
+- @GetMapping("/shipping/page/{pageNum}")
+3. создали html страницу списка shipping_rates и настроили её
