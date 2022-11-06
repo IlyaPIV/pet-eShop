@@ -118,39 +118,8 @@
 <script>
     moduleURL = "[[@{/customers}]]";
     checkUniqieUrl = "[[@{/customers/check_unique}]]";
+    contextPath = "[[@{/}]]";
 
-    var dropDownCountry;
-    var dataStateList;
-    var fieldState;
-
-    $(document).ready(function (){
-        dropDownCountry = $("#country");
-        dataStateList = $("#listStates");
-        fieldState = $("#state")
-
-        dropDownCountry.on("change", function (){
-            loadStatesForCountry();
-            fieldState.val("").focus();
-        });
-
-        loadStatesForCountry();
-    });
-
-    function loadStatesForCountry() {
-        selectedCountry = $("#country option:selected");
-        countryId = selectedCountry.val();
-        url = "[[@{/states/list/}]]" + countryId;
-
-        $.get(url, function (responseJSON) {
-            dataStateList.empty();
-
-            $.each(responseJSON, function (index, state) {
-                $("<option>").val(state.name).text(state.name).appendTo(dataStateList);
-            });
-        }).fail(function () {
-            alert("failed to connect to the server!")
-        });
-    }
 
     function checkEmailUnique(form) {
         url = moduleURL + "/check_unique_email";
@@ -175,5 +144,6 @@
     }
 </script>
 <script th:src="@{/js/common_form.js}"></script>
+<script th:src="@{/js/common_form_country_state.js}"></script>
 </body>
 </html>

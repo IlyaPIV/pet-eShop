@@ -13,7 +13,7 @@ public interface ShippingRatesRepository extends SearchRepository<ShippingRate, 
     @Query("SELECT sr FROM ShippingRate sr WHERE sr.country.name LIKE %?1% OR sr.state LIKE %?1%")
     public Page<ShippingRate> findAll(String keyword, Pageable pageable);
 
-    @Query("SELECT sr FROM ShippingRate sr WHERE sr.country.id = ?1 AND sr.state LIKE ?2")
+    @Query("SELECT sr FROM ShippingRate sr WHERE sr.country.id = ?1 AND sr.state = ?2")
     public ShippingRate findByCountryAndState(Integer countryID, String state);
 
     @Query("UPDATE ShippingRate sr SET sr.codSupported = ?2 WHERE sr.id = ?1")

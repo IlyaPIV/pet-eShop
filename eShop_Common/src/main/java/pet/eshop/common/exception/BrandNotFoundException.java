@@ -1,4 +1,4 @@
-package pet.eshop.admin.brands;
+package pet.eshop.common.exception;
 
 public class BrandNotFoundException extends Exception {
     public BrandNotFoundException(String message) {

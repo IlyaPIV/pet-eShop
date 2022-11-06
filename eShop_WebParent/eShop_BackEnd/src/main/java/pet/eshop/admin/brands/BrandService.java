@@ -1,15 +1,12 @@
 package pet.eshop.admin.brands;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pet.eshop.admin.categories.CategoryService;
 import pet.eshop.admin.paging.PagingAndSortingHelper;
 import pet.eshop.common.entity.Brand;
 import pet.eshop.common.entity.Category;
+import pet.eshop.common.exception.BrandNotFoundException;
 
 import java.util.List;
 import java.util.NoSuchElementException;

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pet.eshop.admin.categories.CategoryDTO;
 import pet.eshop.common.entity.Brand;
 import pet.eshop.common.entity.Category;
+import pet.eshop.common.exception.BrandNotFoundException;
 
 
 import java.util.ArrayList;

@@ -37,9 +37,9 @@
         <td>[[${rate.days}]]</td>
         <td>
           <a th:if="${rate.codSupported == true}" class="fa-solid fa-hand-holding-usd fa-2x icon-green"
-             th:href="@{'/shipping/supported/false'}" th:title="'Turn supporting OFF'"></a>
+             th:href="@{'/shipping/cod/' + ${rate.id} + '/supported/false'}" th:title="'Turn supporting OFF'"></a>
           <a th:if="${rate.codSupported != true}" class="fa-solid fa-hand-holding-usd fa-2x icon-red"
-             th:href="@{'/shipping/supported/true'}" th:title="'Turn supporting ON'"></a>
+             th:href="@{'/shipping/cod/' + ${rate.id} + '/supported/true'}" th:title="'Turn supporting ON'"></a>
         </td>
         <td>
           <a th:replace="fragments :: entity_edit('/shipping/edit/' + ${rate.id}, 'Shipping Rate')"></a>
