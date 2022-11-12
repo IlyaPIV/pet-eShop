@@ -30,7 +30,7 @@ class AddressRepositoryTest {
         Integer countryId = 234; // USA
         Country country = entityManager.find(Country.class, countryId);
 
-        Integer customerId = 2;
+        Integer customerId = 37;
         Customer customer = entityManager.find(Customer.class, customerId);
 
         Address newAddress = new Address();

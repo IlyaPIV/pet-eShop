@@ -146,18 +146,19 @@ public class Address {
 
     @Override
     public String toString() {
-        return "Address{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", addressLine1='" + addressLine1 + '\'' +
-                ", addressLine2='" + addressLine2 + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", country=" + country +
-                ", postalCode='" + postalCode + '\'' +
-                ", customer=" + customer +
-                ", defaultForShipping=" + defaultForShipping +
-                '}';
+        StringBuilder address = new StringBuilder(firstName);
+
+        if (lastName!= null && !lastName.isEmpty()) address.append(" ").append(lastName);
+        if (!addressLine1.isBlank()) address.append(", ").append(addressLine1);
+        if (addressLine2 != null && !addressLine2.isEmpty()) address.append(", ").append(addressLine2);
+        if (!city.isBlank()) address.append(", ").append(city);
+        if (state != null && !state.isBlank()) address.append(", ").append(state);
+        address.append(", ").append(country.getName());
+        if (!postalCode.isBlank()) address.append(". Postal Code: ").append(postalCode);
+        if (!phoneNumber.isBlank()) address.append(". Phone Number: ").append(phoneNumber);
+
+        return address.toString();
     }
+
+
 }
