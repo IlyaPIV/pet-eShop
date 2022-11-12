@@ -1,0 +1,6 @@
+1. создали Entity класс Address настроив поля
+2. на фронте создали пакет addressBook и в нём интерфейс репозитория, добавили в него 3 метода:
+- List<Address> findByCustomer(Customer customer)
+- Address findByIdAndCustomer(Integer id, Customer customer)
+- void deleteByIdAndCustomer(Integer id, Customer customer)
+3. Создали тестовый класс AddressRepositoryTest и проверили методы репозитория
