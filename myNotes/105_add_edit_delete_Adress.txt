@@ -1,0 +1,18 @@
+1. в сервисном классе добавили 3 метода:
+- Address get(Integer addressId, Integer customerId)
+- void save(Address address)
+- void delete(Integer addressId, Integer customerId)
+2. в контроллере добавили маппинги для следующих запросов:
+- @GetMapping("/address_book/new")
+- @PostMapping("/address_book/save")
+- @GetMapping("/address_book/edit/{id}")
+- @GetMapping("/address_book/delete/{id}")
+3. на html форме списка адресов добавили:
+- кнопку для добавления нового адреса
+- блок всплывающего сообщения
+- в карточках адресов добавили кнопки редактирования и удаления адреса
+4. Создали html форму адреса, схожую с формой регистрации
+5. В CustomerController доработали маппинг @PostMapping("/update_account_details") для редиректа в список адресов
+6. На html форме account_form добавили скрытое поле redirect
+7. В html фрагментах добавили новый шаблонный блок - confirm_modal
+8. В html форме addresses добавили новый блок confirm_modal, а так же добавили js скрипты для работы с подтверждением удаления
