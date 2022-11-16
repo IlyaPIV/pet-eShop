@@ -1,0 +1,6 @@
+1. добавили в AddressRepository 2 метода:
+- setDefaultAddress(id)
+- setNonDefaultForOthers(addressId, customerId)
+2. в AddressService добавили метод setDefaultAddress(id, customer);
+3. в контроллере класса добавили маппинг  @GetMapping("/address_book/default/{id}")
+4.

@@ -12,8 +12,11 @@ import java.util.List;
 @Transactional
 public class AddressService {
 
-    @Autowired
-    private AddressRepository repository;
+    private final AddressRepository repository;
+
+    public AddressService(AddressRepository repository) {
+        this.repository = repository;
+    }
 
     public List<Address> addressList(Customer customer){
         return repository.findByCustomer(customer);
@@ -29,5 +32,12 @@ public class AddressService {
 
     public void delete(Integer addressId, Integer customerId){
         repository.deleteByIdAndCustomerId(addressId, customerId);
+    }
+
+    public void setDefaultAddress(Integer defaultAddressId, Customer customer){
+        if (defaultAddressId > 0) {
+            repository.setDefaultAddress(defaultAddressId);
+        }
+        repository.setNonDefaultForOthers(defaultAddressId, customer.getId());
     }
 }
