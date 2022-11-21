@@ -1,0 +1,10 @@
+1. Создали перечисления PaymentMethod и OrderStatus
+2. Создали entity Order
+3. Создали entity OrderDetail
+4. создали интерфейс репозитория OrderRepository
+5. создали тестовый класс для репозитория с методами:
+    - testCreateOrder();
+    - testListOrder();
+    - testUpdateOrder();
+    - testGetOrder();
+    - testDeleteOrder();

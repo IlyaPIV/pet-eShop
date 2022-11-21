@@ -93,6 +93,12 @@
             <artifactId>webjars-locator-core</artifactId>
             <version>0.52</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>
