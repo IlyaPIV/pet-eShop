@@ -94,4 +94,13 @@ public class Order {
         setState(customer.getState());
         setPostalCode(customer.getPostalCode());
     }
+
+    @Transient
+    public String getDestination(){
+        String destination = city + ", ";
+        if (state != null && !state.isEmpty()) destination += state + ", ";
+        destination += country;
+
+        return destination;
+    }
 }

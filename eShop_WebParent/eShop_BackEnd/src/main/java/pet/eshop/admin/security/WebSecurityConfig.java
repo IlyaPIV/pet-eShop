@@ -48,24 +48,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                 .hasAuthority("Admin")         // права авторизации
                 .antMatchers("/categories/**" , "/brands/**")
                                 .hasAnyAuthority("Admin", "Editor")
-                .antMatchers("/products", "/products/", "/products/detail/**","/products/page/**")
-                                .hasAnyAuthority("Admin", "Editor","Salesperson", "Shipper")
                 .antMatchers("/products/new", "products/delete/**")
                                 .hasAnyAuthority("Admin", "Editor")
                 .antMatchers("/products/edit/**", "/products/save", "/products/check_unique")
                                 .hasAnyAuthority("Admin", "Editor", "Salesperson")
+                .antMatchers("/products", "/products/", "/products/detail/**","/products/page/**")
+                                .hasAnyAuthority("Admin", "Editor","Salesperson", "Shipper")
                 .antMatchers("/products/**")
                                 .hasAnyAuthority("Admin", "Editor")
-                .antMatchers("/shipping/**")
+                .antMatchers("/shipping/**", "/customers/**", "/orders/**")
                                 .hasAnyAuthority("Admin", "Salesperson")
                 .anyRequest().authenticated()
                 .and()
-                    .formLogin().loginPage("/login")
-                    .usernameParameter("email")                     // вместо логина для авторизации
-                    .permitAll()
+                    .formLogin()
+                        .loginPage("/login")
+                        .usernameParameter("email")                     // вместо логина для авторизации
+                        .permitAll()
                 .and().logout().permitAll()                         // для логаута
-                .and().rememberMe()                                 // включаем возможность "remember me"
-                    .key("AbcDefgHijklmNOprs_1234567890")           // теперь cookies сохраняются при рестарте приложения
+                .and()
+                    .rememberMe()                                 // включаем возможность "remember me"
+                        .key("AbcDefgHijklmNOprs_1234567890")           // теперь cookies сохраняются при рестарте приложения
                         .tokenValiditySeconds(7 * 24 * 60 * 60)     // время жизни cookies
                 .and()
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);

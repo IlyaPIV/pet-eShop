@@ -1,0 +1,9 @@
+1. в OrderRepository добавили метод findAll с собственным запросом поиска по ключевому слову
+2. на бэке в пакете orders добавили сервисный класс OrderService:
+- в нём добавили метод listByPage(..)
+3. в сервисном классе SettingService добавили метод получения настроек валюты - List<Setting> getCurrencySettings()
+4. в пакете orders добавили контроллер OrderController:
+- добавили базовый маппинг для получения страниц с заказами
+5. в WebSecurityConfig настроили права для запросов к "/orders/**"
+6. в шаблонах создали orders.html, настроили его (добавив пару фрагментов в fragments.html)
+7. в классе Order добавили @Transient поле destination

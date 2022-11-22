@@ -48,7 +48,7 @@
                             </div>
                         </li>
                     </th:block>
-                    <th:block sec:authorize="hasAnyAuthority('Admin','Salesperson','Editor','Shipper')">
+                    <th:block sec:authorize="hasAnyAuthority('Admin', 'Salesperson', 'Editor', 'Shipper')">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown"
                                th:href="@{/products}">Products</a>
@@ -59,32 +59,32 @@
                             </div>
                         </li>
                     </th:block>
-                    <th:block sec:authorize="hasAnyAuthority('Admin','Salesperson')">
+                    <th:block sec:authorize="hasAnyAuthority('Admin', 'Salesperson')">
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/customers}">Customers</a>
                         </li>
                     </th:block>
-                    <th:block sec:authorize="hasAnyAuthority('Admin','Salesperson','Shipper')">
+                    <th:block sec:authorize="hasAnyAuthority('Admin', 'Salesperson', 'Shipper')">
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/orders}">Orders</a>
                         </li>
                     </th:block>
-                    <th:block sec:authorize="hasAnyAuthority('Admin','Salesperson')">
+                    <th:block sec:authorize="hasAnyAuthority('Admin', 'Salesperson')">
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/shipping}">Shipping</a>
                         </li>
                     </th:block>
-                    <th:block sec:authorize="hasAnyAuthority('Admin','Salesperson')">
+                    <th:block sec:authorize="hasAnyAuthority('Admin', 'Salesperson')">
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/report}">Sales Reports</a>
                         </li>
                     </th:block>
-                    <th:block sec:authorize="hasAnyAuthority('Admin','Editor')">
+                    <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/articles}">Articles</a>
                         </li>
                     </th:block>
-                    <th:block sec:authorize="hasAnyAuthority('Admin','Editor')">
+                    <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/menus}">Menus</a>
                         </li>

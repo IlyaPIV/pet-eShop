@@ -54,13 +54,26 @@
         </div>
     </div>
 
+    <div th:fragment="format_currency(amount)" th:remove="tag">
+        <span th:if="${CURRENCY_SYMBOL_POSITION == 'Before price'}" th:remove="tag">
+            [[${CURRENCY_SYMBOL}]]
+        </span>
+        [[${#numbers.formatDecimal(amount, 1, THOUSANDS_POINT_TYPE, DECIMAL_DIGITS, DECIMAL_POINT_TYPE)}]]
+        <span th:if="${CURRENCY_SYMBOL_POSITION == 'After price'}" th:remove="tag">
+            [[${CURRENCY_SYMBOL}]]
+        </span>
+    </div>
+
+    <div th:fragment="format_time(dateTime)" th:remove="tag">
+        <span th:text="${#dates.format(dateTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+    </div>
+
     <div th:fragment="entity_status(enabled, entityName, entityURL)" th:remove="tag">
         <a th:if="${enabled == true}" class="fa-solid fa-toggle-on fa-2x icon-green"
             th:href="@{${entityURL} + '/enabled/false' }" th:title="'Disable this ' + ${entityName}"></a>
         <a th:if="${enabled != true}" class="fa-solid fa-toggle-off fa-2x icon-red"
            th:href="@{${entityURL} + '/enabled/true'}" th:title="'Enable this ' + ${entityName}"></a>
     </div>
-
 
     <a th:fragment="entity_edit(editURL, entityName)" class="fas fa-edit fa-2x icon-green"
            th:href="@{${editURL}}" th:title="'Edit this ' + ${entityName}"></a>
