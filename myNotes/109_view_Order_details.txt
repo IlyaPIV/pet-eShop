@@ -1,0 +1,5 @@
+1. создали класс-ошибку OrderNotFoundException
+2. в сервисе OrderService добавили метод получения заказа по id - getOrder(Integer id)
+3. в контроллере настроили маппинг для запроса @GetMapping("/orders/detail/{id}")
+4. на форме orders.html настроили блок модального окна с деталями и js функцию нажатия на кнопку просмотра деталей
+5. создали и настроили order_detail_modal.html страницу

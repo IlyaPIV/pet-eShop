@@ -9,6 +9,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pet.eshop.admin.paging.PagingAndSortingHelper;
 import pet.eshop.common.entity.Order;
+import pet.eshop.common.exception.OrderNotFoundException;
+
+import java.util.NoSuchElementException;
 
 @Service
 public class OrderService {
@@ -40,4 +43,13 @@ public class OrderService {
         }
         helper.updateModelAttributes(pageNum, page);
     }
+
+    public Order getOrder(Integer id) throws OrderNotFoundException {
+        try {
+            return repo.findById(id).get();
+        } catch (NoSuchElementException ex) {
+            throw new OrderNotFoundException("Could not find any orders with ID " + id);
+        }
+    }
+
 }
