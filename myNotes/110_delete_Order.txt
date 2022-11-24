@@ -1,0 +1,5 @@
+1. в OrderRepository добавили 2 метода:
+- countById(id)
+2. в сервисном классе добавили метод void deleteOrder(Integer id)
+3. в контроллере настроили маппинг для @GetMapping("/orders/delete/{id}")
+4. на форме orders.html добавили функцию перехвата удаления для выдачи запроса подтверждения операции
