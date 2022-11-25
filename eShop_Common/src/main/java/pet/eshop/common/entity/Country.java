@@ -1,16 +1,19 @@
 package pet.eshop.common.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "countries")
-public class Country{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+@Getter
+@Setter
+@NoArgsConstructor
+public class Country extends IdBasedEntity{
 
     @Column(length = 64, nullable = false, unique = true)
     private String name;
@@ -25,9 +28,6 @@ public class Country{
     /*
      *
      */
-
-    public Country() {
-    }
 
     public Country(String name, String code) {
         this.name = name;
@@ -44,41 +44,6 @@ public class Country{
         this.id = countryId;
     }
 
-    /*
-     *
-     */
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-//
-//    public Set<State> getStates() {
-//        return states;
-//    }
-//
-//    public void setStates(Set<State> states) {
-//        this.states = states;
-//    }
 
     /*
      *

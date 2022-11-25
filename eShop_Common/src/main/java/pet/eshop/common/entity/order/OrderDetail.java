@@ -1,8 +1,10 @@
-package pet.eshop.common.entity;
+package pet.eshop.common.entity.order;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pet.eshop.common.entity.IdBasedEntity;
+import pet.eshop.common.entity.product.Product;
 
 import javax.persistence.*;
 
@@ -12,10 +14,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class OrderDetail {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class OrderDetail extends IdBasedEntity {
 
     private int quantity;
 

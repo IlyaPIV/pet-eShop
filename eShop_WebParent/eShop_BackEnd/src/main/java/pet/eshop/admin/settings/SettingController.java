@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pet.eshop.admin.util.FileUploadUtil;
 import pet.eshop.common.entity.Currency;
-import pet.eshop.common.entity.Setting;
+import pet.eshop.common.entity.setting.Setting;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;

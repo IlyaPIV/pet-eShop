@@ -1,7 +1,6 @@
-package pet.eshop.common.entity;
+package pet.eshop.common.entity.setting;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "settings")

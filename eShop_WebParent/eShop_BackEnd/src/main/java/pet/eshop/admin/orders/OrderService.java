@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pet.eshop.admin.paging.PagingAndSortingHelper;
-import pet.eshop.common.entity.Order;
+import pet.eshop.common.entity.order.Order;
 import pet.eshop.common.exception.OrderNotFoundException;
 
 import java.util.NoSuchElementException;

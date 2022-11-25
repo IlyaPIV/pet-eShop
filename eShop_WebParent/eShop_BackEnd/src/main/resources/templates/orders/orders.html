@@ -84,9 +84,9 @@
                    title="View details of this order"
                 ></a>
                 &nbsp;
-                <div th:replace="fragments :: edit('order', '/orders/edit/' + ${order.id})"></div>
+                <a th:replace="fragments :: entity_edit('/orders/edit/' + ${order.id}, 'Order')"></a>
                 &nbsp;
-                <div th:replace="fragments :: delete('order', ${order.id}, '/orders/delete/' + ${order.id}, true)"></div>
+                <a th:replace="fragments :: entity_delete('/orders/delete/' + ${order.id}, 'Order', ${order.id})"></a>
               </div>
             </div>
           </div>

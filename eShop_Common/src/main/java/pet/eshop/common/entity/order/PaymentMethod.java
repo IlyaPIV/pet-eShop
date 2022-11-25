@@ -1,4 +1,4 @@
-package pet.eshop.common.entity;
+package pet.eshop.common.entity.order;
 
 public enum PaymentMethod {
     COD,

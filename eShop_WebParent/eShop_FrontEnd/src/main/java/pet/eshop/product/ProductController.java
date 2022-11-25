@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import pet.eshop.category.CategoryService;
 import pet.eshop.common.entity.Category;
-import pet.eshop.common.entity.Product;
+import pet.eshop.common.entity.product.Product;
 import pet.eshop.common.exception.CategoryNotFoundException;
 import pet.eshop.common.exception.ProductNotFoundException;
 

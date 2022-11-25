@@ -1,7 +1,7 @@
 package pet.eshop.setting;
 
-import pet.eshop.common.entity.Setting;
-import pet.eshop.common.entity.SettingBag;
+import pet.eshop.common.entity.setting.Setting;
+import pet.eshop.common.entity.setting.SettingBag;
 
 import java.util.List;
 

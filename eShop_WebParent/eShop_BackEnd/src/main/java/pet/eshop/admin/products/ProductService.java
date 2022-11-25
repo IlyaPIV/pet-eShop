@@ -2,12 +2,10 @@ package pet.eshop.admin.products;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pet.eshop.admin.paging.PagingAndSortingHelper;
-import pet.eshop.common.entity.Product;
+import pet.eshop.common.entity.product.Product;
 import pet.eshop.common.exception.ProductNotFoundException;
 
 import javax.transaction.Transactional;

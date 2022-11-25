@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import pet.eshop.admin.util.FileUploadUtil;
-import pet.eshop.common.entity.Product;
-import pet.eshop.common.entity.ProductImage;
+import pet.eshop.common.entity.product.Product;
+import pet.eshop.common.entity.product.ProductImage;
 
 import java.io.IOException;
 import java.nio.file.Files;

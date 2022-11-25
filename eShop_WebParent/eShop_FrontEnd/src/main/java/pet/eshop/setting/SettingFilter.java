@@ -2,7 +2,7 @@ package pet.eshop.setting;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pet.eshop.common.entity.Setting;
+import pet.eshop.common.entity.setting.Setting;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

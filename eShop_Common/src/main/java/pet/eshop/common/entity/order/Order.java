@@ -1,8 +1,11 @@
-package pet.eshop.common.entity;
+package pet.eshop.common.entity.order;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pet.eshop.common.entity.AbstractAddress;
+import pet.eshop.common.entity.Customer;
+import pet.eshop.common.entity.IdBasedEntity;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,28 +17,9 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Order {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column(name = "first_name", nullable = false, length = 45)
-    private String firstName;
-    @Column(name = "last_name", nullable = false, length = 45)
-    private String lastName;
-    @Column(name = "phone_number", nullable = false, length = 15)
-    private String phoneNumber;
-    @Column(name = "address_line1", nullable = false, length = 64)
-    private String addressLine1;
-    @Column(name = "address_line2", length = 64)
-    private String addressLine2;
-    @Column(name = "city", nullable = false, length = 45)
-    private String city;
-    @Column(name = "state", nullable = false, length = 45)
-    private String state;
+public class Order extends AbstractAddress {
     @Column(name = "country", nullable = false, length = 45)
     private String country;
-    @Column(name = "postal_code", nullable = false, length = 10)
-    private String postalCode;
 
     private Date orderTime;
 

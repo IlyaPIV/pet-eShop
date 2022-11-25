@@ -8,7 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 import pet.eshop.common.entity.CartItem;
 import pet.eshop.common.entity.Customer;
-import pet.eshop.common.entity.Product;
+import pet.eshop.common.entity.product.Product;
 
 
 import java.util.List;

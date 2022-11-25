@@ -6,8 +6,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 import pet.eshop.admin.settings.SettingRepository;
-import pet.eshop.common.entity.Setting;
-import pet.eshop.common.entity.SettingCategory;
+import pet.eshop.common.entity.setting.Setting;
+import pet.eshop.common.entity.setting.SettingCategory;
 
 import java.util.List;
 

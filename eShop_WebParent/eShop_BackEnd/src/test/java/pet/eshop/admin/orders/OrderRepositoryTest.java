@@ -7,9 +7,13 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 import pet.eshop.common.entity.*;
+import pet.eshop.common.entity.order.Order;
+import pet.eshop.common.entity.order.OrderDetail;
+import pet.eshop.common.entity.order.OrderStatus;
+import pet.eshop.common.entity.order.PaymentMethod;
+import pet.eshop.common.entity.product.Product;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;

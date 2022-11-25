@@ -2,8 +2,8 @@ package pet.eshop.setting;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import pet.eshop.common.entity.Setting;
-import pet.eshop.common.entity.SettingCategory;
+import pet.eshop.common.entity.setting.Setting;
+import pet.eshop.common.entity.setting.SettingCategory;
 
 import java.util.List;
 

@@ -1,14 +1,18 @@
 package pet.eshop.common.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "currencies")
-public class Currency {
+@NoArgsConstructor
+@Getter
+@Setter
+public class Currency extends IdBasedEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
     @Column(nullable = false, length = 64)
     private String name;
     @Column(nullable = false, length = 3)
@@ -20,48 +24,10 @@ public class Currency {
      *
      */
 
-    public Currency() {
-    }
 
     public Currency(String name, String symbol, String code) {
         this.name = name;
         this.symbol = symbol;
-        this.code = code;
-    }
-
-    /*
-     *
-     */
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
         this.code = code;
     }
 

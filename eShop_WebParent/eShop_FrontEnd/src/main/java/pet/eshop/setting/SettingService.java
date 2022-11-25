@@ -2,10 +2,9 @@ package pet.eshop.setting;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pet.eshop.common.entity.Setting;
-import pet.eshop.common.entity.SettingCategory;
+import pet.eshop.common.entity.setting.Setting;
+import pet.eshop.common.entity.setting.SettingCategory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

@@ -1,14 +1,18 @@
 package pet.eshop.common.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "shipping_rates")
-public class ShippingRate {
+@NoArgsConstructor
+@Getter
+@Setter
+public class ShippingRate extends IdBasedEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
     @ManyToOne
     @JoinColumn(name = "country_id", nullable = false)
     private Country country;
@@ -22,68 +26,14 @@ public class ShippingRate {
     private boolean codSupported;
 
     /*
-    *
+    * CONSTRUCTORS
      */
 
-    public ShippingRate() {
-    }
+
 
     /*
-    *
+    * METHODS
      */
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public float getRate() {
-        return rate;
-    }
-
-    public void setRate(float rate) {
-        this.rate = rate;
-    }
-
-    public int getDays() {
-        return days;
-    }
-
-    public void setDays(int days) {
-        this.days = days;
-    }
-
-    public boolean isCodSupported() {
-        return codSupported;
-    }
-
-    public void setCodSupported(boolean codSupported) {
-        this.codSupported = codSupported;
-    }
-
-    /*
-    *
-     */
-
 
 
 }

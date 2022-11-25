@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pet.eshop.common.entity.CartItem;
 import pet.eshop.common.entity.Customer;
-import pet.eshop.common.entity.Product;
+import pet.eshop.common.entity.product.Product;
 import pet.eshop.product.ProductRepository;
 
 import javax.transaction.Transactional;

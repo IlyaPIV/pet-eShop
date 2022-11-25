@@ -1,7 +1,6 @@
 package pet.eshop.admin.products;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -20,7 +19,7 @@ import pet.eshop.admin.security.EShopUserDetails;
 import pet.eshop.admin.util.FileUploadUtil;
 import pet.eshop.common.entity.Brand;
 import pet.eshop.common.entity.Category;
-import pet.eshop.common.entity.Product;
+import pet.eshop.common.entity.product.Product;
 import pet.eshop.common.exception.ProductNotFoundException;
 
 import java.io.IOException;

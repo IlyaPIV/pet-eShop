@@ -1,13 +1,19 @@
 package pet.eshop.common.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import pet.eshop.common.entity.product.Product;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "cart_items")
-public class CartItem {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+@Getter
+@Setter
+@NoArgsConstructor
+public class CartItem extends IdBasedEntity{
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
@@ -20,47 +26,10 @@ public class CartItem {
     /*
     * CONSTRUCTOR
      */
-    public CartItem() {
-    }
+
 
     /*
-    * GETTER and SETTER
-     */
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    /*
-    *
+    * METHODS
      */
 
     @Override

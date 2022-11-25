@@ -1,16 +1,19 @@
 package pet.eshop.common.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "brands")
-public class Brand {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+@Getter
+@Setter
+@NoArgsConstructor
+public class Brand extends IdBasedEntity{
 
     @Column(name = "name", nullable = false, length = 45, unique = true)
     private String name;
@@ -27,9 +30,6 @@ public class Brand {
     /*
      * КОНСТРУКТОРЫ
      */
-
-    public Brand() {
-    }
 
     public Brand(String name) {
         this.name = name;
@@ -56,43 +56,6 @@ public class Brand {
         this.categories = categories;
     }
 
-
-
-    /*
-     * ГЕТТЕРЫ И СЕТТЕРЫ
-     */
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLogo() {
-        return logo;
-    }
-
-    public void setLogo(String logo) {
-        this.logo = logo;
-    }
-
-    public Set<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
-    }
 
     /*
      * МЕТОДЫ

@@ -9,8 +9,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pet.eshop.admin.paging.PagingAndSortingHelper;
 import pet.eshop.admin.paging.PagingAndSortingParam;
 import pet.eshop.admin.settings.SettingService;
-import pet.eshop.common.entity.Order;
-import pet.eshop.common.entity.Setting;
+import pet.eshop.common.entity.order.Order;
+import pet.eshop.common.entity.setting.Setting;
 import pet.eshop.common.exception.OrderNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
