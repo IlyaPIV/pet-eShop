@@ -40,4 +40,8 @@ public class AddressService {
         }
         repository.setNonDefaultForOthers(defaultAddressId, customer.getId());
     }
+
+    public Address getDefaultAddress(Customer customer){
+        return repository.findDefaultByCustomer(customer.getId());
+    }
 }

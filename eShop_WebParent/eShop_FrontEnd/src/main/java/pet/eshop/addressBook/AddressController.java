@@ -105,6 +105,12 @@ public class AddressController {
         Customer customer = getAuthenticatedCustomer(request);
         addressService.setDefaultAddress(addressId, customer);
 
-        return "redirect:/address_book";
+        String redirectOption = request.getParameter("redirect");
+        String redirectUrl = "redirect:/address_book";
+        if ("cart".equals(redirectOption)) {
+            redirectUrl = "redirect:/cart";
+        }
+
+        return redirectUrl;
     }
 }

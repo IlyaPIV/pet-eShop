@@ -1,0 +1,12 @@
+1. на фронте в AddressRepository добавили мтеод получения адреса "по умолчанию"
+2. в сервисном классе добавили метод вызова предыдущего из репозитория - Address getDefaultAddress(Customer customer)
+3. создали новый пакет shipping, в него добавили интерфейс ShippingRateRepository
+4. в этот репозиторий добавили метод получения стоимости доставки - ShippingRate findByCountryAndState(Country country, String state)
+5. добавили сервисный класс ShippingRateService и в нём 2 метода:
+- public ShippingRate getShippingRateForCustomer(Customer customer)
+- public ShippingRate getShippingRateForAddress(Address address)
+6. обновили в ShoppingCartController-е метод для  @GetMapping("/cart")
+7. доработали html форму shopping_cart
+8. в CustomerController доработали метод @PostMapping("/update_account_details") для редиректра в корзину
+9. в AddressController доработали метод @GetMapping("/address_book/default/{id}") для редиректа в корзину
+10.

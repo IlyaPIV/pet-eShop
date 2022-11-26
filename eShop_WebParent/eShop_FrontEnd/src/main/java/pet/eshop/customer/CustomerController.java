@@ -110,8 +110,11 @@ public class CustomerController {
 
         String redirectOption = request.getParameter("redirect");
         String redirectUrl = "redirect:/account_details";
-
-        if ("address_book".equals(redirectOption)) redirectUrl = "redirect:/address_book";
+        if ("address_book".equals(redirectOption)) {
+            redirectUrl = "redirect:/address_book";
+        } else if ("cart".equals(redirectOption)) {
+            redirectUrl = "redirect:/cart";
+        }
 
         return redirectUrl;
     }
