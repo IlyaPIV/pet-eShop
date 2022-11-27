@@ -1,0 +1,8 @@
+1. в checkout.html форме добавили передачу параметра редиректа в ссылке на адресную книгу:
+- <a th:href="@{/address_book(redirect=checkout)}">[Ship to another address]</a>
+2. настроили addresses.html для работы с редиректом:
+- видимость и надписи полей работы с адресом
+- вызовы методов редактирования и добавления адресов с передачей параметров редиректа
+3. обновили AddressController в маппинге @GetMapping("/address_book/default/{id}") для редиректа в checkout
+4. там же обновили @PostMapping("/address_book/save") для сохранения параметра редиректа в случае редактирования
+5. в CustomerController доработали метод @PostMapping("/update_account_details") для сохранения редиректа в checkout при редактировании адреса

@@ -114,6 +114,8 @@ public class CustomerController {
             redirectUrl = "redirect:/address_book";
         } else if ("cart".equals(redirectOption)) {
             redirectUrl = "redirect:/cart";
+        } else if ("checkout".equals(redirectOption)) {
+            redirectUrl = "redirect:/address_book?redirect=checkout";
         }
 
         return redirectUrl;

@@ -71,7 +71,13 @@ public class AddressController {
 
         ra.addFlashAttribute("message", "The address has been saved successfully.");
 
-        return "redirect:/address_book";
+        String redirectOption = request.getParameter("redirect");
+        String redirectUrl = "redirect:/address_book";
+        if ("checkout".equals(redirectOption)) {
+            redirectUrl += "?redirect=checkout";
+        }
+
+        return redirectUrl;
     }
 
     @GetMapping("/address_book/edit/{id}")
@@ -109,6 +115,8 @@ public class AddressController {
         String redirectUrl = "redirect:/address_book";
         if ("cart".equals(redirectOption)) {
             redirectUrl = "redirect:/cart";
+        } else if ("checkout".equals(redirectOption)) {
+            redirectUrl = "redirect:/checkout";
         }
 
         return redirectUrl;
