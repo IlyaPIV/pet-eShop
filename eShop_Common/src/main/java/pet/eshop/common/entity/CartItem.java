@@ -22,6 +22,8 @@ public class CartItem extends IdBasedEntity{
     private Product product;
 
     private int quantity;
+    @Transient
+    private float shippingCost;
 
     /*
     * CONSTRUCTOR
@@ -45,5 +47,10 @@ public class CartItem extends IdBasedEntity{
     @Transient
     public float getSubtotal(){
         return product.getDiscountPrice() * quantity;
+    }
+
+    @Transient
+    public float getShippingCost(){
+        return shippingCost;
     }
 }
