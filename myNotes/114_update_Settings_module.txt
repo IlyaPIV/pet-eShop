@@ -1,0 +1,5 @@
+1. на бэке в SettingService добавили метод получения платежных настроек - public List<Setting> getPaymentSettings()
+2. обновили страницу mail_templates.html, добавив вставку фрагмента order_confirmation.html
+3. в settings.html в js добавили richText к полю orderConfirmationContent
+4. добавили новыф html фрагмент в настройках payment.html и вставили его в settings.html
+5. в SettingController добавили метод сохранения платёжных настроек, настроив маппинг для @PostMapping("/settings/save_payment")

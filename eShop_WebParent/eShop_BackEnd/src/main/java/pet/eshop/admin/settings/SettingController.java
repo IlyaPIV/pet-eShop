@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 public class SettingController {
@@ -91,7 +92,7 @@ public class SettingController {
 
     @PostMapping("/settings/save_mail_server")
     public String saveMailServerSettings(HttpServletRequest request,
-                                 RedirectAttributes redirectAttributes){
+                                            RedirectAttributes redirectAttributes){
         List<Setting> mailServerSettings = service.getMailServerSettings();
 
         updateSettingValuesFromForm(request, mailServerSettings);
@@ -102,12 +103,23 @@ public class SettingController {
 
     @PostMapping("/settings/save_mail_templates")
     public String saveMailTemplateSettings(HttpServletRequest request,
-                                         RedirectAttributes redirectAttributes){
+                                            RedirectAttributes redirectAttributes){
         List<Setting> mailTemplateSettings = service.getMailTemplateSettings();
 
         updateSettingValuesFromForm(request, mailTemplateSettings);
         redirectAttributes.addFlashAttribute("message", "Mail templates settings have been saved.");
 
         return "redirect:/settings";
+    }
+
+    @PostMapping("/settings/save_payment")
+    public String savePaymentSettings(HttpServletRequest request,
+                                      RedirectAttributes redirectAttributes) {
+        List<Setting> paymentSettings = service.getPaymentSettings();
+        updateSettingValuesFromForm(request, paymentSettings);
+
+        redirectAttributes.addFlashAttribute("message", "Payment settings have been saved");
+
+        return "redirect:/settings#payment";
     }
 }
