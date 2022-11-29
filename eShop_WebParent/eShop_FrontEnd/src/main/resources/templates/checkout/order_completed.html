@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('eShop', 'none')"></head>
+<body>
+<div class="container-fluid">
+    <div th:replace="navigation :: header_menu"></div>
+    <div th:replace="navigation :: search_nav"></div>
+
+    <div class="text-center border border-secondary rounded m-3 p-3">
+        <h2>Your Order has been created.</h2>
+    </div>
+
+    <div th:replace="navigation :: footer_menu"></div>
+
+</div>
+</body>
+</html>

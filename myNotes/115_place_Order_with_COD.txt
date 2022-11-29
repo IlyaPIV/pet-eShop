@@ -1,0 +1,9 @@
+1. на фронте создали интерфейс OrderRepository
+2. в entity классе Order добавили метод копирования данных адреса из Address - public void copyShippingAddress(Address address)
+3. на фронте создали сервисный класс OrderService:
+- создали метод создания нового заказа
+4. в CartItemRepository добавили метод удаления позиций покупателя - void deleteByCustomer(Customer customer)
+5. в ShoppingCartService добавили метод для вызова очистки корзины - void deleteByCustomer(Customer customer)
+6. в CheckoutController добавили метод создания заказа - маппинг для @PostMapping("/place_order")
+7. в WebSecurityConfig добавили требование авторизации для "/checkout" и "/place_order"
+8. создали order_completed.html для отображения при успешном создании заказа

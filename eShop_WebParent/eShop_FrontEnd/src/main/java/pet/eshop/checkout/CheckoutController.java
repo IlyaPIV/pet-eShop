@@ -4,12 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import pet.eshop.addressBook.AddressService;
 import pet.eshop.common.entity.Address;
 import pet.eshop.common.entity.CartItem;
 import pet.eshop.common.entity.Customer;
 import pet.eshop.common.entity.ShippingRate;
+import pet.eshop.common.entity.order.PaymentMethod;
 import pet.eshop.customer.CustomerService;
+import pet.eshop.order.OrderService;
 import pet.eshop.shipping.ShippingRateService;
 import pet.eshop.shoppingcart.ShoppingCartService;
 import pet.eshop.util.Utility;
@@ -24,6 +27,7 @@ public class CheckoutController {
     @Autowired private AddressService addressService;
     @Autowired private ShippingRateService shipService;
     @Autowired private ShoppingCartService cartService;
+    @Autowired private OrderService orderService;
 
     @GetMapping("/checkout")
     public String showCheckoutPage(Model model, HttpServletRequest request){
@@ -52,5 +56,30 @@ public class CheckoutController {
         String customerEmail = Utility.getEmailOfAuthenticatedCustomer(request);
 
         return customerService.getCustomerByEmail(customerEmail);
+    }
+
+    @PostMapping("/place_order")
+    public String placeOrder(HttpServletRequest request) {
+        String paymentType = request.getParameter("paymentMethod");
+        PaymentMethod paymentMethod = PaymentMethod.valueOf(paymentType);
+
+        Customer customer = getAuthenticatedCustomer(request);
+        ShippingRate shippingRate = null;
+        Address defaultAddress = addressService.getDefaultAddress(customer);
+        if (defaultAddress != null) {
+
+            shippingRate = shipService.getShippingRateForAddress(defaultAddress);
+        } else {
+
+            shippingRate = shipService.getShippingRateForCustomer(customer);
+        }
+
+        List<CartItem> cartItems = cartService.cartItemList(customer);
+        CheckoutInfo checkoutInfo = checkoutService.prepareCheckout(cartItems, shippingRate);
+
+        orderService.createOrder(customer, defaultAddress, cartItems, paymentMethod, checkoutInfo);
+        cartService.deleteByCustomer(customer);
+
+        return "checkout/order_completed";
     }
 }

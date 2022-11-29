@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pet.eshop.common.entity.AbstractAddress;
+import pet.eshop.common.entity.Address;
 import pet.eshop.common.entity.Customer;
 import pet.eshop.common.entity.IdBasedEntity;
 
@@ -86,5 +87,17 @@ public class Order extends AbstractAddress {
         destination += country;
 
         return destination;
+    }
+
+    public void copyShippingAddress(Address address) {
+        setFirstName(address.getFirstName());
+        setLastName(address.getLastName());
+        setPhoneNumber(address.getPhoneNumber());
+        setAddressLine1(address.getAddressLine1());
+        setAddressLine2(address.getAddressLine2());
+        setCity(address.getCity());
+        setCountry(address.getCountry().getName());
+        setState(address.getState());
+        setPostalCode(address.getPostalCode());
     }
 }

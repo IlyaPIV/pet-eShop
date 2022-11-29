@@ -56,7 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.authorizeRequests().anyRequest().permitAll();    //  позволяет логиниться минуя окно авторизации
         http.authorizeRequests()
                 .antMatchers("/account_details", "/update_account_details",
-                        "/cart", "/address_book/**").authenticated()   // только для авторизованных
+                        "/cart", "/address_book/**", "/checkout", "/place_order").authenticated()   // только для авторизованных
                 .anyRequest().permitAll()                               // всё остальное и без авторизации
                 .and()
                 .formLogin()
