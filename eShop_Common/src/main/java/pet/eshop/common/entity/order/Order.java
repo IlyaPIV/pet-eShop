@@ -100,4 +100,20 @@ public class Order extends AbstractAddress {
         setState(address.getState());
         setPostalCode(address.getPostalCode());
     }
+
+    @Transient
+    public String getShippingAddress(){
+        StringBuilder address = new StringBuilder(firstName);
+
+        if (lastName!= null && !lastName.isEmpty()) address.append(" ").append(lastName);
+        if (!addressLine1.isBlank()) address.append(", ").append(addressLine1);
+        if (addressLine2 != null && !addressLine2.isEmpty()) address.append(", ").append(addressLine2);
+        if (!city.isBlank()) address.append(", ").append(city);
+        if (state != null && !state.isBlank()) address.append(", ").append(state);
+        address.append(", ").append(country);
+        if (!postalCode.isBlank()) address.append(". Postal Code: ").append(postalCode);
+        if (!phoneNumber.isBlank()) address.append(". Phone Number: ").append(phoneNumber);
+
+        return address.toString();
+    }
 }

@@ -10,9 +10,12 @@ import pet.eshop.common.entity.Customer;
 import pet.eshop.common.exception.CustomerNotFoundException;
 import pet.eshop.customer.CustomerService;
 import pet.eshop.security.oauth.CustomerOAuth2User;
+import pet.eshop.setting.CurrencySettingBag;
 import pet.eshop.setting.EmailSettingBag;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Properties;
 
 @Service
@@ -56,6 +59,39 @@ public class Utility {
         }
 
         return customerEmail;
+    }
+
+    public static String formatCurrency(float amount, CurrencySettingBag currencySettings) {
+        String symbol = currencySettings.getSymbol();
+        String symbolPosition = currencySettings.getSymbolPosition();
+        String decimalPointType = currencySettings.getDecimalPointType();
+        String thousandsPointType = currencySettings.getThousandsPointType();
+        int decimalDigits = currencySettings.getDecimalDigits();
+
+        StringBuilder pattern = new StringBuilder(symbolPosition.equals("Before price") ? symbol : "");
+        pattern.append("###,###");
+        if (decimalDigits > 0 ){
+            pattern.append(".");
+            pattern.append("#".repeat(decimalDigits));
+        }
+        pattern.append(symbolPosition.equals("After price") ? symbol : "");
+
+        char thousandSeparator = switch (thousandsPointType) {
+            case "POINT" -> '.';
+            case "COMMA" -> ',';
+            case "WHITESPACE" -> ' ';
+            default -> Character.MIN_VALUE;
+        };
+
+        char decimalSeparator = decimalPointType.equals("POINT") ? '.' : ',';
+
+        DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance();
+        decimalFormatSymbols.setDecimalSeparator(decimalSeparator);
+        decimalFormatSymbols.setGroupingSeparator(thousandSeparator);
+
+        DecimalFormat formatter = new DecimalFormat(pattern.toString(), decimalFormatSymbols);
+
+        return formatter.format(amount);
     }
 
 

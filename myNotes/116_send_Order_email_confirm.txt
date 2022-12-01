@@ -1,0 +1,19 @@
+1. настроили в настройках шаблон письма подтверждения заказа.
+2. на фронте в классе EmailSettingBag добавили методы получения значений:
+- String getOrderConfirmationSubject()
+- String getOrderConfirmationContent()
+3. создали класс CurrencySettingBag extends SettingBag, добавили в нём методы получения настроек валюты:
+- public String getSymbol()
+- public String getSymbolPosition()
+- public String getDecimalPointType()
+- public String getThousandsPointType()
+- public int getDecimalDigits()
+4. в класс SettingService добавили метод получения настроек валюты:
+- public CurrencySettingBag getCurrencySettings()
+5. в Utility класс добавили метод форматирования суммы в строку:
+- public static String formatCurrency(float amount)
+6. в классе Order добавили @Transient метод получения строки адреса доставки:
+- public String getShippingAddress()
+7. в CheckoutController-е в маппинге оформления заказа @PostMapping("/place_order")
+добавили вызов метода отправки письма с подтверждением заказа:
+- private void sendOrderConfirmationEmail(..)
