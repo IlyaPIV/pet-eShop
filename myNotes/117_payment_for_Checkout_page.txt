@@ -1,0 +1,22 @@
+1. завели sandbox аккаунт payPal
+2. в https://developer.paypal.com/ под основной учеткой завели sandbox API для приложения
+3. ввели полученые значения для настроек в админке бэкенда
+4. на фронте в пакете setting Добавили класс PaymentSettingBag и в нём методы получения значений настроек:
+- public String getUrl()
+- public String getClientID()
+- public String getClientSecret()
+5. в классе SettingService добавили метод получения настроек платежей:
+- public PaymentSettingBag getPaymentSettings()
+6. в SettingRepository добавили метод получения настройки по ключу:
+- public Setting findByKey(String key);
+7. создали интерфейс CurrencyRepository
+8. в SettingService добавили метод получения кода валюты оплаты в магазине:
+- public String getCurrencyCode()
+9. в контроллере CheckoutController доработали метод маппинга @GetMapping("/checkout"):
+- на фронт передаём данные клиента, кода валюты и айди PayPal
+10. в классе CheckoutInfo добавили метод получения суммы заказа под формат Paypal:
+- public String getPaymentTotalForPaypal()
+11. доработали на фронте checkout.html:
+- добавили скрипты paypal
+- добавили блок кнопок оплаты paypal с id="paypal-button-container"
+- добавили скрипты работы с кнопками оплаты

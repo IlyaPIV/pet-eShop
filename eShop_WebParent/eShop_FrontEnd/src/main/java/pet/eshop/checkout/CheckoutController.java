@@ -18,6 +18,7 @@ import pet.eshop.customer.CustomerService;
 import pet.eshop.order.OrderService;
 import pet.eshop.setting.CurrencySettingBag;
 import pet.eshop.setting.EmailSettingBag;
+import pet.eshop.setting.PaymentSettingBag;
 import pet.eshop.setting.SettingService;
 import pet.eshop.shipping.ShippingRateService;
 import pet.eshop.shoppingcart.ShoppingCartService;
@@ -58,6 +59,12 @@ public class CheckoutController {
         }
         List<CartItem> cartItems = cartService.cartItemList(customer);
         CheckoutInfo checkoutInfo = checkoutService.prepareCheckout(cartItems, shippingRate);
+        String currencyCode = settingService.getCurrencyCode();
+        PaymentSettingBag paymentSettings = settingService.getPaymentSettings();
+
+        model.addAttribute("paypalClientId", paymentSettings.getClientID());
+        model.addAttribute("customer", customer);
+        model.addAttribute("currencyCode", currencyCode);
         model.addAttribute("checkoutInfo", checkoutInfo);
         model.addAttribute("cartItems", cartItems);
 

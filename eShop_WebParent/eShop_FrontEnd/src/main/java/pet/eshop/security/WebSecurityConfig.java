@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -55,8 +56,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 //        http.authorizeRequests().anyRequest().permitAll();    //  позволяет логиниться минуя окно авторизации
         http.authorizeRequests()
-                .antMatchers("/account_details", "/update_account_details",
-                        "/cart", "/address_book/**", "/checkout", "/place_order").authenticated()   // только для авторизованных
+                .antMatchers("/account_details", "/update_account_details", "/orders/**",
+                        "/cart", "/address_book/**", "/checkout", "/place_order", "/reviews/**",
+                         "/process_paypal_order", "/write_review/**", "/post_review").authenticated()   // только для авторизованных
                 .anyRequest().permitAll()                               // всё остальное и без авторизации
                 .and()
                 .formLogin()
@@ -74,9 +76,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().permitAll()                         // для логаута
                 .and()
-                .rememberMe()                                 // включаем возможность "remember me"
+                .rememberMe()                                       // включаем возможность "remember me"
                     .key("1234567890_AbcDefgHijklmNOprs")           // теперь cookies сохраняются при рестарте приложения
-                        .tokenValiditySeconds(7 * 24 * 60 * 60);    // время жизни cookies
+                        .tokenValiditySeconds(7 * 24 * 60 * 60)     // время жизни cookies
+                .and().
+                    sessionManagement()
+                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
     }
 
     @Override

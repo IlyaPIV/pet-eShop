@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -25,4 +26,8 @@ public class CheckoutInfo {
         return calendar.getTime();
     }
 
+    public String getPaymentTotalForPaypal(){
+        DecimalFormat formatter = new DecimalFormat("###,###.##");
+        return formatter.format(paymentTotal);
+    }
 }
