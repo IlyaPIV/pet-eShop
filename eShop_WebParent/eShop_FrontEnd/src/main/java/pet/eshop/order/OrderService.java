@@ -59,8 +59,12 @@ public class OrderService {
     }
 
     private static void fillNewOrderCommonData(PaymentMethod paymentMethod, CheckoutInfo checkoutInfo, Order newOrder) {
+        if (paymentMethod.equals(PaymentMethod.PAYPAL)) {
+            newOrder.setStatus(OrderStatus.PAID);
+        } else {
+            newOrder.setStatus(OrderStatus.NEW);
+        }
         newOrder.setOrderTime(new Date());
-        newOrder.setStatus(OrderStatus.NEW);
         newOrder.setProductsCost(checkoutInfo.getProductCost());
         newOrder.setSubtotal(checkoutInfo.getProductTotal());
         newOrder.setShippingCost(checkoutInfo.getShippingCostTotal());
