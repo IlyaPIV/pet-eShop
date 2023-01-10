@@ -7,13 +7,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 import pet.eshop.common.entity.*;
-import pet.eshop.common.entity.order.Order;
-import pet.eshop.common.entity.order.OrderDetail;
-import pet.eshop.common.entity.order.OrderStatus;
-import pet.eshop.common.entity.order.PaymentMethod;
+import pet.eshop.common.entity.order.*;
 import pet.eshop.common.entity.product.Product;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -152,6 +150,30 @@ class OrderRepositoryTest {
 
         Optional<Order> order = repository.findById(orderId);
         assertThat(order).isNotPresent();
+    }
+
+    @Test
+    public void testUpdateOrderTracks() {
+        Integer orderId = 7;
+        Order order = repository.findById(orderId).get();
+
+        OrderTrack newTrack = new OrderTrack();
+        newTrack.setOrder(order);
+        newTrack.setStatus(OrderStatus.PACKAGED);
+        newTrack.setUpdatedTime(new Date());
+        newTrack.setNotes(OrderStatus.PACKAGED.defaultDescription());
+
+        OrderTrack processingTrack = new OrderTrack();
+        processingTrack.setOrder(order);
+        processingTrack.setStatus(OrderStatus.PICKED);
+        processingTrack.setUpdatedTime(new Date());
+        processingTrack.setNotes(OrderStatus.PICKED.defaultDescription());
+
+        order.getOrderTracks().addAll(List.of(newTrack, processingTrack));
+
+        Order updatedOrder = repository.save(order);
+
+        assertThat(updatedOrder.getOrderTracks()).hasSizeGreaterThan(0);
     }
 
 }
