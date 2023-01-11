@@ -9,6 +9,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pet.eshop.admin.paging.PagingAndSortingHelper;
 import pet.eshop.admin.paging.PagingAndSortingParam;
 import pet.eshop.admin.settings.SettingService;
+import pet.eshop.common.entity.Country;
 import pet.eshop.common.entity.order.Order;
 import pet.eshop.common.entity.setting.Setting;
 import pet.eshop.common.exception.OrderNotFoundException;
@@ -74,6 +75,26 @@ public class OrderController {
             ra.addFlashAttribute("message", ex.getMessage());
         }
         return defaultRedirectURL;
+    }
+
+    @GetMapping("/orders/edit/{id}")
+    public String editOrder(@PathVariable("id") Integer id, Model model, RedirectAttributes ra,
+                            HttpServletRequest request) {
+        try {
+            Order order = orderService.getOrder(id);
+
+            List<Country> countryList = orderService.listAllCountries();
+
+            model.addAttribute("pageTitle", "Edit Order (ID: " + id + ")");
+            model.addAttribute("order", order);
+            model.addAttribute("listCountries", countryList);
+
+            return "orders/order_form";
+
+        } catch (OrderNotFoundException ex) {
+            ra.addFlashAttribute("message", ex.getMessage());
+            return defaultRedirectURL;
+        }
     }
 
 }

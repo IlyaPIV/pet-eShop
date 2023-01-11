@@ -1,0 +1,6 @@
+1. в сервисе OrderService добавили метод получения списка всех стран - List<Country> listAllCountries()
+2. в контроллере OrderController добавили маппинг для редактирования - @GetMapping("/orders/edit/{id}")
+3. добавили html форму order_form.html
+3.1. добавили форму-фрагмент order_form_overview.html для вкладки Overview
+3.2. добавили форму-фрагмент order_form_shipping.html для вкладки Shipping
+4. в классе Order добавили @Transient метод получения даты для html формы - public String getDeliverDateOnForm()

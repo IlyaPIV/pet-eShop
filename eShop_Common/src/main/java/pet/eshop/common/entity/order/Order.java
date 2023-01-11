@@ -6,9 +6,10 @@ import lombok.Setter;
 import pet.eshop.common.entity.AbstractAddress;
 import pet.eshop.common.entity.Address;
 import pet.eshop.common.entity.Customer;
-import pet.eshop.common.entity.IdBasedEntity;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Entity
@@ -117,5 +118,11 @@ public class Order extends AbstractAddress {
         if (!phoneNumber.isBlank()) address.append(". Phone Number: ").append(phoneNumber);
 
         return address.toString();
+    }
+
+    @Transient
+    public String getDeliverDateOnForm(){
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormatter.format(this.deliverDate);
     }
 }

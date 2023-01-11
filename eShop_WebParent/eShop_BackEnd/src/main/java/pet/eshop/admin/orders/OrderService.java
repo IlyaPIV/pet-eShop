@@ -8,9 +8,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pet.eshop.admin.paging.PagingAndSortingHelper;
+import pet.eshop.admin.settings.country.CountryRepository;
+import pet.eshop.common.entity.Country;
 import pet.eshop.common.entity.order.Order;
 import pet.eshop.common.exception.OrderNotFoundException;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -18,6 +21,8 @@ public class OrderService {
     private static final int ORDERS_PER_PAGE = 10;
 
     @Autowired private OrderRepository repo;
+    @Autowired
+    private CountryRepository countryRepository;
 
     public void listByPage(int pageNum, PagingAndSortingHelper helper){
         String sortField = helper.getSortField();
@@ -61,4 +66,7 @@ public class OrderService {
         repo.deleteById(id);
     }
 
+    public List<Country> listAllCountries() {
+        return countryRepository.findAllByOrderByNameAsc();
+    }
 }
