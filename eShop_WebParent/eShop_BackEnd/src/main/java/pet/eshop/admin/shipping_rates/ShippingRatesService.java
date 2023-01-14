@@ -3,9 +3,11 @@ package pet.eshop.admin.shipping_rates;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pet.eshop.admin.paging.PagingAndSortingHelper;
+import pet.eshop.admin.products.ProductRepository;
 import pet.eshop.admin.settings.country.CountryRepository;
 import pet.eshop.common.entity.Country;
 import pet.eshop.common.entity.ShippingRate;
+import pet.eshop.common.entity.product.Product;
 import pet.eshop.common.exception.ShippingRateAlreadyExistsException;
 import pet.eshop.common.exception.ShippingRateNotFoundException;
 
@@ -19,8 +21,11 @@ public class ShippingRatesService {
     private ShippingRatesRepository repository;
     @Autowired
     private CountryRepository countryRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
     public final static int RATES_PER_PAGE = 10;
+    private static final int DIM_DIVISOR = 139; //139 or 163 - for inches, 4000 or 5000 - for sm.
 
     public void listByPage(Integer pageNum, PagingAndSortingHelper helper) {
         helper.listEntities(pageNum, RATES_PER_PAGE, repository);
@@ -75,5 +80,21 @@ public class ShippingRatesService {
         }
 
         repository.deleteById(id);
+    }
+
+    public float calculateShippingCost(Integer productId, Integer countryId,
+                                       String state) throws ShippingRateNotFoundException {
+        ShippingRate shippingRate = repository.findByCountryAndState(countryId, state);
+
+        if (shippingRate == null) {
+            throw new ShippingRateNotFoundException("No shipping rate found for the given"
+            + " destination. You have to enter shipping cost manually.");
+        }
+
+        Product product = productRepository.findById(productId).orElseThrow();
+        float dimWeight = (product.getLength() * product.getWidth() * product.getHeight()) / DIM_DIVISOR;
+        float finalWeight = Math.max(product.getWeight(), dimWeight);
+
+        return finalWeight * shippingRate.getRate();
     }
 }

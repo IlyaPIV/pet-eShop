@@ -1,0 +1,3 @@
+1. В ShippingRatesService добавили метод получения стоимости доставки - float calculateShippingCost(..)
+2. Настроили WebSecurityConfig для url "/get_shipping_cost"
+3. добавили REST контроллер ShippingRatesRestController и добавили маппинг для обработки запроса из п.2
