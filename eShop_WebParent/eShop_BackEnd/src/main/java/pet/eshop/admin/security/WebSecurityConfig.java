@@ -71,6 +71,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         .tokenValiditySeconds(7 * 24 * 60 * 60)     // время жизни cookies
                 .and()
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
+
+        http.headers().frameOptions().sameOrigin();
     }
 
     @Override

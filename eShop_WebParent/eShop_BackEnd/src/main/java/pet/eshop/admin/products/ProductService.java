@@ -18,6 +18,8 @@ import java.util.NoSuchElementException;
 public class ProductService {
 
     public static final int PRODUCTS_PER_PAGE = 10;
+    public static final int PRODUCT_PER_SEARCH_PAGE = 5;
+
     @Autowired
     private ProductRepository repo;
 
@@ -47,6 +49,15 @@ public class ProductService {
                 page = repo.findAll(pageable);
             }
         }
+
+        helper.updateModelAttributes(pageNum, page);
+    }
+
+    public void searchProducts(int pageNum, PagingAndSortingHelper helper) {
+        Pageable pageable = helper.createPageable(PRODUCT_PER_SEARCH_PAGE, pageNum);
+        String keyword = helper.getKeyword();
+
+        Page<Product> page = repo.searchProductByName(keyword, pageable);
 
         helper.updateModelAttributes(pageNum, page);
     }

@@ -1,0 +1,13 @@
+1. в ProductRepository добавили метод поиска по имени - public Page<Product> searchProductByName(..)
+2. добавили в сервисный класс ProductService метод - public void searchProducts(int pageNum, PagingAndSortingHelper helper)
+3. добавили на html форму order_form_products.html кнопку вызова модального окна добавления продуктов
+4. добавили модульный фрагмент add_product_modal.html
+5. в форме order_form.html вставили подстановку этого модального фрагмента и ссылку на новый файл js из п.6
+6. добавили в проект новый файл скриптов order_form_add_product.js
+7. добавили html фрагмент search_product.html
+8. добавили в пакет orders класс ProductSearchController и настроили маппинг для:
+- @GetMapping("/orders/search_product");
+- @PostMapping("/orders/search_product")
+- @GetMapping("/orders/search_product/page/{pageNum}")
+9. добавили в WebSecurityConfig настройку хедеров - http.headers().frameOptions().sameOrigin();
+10.
