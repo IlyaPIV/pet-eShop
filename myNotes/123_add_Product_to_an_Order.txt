@@ -10,4 +10,9 @@
 - @PostMapping("/orders/search_product")
 - @GetMapping("/orders/search_product/page/{pageNum}")
 9. добавили в WebSecurityConfig настройку хедеров - http.headers().frameOptions().sameOrigin();
-10.
+10. добавили js проверки на наличие в списке продуктов выбранной позиции в окне подбора
+11. добавили js получения стоимости доставки для нового выбранного продукта
+12. в пакет products на бэке добавили класс ProductDTO
+13. в ProductRestController добавили маппинг для @GetMapping("/products/get/{id}")
+14. добавили js для получения доп информации о продукте по url из предыдущего пункта
+15.
