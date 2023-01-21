@@ -1,0 +1,6 @@
+1. в класс OrderTrack добавили методы для работы с форматом даты на фронтенде:
+- public String getUpdatedTimeOnForm()
+- public void setUpdatedTimeOnForm(String dateString)
+2. сделали фрагмент-страницу html для работы со списком трэк листов
+3. вставили её в order_form.html
+4. добавили js файл для обработки событий на этом фрагменте
