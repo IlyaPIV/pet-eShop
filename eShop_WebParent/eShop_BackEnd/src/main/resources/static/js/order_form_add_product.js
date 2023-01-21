@@ -61,6 +61,8 @@ function getProductInfo(productId, shippingCost) {
         let htmlCode = generateProductHtmlCode(productId, productName, mainImagePath, productCost, productPrice, shippingCost)
         $("#productList").append(htmlCode);
 
+        updateOrderAmounts();
+
     }).fail(function (err){
         showWarningModal(err.responseJSON.message);
     });
@@ -87,18 +89,20 @@ function generateProductHtmlCode(productId, productName, mainImagePath, productC
     quantityId  = "quantity" + nextCount;
     priceId     = "price" + nextCount;
     subtotalId  = "subtotal" + nextCount;
-
+    rowId       = "row" + nextCount;
 
     htmlCode = `
-          <div class="border rounded p-1">
+          <div class="border rounded p-1" id="${rowId}">
               <input type="hidden" name="productId"
                      value="${productId}" class="hiddenProductId"/>
               <div class="row">
                   <div class="col-1">
-                      <div>${nextCount}</div>
+                      <div class="divCount">${nextCount}</div>
+                      <div><a class="fas fa-trash icon-dark linkRemove" href=""
+                              rowNumber="${nextCount}"></a> </div>
                   </div>
                   <div class="col-3">
-                      <img src="@{${mainImagePath}}" class="img-fluid"/>
+                      <img src="${mainImagePath}" class="img-fluid"/>
                   </div>
               </div>
 
@@ -155,7 +159,7 @@ function generateProductHtmlCode(productId, productName, mainImagePath, productC
               </div>
 
           </div>
-          <div class="row">&nbsp;</div>`;
+          <div id="'blankLine' + ${nextCount}" class="row">&nbsp;</div>`;
 
     return htmlCode;
 }
