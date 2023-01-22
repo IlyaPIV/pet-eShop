@@ -1,4 +1,8 @@
+var productDetailCount;
+
 $(document).ready(function (){
+    productDetailCount = $(".hiddenProductId").length;
+
     $("#products").on("click", "#linkAddProduct", function (e) {
         e.preventDefault();
 
@@ -85,7 +89,9 @@ function isProductAlreadyAdded(productId) {
 }
 
 function generateProductHtmlCode(productId, productName, mainImagePath, productCost, productPrice, shippingCost) {
-    nextCount   = $(".hiddenProductId").length + 1;
+    nextCount   = productDetailCount + 1;
+    productDetailCount++;
+
     quantityId  = "quantity" + nextCount;
     priceId     = "price" + nextCount;
     subtotalId  = "subtotal" + nextCount;
