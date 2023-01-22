@@ -55,7 +55,8 @@
           <div class="form-group row">
             <label class="col-form-label">Notes:</label>
             <div class="col">
-						<textarea rows="2" cols="10" class="form-control" name="trackNotes" style="max-width: 300px"
+						<textarea rows="2" cols="10" class="form-control" name="trackNotes"
+                                  style="max-width: 300px"
                                   th:id="'trackNote' + ${status.count}"
                                   th:readonly="${isTrackWithStatusNew}" required>[[${track.notes}]]</textarea>
             </div>
