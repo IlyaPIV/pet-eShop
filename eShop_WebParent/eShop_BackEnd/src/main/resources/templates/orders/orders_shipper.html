@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments :: page_head('Orders - eShop Admin', 'none')"></head>
+<body>
+    <div class="container-fluid">
+      <div th:replace="navigationMenu :: menu"></div>
+
+      <div>
+        <h2>Manage Orders</h2>
+      </div>
+
+      <div th:replace="fragments :: search_form_and_message"></div>
+
+
+      <div>
+        <th:block th:each="order : ${listOrders}">
+          <div class="row m-1">
+              <div class="card">
+                  <div class="card-header">
+                      <div class="row">
+                          <div class="col">
+                              <span>Order ID #[[${order.id}]]</span>
+                          </div>
+                          <div class="col">
+                              <div class="float-right">
+                                  <a class="fas fa-file-alt fa-2x icon-green linkOrderDetail"
+                                     th:href="@{'/orders/detail/' + ${order.id}}"
+                                     title="View details of this order"></a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="card-body">
+                      <div>
+                          <i class="fas fa-user"></i>
+                          <b>[[${order.recipientName}]]</b>
+                      </div>
+                      <div>
+                          <i class="fas fa-home"></i>
+                          [[${order.recipientAddress}]]
+                      </div>
+                      <div>
+                          <i class="fas fa-phone-alt"></i>
+                          [[${order.phoneNumber}]]
+                      </div>
+                      <div th:if="${order.COD}">
+                          <span>COD: <b><div th:replace="fragments :: format_currency(${order.total})"></div></b></span>
+                      </div>
+                      <div>&nbsp;</div>
+                      <div class="row">
+                          <div th:replace="orders/order_status_fragment :: content(${order.picked}, 'PICKED', 'fa-people-carry')"></div>
+                          <div th:replace="orders/order_status_fragment :: content(${order.shipping}, 'SHIPPING', 'fa-shipping-fast')"></div>
+                          <div th:replace="orders/order_status_fragment :: content(${order.delivered}, 'DELIVERED', 'fa-box-open')"></div>
+                          <div th:replace="orders/order_status_fragment :: content(${order.returned}, 'RETURNED', 'fa-undo')"></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div>&nbsp;</div>
+        </th:block>
+      </div>
+
+      <div th:replace="fragments :: pagination('Products')"></div>
+
+      <div class="modal fade" id="orderDetailModal">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+          </div>
+        </div>
+      </div>
+
+      <div th:replace="fragments :: footer"> </div>
+
+
+    </div>
+
+<script th:src="@{/js/common_list.js}"></script>
+<script th:src="@{/js/orders_shipper.js}"></script>
+<script type="text/javascript">
+      moduleURL = "[[@{/orders}]]";
+
+      $(document).ready(function (){
+          $("[name='keyword']").attr("placeholder", "Type #number to search by Order ID");
+          handleLinkViewOrderDetails();
+      });
+
+      function handleLinkViewOrderDetails(){
+          $(".linkOrderDetail").on("click", function (e) {
+              e.preventDefault();
+              linkDetailURL = $(this).attr("href");
+              $("#orderDetailModal").modal("show").find(".modal-content").load(linkDetailURL);
+          });
+      }
+</script>
+</body>
+</html>

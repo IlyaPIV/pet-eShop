@@ -44,6 +44,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         //http.authorizeRequests().anyRequest().permitAll();    //  позволяет логиниться минуя окно авторизации
         http.authorizeRequests()
+                .antMatchers("/states/list_by_country/**")
+                                .hasAnyAuthority("Admin", "Salesperson")
                 .antMatchers("/users/**", "/settings/**", "/countries/**", "/states/**")
                                 .hasAuthority("Admin")         // права авторизации
                 .antMatchers("/categories/**" , "/brands/**")
@@ -56,6 +58,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                 .hasAnyAuthority("Admin", "Editor","Salesperson", "Shipper")
                 .antMatchers("/products/**")
                                 .hasAnyAuthority("Admin", "Editor")
+                .antMatchers("/orders", "/orders/", "/orders/page/**", "/orders/detail/**")
+                                .hasAnyAuthority("Admin", "Salesperson", "Shipper")
                 .antMatchers("/shipping/**", "/customers/**", "/orders/**", "/get_shipping_cost")
                                 .hasAnyAuthority("Admin", "Salesperson")
                 .anyRequest().authenticated()

@@ -1,0 +1,10 @@
+1. в WebSecurityConfig донастроили права для пользователей с ролью Shipper для работы с Orders
+2. создали html страницу списка заказов для роли Shipper - orders_shipper.html
+3. в OrderController в маппинге для @GetMapping("/orders/page/{pageNum}") настроили переход на страницу для Shipper
+4. создана html страница-фрагмент order_status_fragment для отображения иконок статуса заказа в списке
+5. создан файл со скриптами работы со страницей - orders_shipper.js
+6. донастроен класс Order для получения значений на фронте на html странице
+7. обновили запрос в OrderRepository
+8. доработали видимость полей в OrderDetails для роли Salesperson ограничив видимость:
+- донастроили в контролере маппинг     @GetMapping("/orders/detail/{id}")
+-

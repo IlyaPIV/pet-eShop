@@ -1,6 +1,7 @@
 package pet.eshop.admin.orders;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pet.eshop.admin.paging.PagingAndSortingHelper;
 import pet.eshop.admin.paging.PagingAndSortingParam;
+import pet.eshop.admin.security.EShopUserDetails;
 import pet.eshop.admin.settings.SettingService;
 import pet.eshop.common.entity.Country;
 import pet.eshop.common.entity.order.Order;
@@ -42,10 +44,15 @@ public class OrderController {
     @GetMapping("/orders/page/{pageNum}")
     public String listByPage(@PagingAndSortingParam(listName = "listOrders", moduleURL = "/orders")PagingAndSortingHelper helper,
                              @PathVariable(name = "pageNum") int pageNum,
-                             HttpServletRequest request){
+                             HttpServletRequest request,
+                             @AuthenticationPrincipal EShopUserDetails loggedUser){
 
         orderService.listByPage(pageNum, helper);
         loadCurrencySetting(request);
+
+        if (!loggedUser.hasRole("Admin") && !loggedUser.hasRole("Salesperson") & loggedUser.hasRole("Shipper")) {
+            return "orders/orders_shipper";
+        }
 
         return "orders/orders";
     }
@@ -62,10 +69,15 @@ public class OrderController {
     @GetMapping("/orders/detail/{id}")
     public String viewOrderDetails(@PathVariable("id") Integer id, Model model,
                                    RedirectAttributes ra,
-                                   HttpServletRequest request) {
+                                   HttpServletRequest request,
+                                   @AuthenticationPrincipal EShopUserDetails loggedUser) {
         try {
             Order order = orderService.getOrder(id);
             loadCurrencySetting(request);
+
+            boolean isVisibleForAdminOrSalesperson = loggedUser.hasRole("Admin") || loggedUser.hasRole("Salesperson");
+
+            model.addAttribute("isVisibleForAdminOrSalesperson", isVisibleForAdminOrSalesperson);
             model.addAttribute("order", order);
             model.addAttribute("isVisibleForAdminOrSalesperson", true);
             return "orders/order_detail_modal";
