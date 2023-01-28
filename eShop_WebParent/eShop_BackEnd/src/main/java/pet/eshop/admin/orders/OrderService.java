@@ -11,8 +11,11 @@ import pet.eshop.admin.paging.PagingAndSortingHelper;
 import pet.eshop.admin.settings.country.CountryRepository;
 import pet.eshop.common.entity.Country;
 import pet.eshop.common.entity.order.Order;
+import pet.eshop.common.entity.order.OrderStatus;
+import pet.eshop.common.entity.order.OrderTrack;
 import pet.eshop.common.exception.OrderNotFoundException;
 
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -76,6 +79,26 @@ public class OrderService {
         orderInForm.setCustomer(orderInDB.getCustomer());
 
         repo.save(orderInForm);
+    }
 
+    public void updateStatus(Integer orderId, String status) {
+        Order orderInDB = repo.findById(orderId).get();
+        OrderStatus statusToUpdate = OrderStatus.valueOf(status);
+
+        if (!orderInDB.hasStatus(statusToUpdate)) {
+            List<OrderTrack> orderTracks = orderInDB.getOrderTracks();
+
+            OrderTrack track = new OrderTrack();
+            track.setOrder(orderInDB);
+            track.setStatus(statusToUpdate);
+            track.setUpdatedTime(new Date());
+            track.setNotes(statusToUpdate.defaultDescription());
+
+            orderTracks.add(track);
+
+            orderInDB.setStatus(statusToUpdate);
+
+            repo.save(orderInDB);
+        }
     }
 }

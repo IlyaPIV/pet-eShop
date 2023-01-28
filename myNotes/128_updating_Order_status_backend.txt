@@ -1,0 +1,4 @@
+1. добавили в сервис OrderService метод для обновления статуса заказов - public void updateStatus(..)
+2. создали Rest контроллер и настроили @PostMapping("/orders_shipper/update/{id}/{status}")
+3. настроили WebSecurityConfig для работы с этим url
+4. создали тестовый класс и метод для проверки
