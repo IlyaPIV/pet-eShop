@@ -1,6 +1,9 @@
 package pet.eshop.order;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pet.eshop.checkout.CheckoutInfo;
 import pet.eshop.common.entity.Address;
@@ -20,6 +23,8 @@ import java.util.Set;
 public class OrderService {
 
     @Autowired private OrderRepository repository;
+
+    public static final int ORDERS_PER_PAGE = 5;
 
     public Order createOrder(Customer customer, Address address, List<CartItem> cartItems,
                              PaymentMethod paymentMethod, CheckoutInfo checkoutInfo){
@@ -73,5 +78,21 @@ public class OrderService {
         newOrder.setPaymentMethod(paymentMethod);
         newOrder.setDeliverDays(checkoutInfo.getDeliverDays());
         newOrder.setDeliverDate(checkoutInfo.getDeliverDate());
+    }
+
+    public Page<Order> listForCustomerByPage(Customer customer, int pageNum,
+                                             String sortField, String sortDir, String keyword) {
+        System.out.println("incoming params:" + sortField + " / " + sortDir + " / " + keyword);
+        Sort sort = Sort.by(sortField);
+        sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+
+        PageRequest pageable = PageRequest.of(pageNum - 1, ORDERS_PER_PAGE, sort);
+
+        if (keyword != null) {
+            System.out.println("keyword = " + keyword);
+            return repository.findAll(keyword, customer.getId(), pageable);
+        }
+
+        return repository.findAll(customer.getId(), pageable);
     }
 }
