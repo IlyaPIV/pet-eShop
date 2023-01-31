@@ -1,0 +1,5 @@
+1. в пакете order создали класс OrderReturnRequest для запросов со фронта о возврате заказа
+2. там же создали класс для ответа от сервера - OrderReturnResponse
+3. в OrderService добавили метод обработки запроса о возврате заказа - public void setOrderReturnRequested(..)
+4. создали REST контроллер OrderRestController. Добавили в нём маппинг обработки запроса возврата - @PostMapping("/orders/return")
+5.

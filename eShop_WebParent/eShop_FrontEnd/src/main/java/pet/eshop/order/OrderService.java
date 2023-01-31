@@ -9,11 +9,9 @@ import pet.eshop.checkout.CheckoutInfo;
 import pet.eshop.common.entity.Address;
 import pet.eshop.common.entity.CartItem;
 import pet.eshop.common.entity.Customer;
-import pet.eshop.common.entity.order.Order;
-import pet.eshop.common.entity.order.OrderDetail;
-import pet.eshop.common.entity.order.OrderStatus;
-import pet.eshop.common.entity.order.PaymentMethod;
+import pet.eshop.common.entity.order.*;
 import pet.eshop.common.entity.product.Product;
+import pet.eshop.common.exception.OrderNotFoundException;
 
 import java.util.Date;
 import java.util.List;
@@ -82,14 +80,12 @@ public class OrderService {
 
     public Page<Order> listForCustomerByPage(Customer customer, int pageNum,
                                              String sortField, String sortDir, String keyword) {
-        System.out.println("incoming params:" + sortField + " / " + sortDir + " / " + keyword);
         Sort sort = Sort.by(sortField);
         sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
 
         PageRequest pageable = PageRequest.of(pageNum - 1, ORDERS_PER_PAGE, sort);
 
         if (keyword != null) {
-            System.out.println("keyword = " + keyword);
             return repository.findAll(keyword, customer.getId(), pageable);
         }
 
@@ -100,4 +96,28 @@ public class OrderService {
         return repository.findByIdAndCustomer(id, customer);
     }
 
+    public void setOrderReturnRequested(OrderReturnRequest request, Customer customer) throws OrderNotFoundException {
+        Order order = repository.findByIdAndCustomer(request.getOrderId(), customer);
+        if (order == null) {
+            throw new OrderNotFoundException("Order ID " + request.getOrderId() + " not found");
+        }
+
+        if (order.isReturnRequested()) return;
+
+        String notes = "Reason: " + request.getReason();
+        if (!"".equals(request.getNote())){
+            notes += ". " + request.getNote();
+        }
+
+        OrderTrack track = new OrderTrack();
+        track.setOrder(order);
+        track.setUpdatedTime(new Date());
+        track.setStatus(OrderStatus.RETURN_REQUESTED);
+        track.setNotes(notes);
+
+        order.getOrderTracks().add(track);
+        order.setStatus(OrderStatus.RETURN_REQUESTED);
+
+        repository.save(order);
+    }
 }
