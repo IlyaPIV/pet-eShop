@@ -82,6 +82,11 @@
         </span>
     </div>
 
+    <div th:fragment="currency_input(amount)" th:remove="tag">
+        <input type="text" readonly class="form-control"
+               th:value="${(CURRENCY_SYMBOL_POSITION == 'Before price' ? CURRENCY_SYMBOL : '') + #numbers.formatDecimal(amount, 1, THOUSANDS_POINT_TYPE, DECIMAL_DIGITS, DECIMAL_POINT_TYPE) + (CURRENCY_SYMBOL_POSITION == 'After price' ? CURRENCY_SYMBOL : '')}">
+    </div>
+
 
     <div th:fragment="pagination(moduleURL, entityName)" th:remove="tag">
         <div class="text-center m-1" th:if="${totalItems > 0}">

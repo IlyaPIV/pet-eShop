@@ -61,6 +61,9 @@ public class Product extends IdBasedEntity {
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
+    @Transient private boolean customerCanReview;
+    @Transient private boolean reviewedByCustomer;
+
     /*
      *  КОНСТРУКТОРЫ
      */
@@ -122,5 +125,13 @@ public class Product extends IdBasedEntity {
             return price * ((100 - discountPercent) / 100);
         }
         return this.price;
+    }
+
+    public boolean isReviewedByCustomer() {
+        return reviewedByCustomer;
+    }
+
+    public boolean isCustomerCanReview() {
+        return customerCanReview;
     }
 }

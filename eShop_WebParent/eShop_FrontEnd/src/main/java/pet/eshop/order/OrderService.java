@@ -95,4 +95,9 @@ public class OrderService {
 
         return repository.findAll(customer.getId(), pageable);
     }
+
+    public Order getOrder(Integer id, Customer customer) {
+        return repository.findByIdAndCustomer(id, customer);
+    }
+
 }

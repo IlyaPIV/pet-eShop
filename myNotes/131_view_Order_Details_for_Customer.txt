@@ -1,0 +1,9 @@
+1. добавили метод в OrderRepository для поиска заказа пользователя по айди:
+- public Order findByIdAndCustomer(Integer id, Customer customer);
+2. в OrderService добавили метод для вызова предыдущего метода - public Order getOrder(Integer id, Customer customer)
+3. в OrderController-е настроили маппинг для @GetMapping("/orders/detail/{id}")
+4. на фронте в orders_customer.html добавили модальную секцию для отображения деталей заказа - id = orderDetailsModal
+5. добавили js функцию handleDetailLink(..) для показа деталей заказа модально вместо перехода по ссылке
+6. добавили html фрагменты:
+- order_details_modal.html для отображения деталей заказа
+- order_status_fragment.html для отображения иконок статуса заказа
