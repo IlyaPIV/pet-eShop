@@ -47,7 +47,18 @@ public class OrderService {
         }
         newOrder.setOrderDetails(orderDetails);
 
+        setDefaultFirstTrack(newOrder);
+
         return repository.save(newOrder);
+    }
+
+    private static void setDefaultFirstTrack(Order newOrder) {
+        OrderTrack track = new OrderTrack();
+        track.setOrder(newOrder);
+        track.setStatus(OrderStatus.NEW);
+        track.setNotes(OrderStatus.NEW.defaultDescription());
+        track.setUpdatedTime(new Date());
+        newOrder.getOrderTracks().add(track);
     }
 
     private static void fillNewOrderDetailFromCartItem(Order newOrder, CartItem cartItem, OrderDetail orderDetail) {
