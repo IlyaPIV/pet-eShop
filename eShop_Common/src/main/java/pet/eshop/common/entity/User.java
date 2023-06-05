@@ -4,6 +4,7 @@ package pet.eshop.common.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pet.eshop.common.Constants;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -73,8 +74,10 @@ public class User extends IdBasedEntity{
 
     @Transient
     public String getPhotosImagePath(){
-        if (id == null || photos == null) return "/images/default-user.png";
-        return "/user-photos/" + this.id + "/" + this.photos;
+        if (id == null || photos == null) {
+            return Constants.S3_BASE_URI + "/images/default-user.png";
+        }
+        return Constants.S3_BASE_URI + "/user-photos/" + this.id + "/" + this.photos;
     }
 
     @Transient

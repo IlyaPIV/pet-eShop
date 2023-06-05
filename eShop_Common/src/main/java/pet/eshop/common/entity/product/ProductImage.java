@@ -3,6 +3,7 @@ package pet.eshop.common.entity.product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pet.eshop.common.Constants;
 import pet.eshop.common.entity.IdBasedEntity;
 
 import javax.persistence.*;
@@ -35,6 +36,6 @@ public class ProductImage extends IdBasedEntity {
 
     @Transient
     public String getImagePath(){
-        return "/product-images/" + product.getId() + "/extras/" + this.name;
+        return Constants.S3_BASE_URI + "/product-images/" + product.getId() + "/extras/" + this.name;
     }
 }

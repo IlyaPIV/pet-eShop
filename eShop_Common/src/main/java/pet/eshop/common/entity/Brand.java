@@ -3,6 +3,7 @@ package pet.eshop.common.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pet.eshop.common.Constants;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -77,7 +78,7 @@ public class Brand extends IdBasedEntity{
 
     @Transient
     public String getLogoPath(){
-        if (id == null || logo.equals("brand-logo.png")) return "/images/image-thumbnail.png";
-        else return "/brand-logos/" + this.id + "/" + this.logo;
+        if (id == null || logo.equals("brand-logo.png")) return Constants.S3_BASE_URI + "/images/image-thumbnail.png";
+        else return Constants.S3_BASE_URI + "/brand-logos/" + this.id + "/" + this.logo;
     }
 }

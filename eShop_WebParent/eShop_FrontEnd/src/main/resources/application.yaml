@@ -9,7 +9,7 @@ spring:
   datasource:
     url:  jdbc:mysql://localhost:3306/eshop
     username: root
-    password: 7940588
+    password: root
   jpa:
     hibernate:
       ddl-auto: update

@@ -3,6 +3,7 @@ package pet.eshop.common.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pet.eshop.common.Constants;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -109,8 +110,10 @@ public class Category extends IdBasedEntity{
 
     @Transient
     public String getImagePath(){
-        if (id == null || image.equals("default.png")) return "/images/image-thumbnail.png";
-            else return "/category-images/" + this.id + "/" + this.image;
+        if (id == null || image.equals("default.png")) {
+            return Constants.S3_BASE_URI + "/images/image-thumbnail.png";
+        }
+            else return Constants.S3_BASE_URI + "/category-images/" + this.id + "/" + this.image;
     }
 
     @Transient

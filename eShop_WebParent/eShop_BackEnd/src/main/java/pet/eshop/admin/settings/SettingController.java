@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pet.eshop.admin.util.AmazonS3Util;
 import pet.eshop.admin.util.FileUploadUtil;
+import pet.eshop.common.Constants;
 import pet.eshop.common.entity.Currency;
 import pet.eshop.common.entity.setting.Setting;
 
@@ -39,6 +41,8 @@ public class SettingController {
             model.addAttribute(setting.getKey(), setting.getValue());
         });
 
+        model.addAttribute("S3_BASE_URI", Constants.S3_BASE_URI);
+
         return "settings/settings";
     }
 
@@ -63,9 +67,15 @@ public class SettingController {
             String value = "/site-logo/" + fileName;
             settingBag.updateSiteLogo(value);
 
-            String uploadDir = "../site-logo/";
-            FileUploadUtil.cleanDir(uploadDir);
-            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+            // local
+//            String uploadDir = "../site-logo/";
+//            FileUploadUtil.cleanDir(uploadDir);
+//            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+
+            // amazon
+            String uploadDir = "site-logo";
+            AmazonS3Util.removeFolder(uploadDir);
+            AmazonS3Util.uploadFile(uploadDir, fileName, multipartFile.getInputStream());
         }
     }
 

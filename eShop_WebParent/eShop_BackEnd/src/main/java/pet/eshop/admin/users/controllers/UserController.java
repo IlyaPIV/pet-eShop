@@ -20,6 +20,7 @@ import pet.eshop.admin.users.UserService;
 import pet.eshop.admin.users.export.UserCsvExporter;
 import pet.eshop.admin.users.export.UserExcelExporter;
 import pet.eshop.admin.users.export.UserPdfExporter;
+import pet.eshop.admin.util.AmazonS3Util;
 import pet.eshop.admin.util.FileUploadUtil;
 import pet.eshop.common.entity.User;
 
@@ -66,8 +67,10 @@ public class UserController {
             User savedUser = service.save(user);
             String uploadDir = "user-photos/" + savedUser.getId();
 
-            FileUploadUtil.cleanDir(uploadDir);
-            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+            AmazonS3Util.removeFolder(uploadDir);
+            AmazonS3Util.uploadFile(uploadDir, fileName, multipartFile.getInputStream());
+//            FileUploadUtil.cleanDir(uploadDir);
+//            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         } else {
             if (user.getPhotos().isEmpty()) user.setPhotos(null);
             service.save(user);
@@ -106,8 +109,8 @@ public class UserController {
         try {
             service.delete(id);
 
-//            String userDir = "/user-photos/" + id;
-//            FileUploadUtil.removeDir(userDir);
+            String userDir = "user-photos/" + id;
+            AmazonS3Util.removeFolder(userDir);
 
             redirectAttributes.addFlashAttribute("message",
                     "The user ID=" + id + " was deleted successfully");

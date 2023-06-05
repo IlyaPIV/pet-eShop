@@ -2,6 +2,7 @@ package pet.eshop.setting;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import pet.eshop.common.Constants;
 import pet.eshop.common.entity.setting.Setting;
 
 import javax.servlet.*;
@@ -33,6 +34,8 @@ public class SettingFilter implements Filter {
         generalSettings.forEach(setting -> {
             request.setAttribute(setting.getKey(), setting.getValue());
         });
+
+        request.setAttribute("S3_BASE_URI", Constants.S3_BASE_URI);
 
         chain.doFilter(request, response);
     }

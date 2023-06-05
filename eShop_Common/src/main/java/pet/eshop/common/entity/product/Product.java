@@ -3,6 +3,7 @@ package pet.eshop.common.entity.product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pet.eshop.common.Constants;
 import pet.eshop.common.entity.Brand;
 import pet.eshop.common.entity.Category;
 import pet.eshop.common.entity.IdBasedEntity;
@@ -90,8 +91,8 @@ public class Product extends IdBasedEntity {
 
     @Transient
     public String getMainImagePath(){
-        if (id == null || mainImage == null) return "/images/image-thumbnail.png";
-        else return "/product-images/" + this.id + "/" + this.mainImage;
+        if (id == null || mainImage == null) return Constants.S3_BASE_URI + "/images/image-thumbnail.png";
+        else return Constants.S3_BASE_URI + "/product-images/" + this.id + "/" + this.mainImage;
     }
 
     public void addDetail(String name, String value) {
